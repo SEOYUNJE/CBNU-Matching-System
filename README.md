@@ -23,6 +23,8 @@
 
 ## ⚽ Weekly Summary
 
+[Here is 오픈소스 기초 프로젝트 Notion](https://www.notion.so/1b4ee048c98f80bdbabee8e7aa3b08e4)
+
 #### 1Weeks(2025/03/19)
 
 - 회의 주제: 프로젝트명 및 프로젝트 주제 선정
