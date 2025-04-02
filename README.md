@@ -17,9 +17,9 @@
 |--------|--------|---------|------------------------|
 |  팀장  |  서윤제 | 2020028034 |   BackEnd           |
 |  팀원  |  조인흠 | 2024042067 |   BackEnd & FrontEnd     |
-|  팀원  |  오주노 | 2024042027 |   FrontEnd & UI Design   |
+|  팀원  |  오주노 | 2024042027 |   BackEnd                |
 |  팀원  |  조예지 | 2023078083 |   FrontEnd & UI Design   |
-|  팀원  |  최은재 | 2023078086 |   BackEnd           |
+|  팀원  |  최은재 | 2023078086 |   FrontEnd & UI Design   |
 
 
 ## ⚽ Weekly Summary
