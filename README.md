@@ -2,8 +2,8 @@
 
 ## 📋 Table of content
 
-[Project Introduction](https://github.com/SEOYUNJE/CBNU-Matching-System/edit/main/README.md#project-Introduction)
-  - [Project Name](https://github.com/SEOYUNJE/CBNU-Matching-System/edit/main/README.md#project-name)
+[Project Introduction](https://github.com/SEOYUNJE/CBNU-Matching-System/blob/main/README.md#project-Introduction)
+  - [Project Name](https://github.com/SEOYUNJE/CBNU-Matching-System/blob/main/README.md#project-name)
   - Project Schedule
   - Project Member
   - Project Architecture Diagram
