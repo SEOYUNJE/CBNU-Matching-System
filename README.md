@@ -4,20 +4,21 @@
 
 [Project Introduction](https://github.com/SEOYUNJE/CBNU-Matching-System/blob/main/README.md#-project-Introduction)
   - [Project Name](https://github.com/SEOYUNJE/CBNU-Matching-System/blob/main/README.md#-project-name)
-  - Project Schedule
-  - Project Member
-  - Project Architecture Diagram
+  - Project Schedule(https://github.com/SEOYUNJE/CBNU-Matching-System/blob/main/README.md#-project-schedule)
+  - Project Member(https://github.com/SEOYUNJE/CBNU-Matching-System/blob/main/README.md#-project-member)
+  - Project Architecture Diagram(https://github.com/SEOYUNJE/CBNU-Matching-System/blob/main/README.md#-project-architecture)
 
 Weekly Summary
-  - [1Weeks](https://github.com/SEOYUNJE/CBNU-Matching-System/edit/main/README.md#-1Weeks)
-  - 2Weeks
-  - 3Weeks
+  - [1Weeks](https://github.com/SEOYUNJE/CBNU-Matching-System/blob/main/README.md#1weeks)
+  - [2Weeks](https://github.com/SEOYUNJE/CBNU-Matching-System/blob/main/README.md#2weeks)
+  - [3Weeks](https://github.com/SEOYUNJE/CBNU-Matching-System/blob/main/README.md#3weeks)
 
 
 ## 🏀 Project Introduction
 
+#### 📌 Project Name
 <details> 
-<summary>Project Name(프로젝트 이름)</summary>
+<summary>프로젝트 이름</summary>
 <br>
 
 => `CBNU Matching System`(충북대 매칭 시스템 앱)
@@ -27,16 +28,17 @@ Weekly Summary
 
 </details>
 
+#### 📌 Project Schedule
 <details> 
-<summary>Project Schedule(프로젝트 추진 일정)</summary>
+<summary>프로젝트 추진 일정</summary>
 <br>
 
 ![image](https://github.com/user-attachments/assets/70aec225-f62e-4a87-9b82-895871979d1e)
 </details>
 
-
+#### 📌 Project Member
 <details> 
-<summary>Project Member(프로젝트 팀원 소개)</summary>
+<summary>프로젝트 팀원 소개</summary>
 <br>
 
 |  역할  |  성명  |   학번  |  프로젝트 내 맡은 역할  |  GitHub-계정    |
@@ -48,8 +50,9 @@ Weekly Summary
 |  팀원  |  최은재 | 2023078086 |   FrontEnd & UI Design   |   https://github.com/si-mong  |
 </details>
 
+#### 📌 Project Architecture Diagram
 <details> 
-<summary>Project Architecture Diagram(프로젝트 구성도)</summary>
+<summary>프로젝트 구성도</summary>
 <br>
   
 ![프로그램 구성도](https://github.com/user-attachments/assets/e2d49b01-80c1-4a27-982f-2b658e9af8d9)
