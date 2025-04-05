@@ -4,14 +4,14 @@
 
 [Project Introduction](https://github.com/SEOYUNJE/CBNU-Matching-System/blob/main/README.md#-project-Introduction)
   - [Project Name](https://github.com/SEOYUNJE/CBNU-Matching-System/blob/main/README.md#-project-name)
-  - Project Schedule(https://github.com/SEOYUNJE/CBNU-Matching-System/blob/main/README.md#-project-schedule)
-  - Project Member(https://github.com/SEOYUNJE/CBNU-Matching-System/blob/main/README.md#-project-member)
-  - Project Architecture Diagram(https://github.com/SEOYUNJE/CBNU-Matching-System/blob/main/README.md#-project-architecture)
+  - [Project Schedule](https://github.com/SEOYUNJE/CBNU-Matching-System/blob/main/README.md#-project-schedule)
+  - [Project Member](https://github.com/SEOYUNJE/CBNU-Matching-System/blob/main/README.md#-project-member)
+  - [Project Architecture Diagram](https://github.com/SEOYUNJE/CBNU-Matching-System/blob/main/README.md#-project-architecture)
 
 Weekly Summary
-  - [1Weeks](https://github.com/SEOYUNJE/CBNU-Matching-System/blob/main/README.md#1weeks)
-  - [2Weeks](https://github.com/SEOYUNJE/CBNU-Matching-System/blob/main/README.md#2weeks)
-  - [3Weeks](https://github.com/SEOYUNJE/CBNU-Matching-System/blob/main/README.md#3weeks)
+  - [1Weeks](https://github.com/SEOYUNJE/CBNU-Matching-System/blob/main/README.md#1weeks20250319)
+  - [2Weeks](https://github.com/SEOYUNJE/CBNU-Matching-System/blob/main/README.md#2weeks20250326)
+  - [3Weeks](https://github.com/SEOYUNJE/CBNU-Matching-System/blob/main/README.md#3weeks20250402)
 
 
 ## 🏀 Project Introduction
