@@ -6,8 +6,8 @@
   - [Project Name](https://github.com/SEOYUNJE/CBNU-Matching-System/blob/main/README.md#-project-name)
   - [Project Schedule](https://github.com/SEOYUNJE/CBNU-Matching-System/blob/main/README.md#-project-schedule)
   - [Project Member](https://github.com/SEOYUNJE/CBNU-Matching-System/blob/main/README.md#-project-member)
-  - [Project Architecture Diagram](https://github.com/SEOYUNJE/CBNU-Matching-System/blob/main/README.md#-project-architecture)
-
+  - [Project Architecture Diagram](https://github.com/SEOYUNJE/CBNU-Matching-System/blob/main/README.md#-project-architecture-diagram)
+    
 Weekly Summary
   - [1Weeks](https://github.com/SEOYUNJE/CBNU-Matching-System/blob/main/README.md#1weeks20250319)
   - [2Weeks](https://github.com/SEOYUNJE/CBNU-Matching-System/blob/main/README.md#2weeks20250326)
@@ -122,12 +122,12 @@ Weekly Summary
 <summary> 회의 내용 </summary>
 <br>
 
-- 회의 주제: 프로젝트명 및 프로젝트 주제 선정
+- 회의 주제: 충북대 매칭 시스템 핵심 기능 목록 작성
 
 - 회의 결정 사항
-  - Frontend FrameWork는 React로 진행하기
-  - Backend FrameWork는 Django로 진행하기
-  - Design는 Figma로 진행하기
-  - 주마다 역할별 스터디 모임 진행하기
+  - 프로젝트 <충북대 매칭 시스템> 핵심 기능 선정 및 정의
+  - 웹사이트로 프로젝트 구현
+  - Front-End: 스토리보드 기획 및 작성 시작
+  - Back-End: 방 생성 및 채팅 기능을 포함한 앱 구조 설계 시작 
 
 </details>
