@@ -12,6 +12,7 @@ Weekly Summary
   - [1Weeks](https://github.com/SEOYUNJE/CBNU-Matching-System/blob/main/README.md#1weeks20250319)
   - [2Weeks](https://github.com/SEOYUNJE/CBNU-Matching-System/blob/main/README.md#2weeks20250326)
   - [3Weeks](https://github.com/SEOYUNJE/CBNU-Matching-System/blob/main/README.md#3weeks20250402)
+  - [4Weeks](https://github.com/SEOYUNJE/CBNU-Matching-System/blob/main/README.md#4weeks20250409)
 
 
 ## 🏀 Project Introduction
@@ -129,5 +130,22 @@ Weekly Summary
   - 웹사이트로 프로젝트 구현
   - Front-End: 스토리보드 기획 및 작성 시작
   - Back-End: 방 생성 및 채팅 기능을 포함한 앱 구조 설계 시작 
+
+</details>
+
+#### 4Weeks(2025/04/09)
+
+
+ <details> 
+<summary> 회의 내용 </summary>
+<br>
+
+- 회의 주제: 충북대 매칭 시스템 세부 기능 및 타켓팅 구체화
+
+- 회의 결정 사항
+  - 충북대학교 매칭시스템 주요 고객층 설정
+  - 로그인/회원가입 기능 변경: 전화번호 인증 -> 아이디/비밀번호 인증
+  - FrontEnd: Figma를 활용하여 Moit 메인 페이지 UI/UX 디자인 기획 및 설계
+  - BackEnd: 마스터 노드에서 Active Branch 생성 이후, 각 담당 앱 기능별로 개발 분담 및 구현 진행
 
 </details>
