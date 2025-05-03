@@ -149,3 +149,16 @@ Weekly Summary
   - BackEnd: 마스터 노드에서 Active Branch 생성 이후, 각 담당 앱 기능별로 개발 분담 및 구현 진행
 
 </details>
+
+#### 4Weeks(2025/04/09)
+
+
+ <details> 
+<summary> 회의 내용 </summary>
+<br>
+
+1. Front-End: 스타일 가이드 작성 시작
+2. Back-End: Django스터디 마무리 후 기본 API 개발 착수
+
+</details>
+
