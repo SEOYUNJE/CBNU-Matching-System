@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>mypage</title>
+    <style>
+        @import url('mypage.css');
+    </style>
+</head>
+<body>
+<header class="header">
+    <div class="logo">moit</div>
+
+    <nav class="nav">
+        <a href="#">meals</a>
+        <a href="#">study</a>
+        <a href="#">game</a>
+        <a href="#">exercise</a>
+    </nav>
+
+    <div class="util">검색, 프로필 추가예정</div>
+</header>
+
+<section class="page-title">
+    <h1>My page</h1>
+</section>
+
+<aside class="sidebar">
+    <button class="tab active">Profile</button>
+    <button class="tab">Moit Chat</button>
+</aside>
+
+<main class="main">
+    <div class="profile-box">
+        <img class="add_img" src="user-placeholder.png">
+        <div class="info">
+            <!--  디자인 참고용으로 작성, 추후 db에서 가져와서 보여줄 거임 -->
+            <label>닉네임</label><input type="text" value="토마토" readonly>
+            <label>성별</label><input type="text" value="비공개" readonly>
+            <label>MBTI</label><input type="text" value="ESFP" readonly>
+            <label>단대</label><input type="text" value="전자정보대학" readonly>
+            <label>한줄 소개</label>
+            <textarea readonly>저는 다양한 운동을 좋아해요! 운동 끝나고 치맥하는게 삶의 낙입니다ㅎㅎ</textarea>
+        </div>
+        <button class="edit-btn">프로필 수정하기</button> <!-- 💡 여기로 이동 -->
+    </div>
+</main>
+
+<footer class="footer">
+    &copy; 2025 Moit. All rights reserved.
+</footer>
+</body>
+</html>
