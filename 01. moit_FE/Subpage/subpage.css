@@ -57,7 +57,7 @@ body {
     grid-template-rows: auto auto;
 }
 
-/* 상단 회색 영역 */
+/* 상단 임박 영역 */
 .section-top {
     grid-area: top;
     background-color: #f8f8f8;
@@ -65,7 +65,7 @@ body {
     margin-top: 3rem; /* 헤더와 간격 */
 }
 
-/* 하단 흰색 영역 */
+/* 하단 전체 컨텐츠 영역 */
 .section-bottom {
     grid-area: bottom;
     background-color: white;

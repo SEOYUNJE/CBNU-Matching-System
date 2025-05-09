@@ -124,7 +124,7 @@ body {
 .profile-box {
     display: flex;
     flex-direction: column;
-    align-items: center; /* 🔥 중앙 정렬 핵심 */
+    align-items: center;
     gap: 1rem;
 }
 .add_img {
@@ -152,7 +152,8 @@ body {
 }
 .edit-btn {
     display: block;
-    margin: 1rem auto;  /* ← 이것만 추가하면 가로 중앙 정렬! */
+    /* 가로 중앙 정렬 */
+    margin: 1rem auto;
     background-color: #e74c3c;
     color: white;
     border: none;
