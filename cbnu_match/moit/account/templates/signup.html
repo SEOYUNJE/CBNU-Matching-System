@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SignUp Page</title>
+    {% load bootstrap4 %}
+    {% bootstrap_css %}
+</head>
+<body>
+<div class="wrapper" style="text-align: center;">
+    <h1>회원가입</h1>
+    <form action='',method="POST"> {% csrf_token %}
+        아이디: <br>
+            <input type="text" name="username" size="100" autocomplete="off" placeholder="아이디을 입력해주세요">
+        <br>
+        이메일: <br>
+            <input type="email" name="email" size="100" autocomplete="off" placeholder="이메일 입력해주세요">
+        <br>
+        비밀번호: <br>
+            <input type='password' name='password' size='100' autocomplete="off"placeholder='비밀번호를 입력해주세요'>
+        <br>
+        비밀번호 확인: <br> 
+            <input type='password' name='password_check' size='100' autocomplete='off'placeholder="비밀번호를 다시 한번 입력해주세요">
+        <br><br>
+        <input type='submit' class='btn btn-primary' value='Sign Up'>
+    </form>
+</div>
+</body>
+</html>

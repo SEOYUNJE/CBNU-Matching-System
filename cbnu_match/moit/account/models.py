@@ -1,14 +1,6 @@
 from django.db import models
 
 # Create your models here.
-class login(models.Model):
-    ## 로그인은 최소 길이 상관없이 100자 이내로만, 중복 불가능
-    login = models.CharField(max_length=100, unique=True)
-    ## EmailField: CharField 상속, 이메일 형식 유효성 검사 진행
-    email = models.EmailField(max_length=100, unique=True)
-    password = models.CharField(max_length=100)
-    password_check = models.CharField(max_length=100)
-    
 class profile(models.Model):
     MBTI_CHOICES = [
         ('INTJ', 'INTJ'),
