@@ -7,12 +7,16 @@
   - [Project Schedule](https://github.com/SEOYUNJE/CBNU-Matching-System/blob/main/README.md#-project-schedule)
   - [Project Member](https://github.com/SEOYUNJE/CBNU-Matching-System/blob/main/README.md#-project-member)
   - [Project Architecture Diagram](https://github.com/SEOYUNJE/CBNU-Matching-System/blob/main/README.md#-project-architecture-diagram)
+
+[Website Design](https://github.com/SEOYUNJE/CBNU-Matching-System/blob/main/README.md#-website-design)
     
-Weekly Summary
+[Weekly Summary](https://github.com/SEOYUNJE/CBNU-Matching-System/blob/main/README.md#-weekly-Summary)
   - [1Weeks](https://github.com/SEOYUNJE/CBNU-Matching-System/blob/main/README.md#1weeks20250319)
   - [2Weeks](https://github.com/SEOYUNJE/CBNU-Matching-System/blob/main/README.md#2weeks20250326)
   - [3Weeks](https://github.com/SEOYUNJE/CBNU-Matching-System/blob/main/README.md#3weeks20250402)
   - [4Weeks](https://github.com/SEOYUNJE/CBNU-Matching-System/blob/main/README.md#4weeks20250409)
+  - [9Weeks](https://github.com/SEOYUNJE/CBNU-Matching-System/blob/main/README.md#9weeks20250409)
+  - [10Weeks](https://github.com/SEOYUNJE/CBNU-Matching-System/blob/main/README.md#10weeks20250409)
 
 
 ## 🏀 Project Introduction
@@ -59,6 +63,29 @@ Weekly Summary
 ![프로그램 구성도](https://github.com/user-attachments/assets/e2d49b01-80c1-4a27-982f-2b658e9af8d9)
 
 </details>
+
+## 📢 Website Design
+
+<details> 
+<summary> 로그인 페이지 </summary>
+<br>
+<img src="https://github.com/user-attachments/assets/c0e652d8-3721-4f7f-8e3f-e8990212868b" width="600"/>
+</details>
+
+<details> 
+<summary> 회원가입 페이지 </summary>
+<br>
+<img src="https://github.com/user-attachments/assets/bead7971-616e-4fa6-b390-fd225cc5f3f6" width="600/">
+
+</details>
+
+<details> 
+<summary> 메인 페이지 </summary>
+<br>
+<img src="https://github.com/user-attachments/assets/851cd3a4-4f96-44d4-9a14-ebb0527c4aa8" width="600/">
+</details>
+
+
 
 ## ⚽ Weekly Summary
 
@@ -162,3 +189,20 @@ Weekly Summary
 
 </details>
 
+#### 10Weeks(2025/04/09)
+
+
+ <details> 
+<summary> 회의 내용 </summary>
+<br>
+
+
+- [main branch] 참고용 메인/서브 디자인 css/html 업로드
+
+- [dev branch] create and register “Message” model in chat app
+
+- [dev branch] create and register “profile” model in account app
+
+- [dev branch] create signup.html in accout app
+
+</details>
