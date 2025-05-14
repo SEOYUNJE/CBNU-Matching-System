@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="signup_profile.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+</head>
+<body>
+
+   <header class="header">
+    <div class="logo">moit</div>
+    <nav class="nav">
+      <a href="#">meals</a>
+      <a href="#">study</a>
+      <a href="#">game</a>
+      <a href="#">exercise</a>
+    </nav>
+    <div class="util">🔍 👤</div>
+  </header>
+
+  <main>
+    <div class="profile-container">
+      <h1 class="title">Profile Setup</h1>
+      <form id="profile-form">
+        <!-- 닉네임 -->
+        <div class="field">
+          <label for="nickname">닉네임</label>
+          <input id="nickname" type="text" placeholder="닉네임을 입력해주세요." required />
+        </div>
+
+        <!-- 성별 -->
+        <div class="field">
+          <label for="gender">성별</label>
+          <select id="gender" required>
+            <option value="" disabled selected>성별을 선택해주세요</option>
+            <option value="female">여성</option>
+            <option value="male">남성</option>
+            <option value="other">기타</option>
+          </select>
+        </div>
+
+        <!-- MBTI -->
+        <div class="field">
+          <label for="mbti">MBTI</label>
+          <select id="mbti" required>
+              <option value="" disabled selected>MBTI를 선택해주세요</option>
+              <option value="ISTJ">ISTJ</option>
+              <option value="ISFJ">ISFJ</option>
+              <option value="INFJ">INFJ</option>
+              <option value="INTJ">INTJ</option>
+              <option value="ISTP">ISTP</option>
+              <option value="ISFP">ISFP</option>
+              <option value="INFP">INFP</option>
+              <option value="INTP">INTP</option>
+              <option value="ESTP">ESTP</option>
+              <option value="ESFP">ESFP</option>
+              <option value="ENFP">ENFP</option>
+              <option value="ENTP">ENTP</option>
+              <option value="ESTJ">ESTJ</option>
+              <option value="ESFJ">ESFJ</option>
+              <option value="ENFJ">ENFJ</option>
+              <option value="ENTJ">ENTJ</option>
+          </select>
+        </div>
+
+        <!-- 단과대학 -->
+        <div class="field">
+          <label for="faculty">단과대학</label>
+          <select id="faculty" required>
+            <option value="" disabled selected>단과대학을 선택해주세요</option>
+            <option value="engineering">공과대학</option>
+            <option value="science">자연과학대학</option>
+            <option value="humanities">인문대학</option>
+            <option value="social">사회과학대학</option>
+          </select>
+        </div>
+
+        <!-- 한줄 자기소개 -->
+        <div class="field">
+          <label for="intro">한줄 자기소개</label>
+          <textarea id="intro" type="text" maxlength="50" placeholder="자기소개를 입력해주세요. (50자 이내)" required></textarea>
+        </div>
+
+        <button type="submit" class="btn-submit">프로필 설정</button>
+      </form>
+    </div>
+  </main>
+</body>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="signup.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+      /* 버튼 disabled 스타일 */
+      .btn-signup:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+      /* 에러 메시지 기본 숨김 */
+      #pw-error {
+        display: none;
+        font-size: 0.8rem;
+        margin-top: 0.5rem;
+      }
+    </style>
+</head>
+<body>
+  <header class="header">
+    <div class="logo">moit</div>
+    <nav class="nav">
+      <a href="#">meals</a>
+      <a href="#">study</a>
+      <a href="#">game</a>
+      <a href="#">exercise</a>
+    </nav>
+    <div class="util">🔍 👤</div>
+  </header>
+
+  <main>
+    <div class="signup-container">
+      <h1 class="title">Sign up</h1>
+
+      <form id="signup-form" novalidate>
+        <!-- 아이디 -->
+        <div class="field">
+          <label for="user-id">아이디</label>
+          <div class="inline-group">
+            <input
+              id="user-id"
+              type="text"
+              placeholder="아이디 입력"
+              required />
+            <button type="button" class="btn-check">중복확인</button>
+          </div>
+        </div>
+
+        <!-- 비밀번호 -->
+        <div class="field">
+          <label for="password">비밀번호</label>
+          <input
+            id="password"
+            type="password"
+            oninput="pwCheck()"
+            placeholder="대문자+숫자+특수문자 조합"
+            required />
+        </div>
+
+        <!-- 비밀번호 확인 -->
+        <div class="field">
+          <label for="password-confirm">비밀번호 확인</label>
+          <input
+            id="password-confirm"
+            type="password"
+            oninput="pwCheck()"
+            placeholder="비밀번호 재입력"
+            required />
+          <p class="error-message" id="pw-error">비밀번호가 일치하지 않습니다.</p>
+        </div>
+
+        <!-- 이메일 -->
+        <div class="field">
+          <label for="email">이메일</label>
+          <input
+            id="email"
+            type="email"
+            placeholder="이메일 입력"
+            required />
+        </div>
+
+        <!-- 가입 버튼 -->
+        <button type="submit" class="btn-signup" disabled>회원가입</button>
+      </form>
+    </div>
+  </main>
+
+  <footer>
+    <!-- footer 내용 -->
+  </footer>
+
+  <!-- validation & password-check 스크립트 -->
+  <script>
+  $(function(){
+    // 변수 선언
+    const $idField  = $('#user-id');
+    const $p1       = $('#password');
+    const $p2       = $('#password-confirm');
+    const $email    = $('#email');
+    const $msg      = $('#pw-error');
+    const $submit   = $('.btn-signup');
+
+    const reg = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,25}$/;
+
+    // 전체 폼 검증 함수
+    function validateForm(){
+      const idVal    = $idField.val().trim();
+      const p1Val    = $p1.val();
+      const p2Val    = $p2.val();
+      const emailVal = $email.val().trim();
+
+      // 1) 네 필드 중 하나라도 비어 있으면
+      if (!idVal || !p1Val || !p2Val || !emailVal) {
+        $msg.hide();
+        $submit.prop('disabled', true);
+        return;
+      }
+
+        if (!reg.test(p1Val)) {
+      $msg
+        .text('비밀번호는 영문자와 숫자를 포함한 8~25자여야 합니다.')
+        .css({ color: 'orange', display: 'block' });
+      $submit.prop('disabled', true);
+      return;
+    }
+
+      // 2) 비밀번호 불일치 시
+      if (p1Val !== p2Val) {
+        $msg
+          .text('비밀번호가 일치하지 않습니다.')
+          .css({ color: 'red', display: 'block' });
+        $submit.prop('disabled', true);
+        return;
+      }
+
+      // 3) 모두 채워졌고 비밀번호 일치 시
+      $msg.hide();
+      $submit.prop('disabled', false);
+    }
+
+    // pwCheck()는(validateForm과 동일) inline oninput을 위해 남겨둠
+    window.pwCheck = validateForm;
+
+    // 이벤트 바인딩: 모든 필드 변화 시 검증
+    $idField
+      .add($p1)
+      .add($p2)
+      .add($email)
+      .on('input', validateForm);
+
+    // 초기 검증
+    validateForm();
+
+    // 제출 안전장치
+    $('#signup-form').on('submit', function(e){
+      if ($submit.prop('disabled')) {
+        e.preventDefault();
+      }
+    });
+  });
+
+   // 폼 제출 시 실제 이동 백엔드랑 합치면 지우기(프론트에서 이동할려고 구현한것)
+  $('#signup-form').on('submit', function(e){
+    e.preventDefault();
+    // TODO: 실제 회원가입 API 호출 후
+    // location.replace('/profile.html');
+    window.location.href = 'profile.html';
+  });
+  </script>
+</body>
+</html>
