@@ -10,15 +10,6 @@
     overflow-y: auto;
 }
 
-
-/* .scroll-grid {
-  overflow-y: scroll;
-  scroll-snap-type: y mandatory;
-  scroll-behavior: smooth;
-
-  display: grid;
-  grid-auto-rows: 100vh; 
-} */
 .scroll-grid {
   /* height: 100%; ← 이거 삭제 또는 주석 처리 */
   scroll-snap-type: y mandatory;
@@ -29,46 +20,18 @@
 }
 .scroll-grid > section {
   scroll-snap-align: start;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  /* min-height: 100vh; */
+  min-height: calc(100vh - 60px);
+
 }
-
-    /* 테스트 */
-    /* 유지 */
-    /* scroll-snap-type: y mandatory;  */
-    /* JS가 움직일 땐 smooth라 자동 작동 */
-    /* scroll-behavior: auto;           */
-    /* scroll-behavior: smooth; */
-/* .scroll-grid {
-
-    position: fixed;
-    top: 65px;
-    bottom: 60px;
-    left: 0;
-    right: 0;
-    overflow-y: scroll;
-    scroll-snap-type: y mandatory;
-    display: grid;
-    grid-template-rows: repeat(3, 100%);
-} */
-  /* scroll-snap-align: start;
-  padding: 2rem; */
-/* .scroll-grid > section {
-
-    height: 100%;
-    scroll-snap-align: start;
-    padding: 2rem;
-} */
 
 /* intro, group-list에만 flex 정렬 적용 */
 .scroll-grid > .intro,
 .scroll-grid > .group-list {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 html, body {
@@ -80,7 +43,11 @@ html, body {
 }
 
 
-    .intro { background-color: #fff; }
+.intro {
+  background-color: #fff; 
+  /* 헤더에 씹히는 문제 */
+  padding-top: 65px
+}
     .welcome { background-color: #f8f8f8; }
     .group-list { background-color: #f0f0f0; }
 
@@ -112,63 +79,137 @@ html, body {
 
 /* 두 번째 섹션 */
 .section.welcome {
-  height: 100%;
+  height: 80%;
 }
 .welcome {
   display: flex;
   justify-content: space-between;
-  align-items: stretch; /* ← 전체를 위아래 꽉 채움 */
+  /* align-items: stretch; */
   /* padding: 4rem 6rem; */
-  padding: 4rem 8rem 4rem 6rem; /* 좌우 여백 따로 줘도 가능 */
+  padding: 4rem 0rem; 
   height: 100%;
   gap: 4rem;
 }
 /* 두 번째 섹션의 왼쪽 파트 */
 .welcome-left {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    align-self: flex-start; /* ✅ 이거 추가 */
-    padding-left: 1rem;
-    gap: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  align-self: flex-start;
+  gap: 1.5rem;
+  margin-top: 1rem; /*  살짝 아래로 배치 */
 }
 
 .welcome-left h2 {
-    font-size: 3.2rem;           
-    font-weight: 800;
-    margin-bottom: 0.5rem;
+  font-size: 3.2rem;           
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  color: #333333;
 }
+/* 모임생성 버튼 */
 .create-btn {
-    background-color: #e74c3c;
-    color: white;
-    border: none;
-    padding: 0.8rem 1.6rem;
-    border-radius: 20px;
-    font-weight: bold;
-    font-size: 1rem;
-    cursor: pointer;
+  background-color: #e0e0e0;  /* ✅ 기본: 연한 회색 */
+  color: #333;
+  border: none;
+  padding: 0.8rem 1.6rem;
+  border-radius: 20px;
+  font-weight: 500;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.create-btn:hover {
+  background-color: #e74c3c;
+  color: #fff;
 }
 .welcome-right {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    align-self: center; /* 이거 추가 */
-    padding-right: 4rem; /* 오른쪽에 공간 확보 */
+  display: flex;
+  margin-top: -20px;     /* ← 딱 보기 좋게 위로 당겨줌 */
+  padding-top: 0rem;
+  flex-direction: column;
+  align-items: flex-start; /* ← 왼쪽 정렬로 변경 */
+  justify-content: flex-start;
+  gap: 1rem;
+  /* padding-top: 0.5rem; */
+  transform: translateY(-20px);
 }
+
 .category-title {
-  font-size: 1rem;
-  font-weight: bold;
+  font-size: 1.4rem;        /* ← 크기 키움 */
+  font-weight: 800;
   color: #e74c3c;
-  margin-bottom: 1.2rem;
+  margin: 0 0 1.2rem 0;     /* ← 아래쪽 margin만 부여 */
+  padding-left: 0.2rem;     /* ← 살짝 들여쓰기 효과 */
 }
+/* 2X2 표 내부 카테고리리 */
 .categories {
   display: grid;
-  grid-template-columns: repeat(2, 120px);
-  grid-template-rows: repeat(2, 120px);
-  gap: 1rem;
+  grid-template-columns: repeat(2, 250px); /* 가로 넓게 */
+  grid-template-rows: repeat(2, 200px);    /* 세로는 유지 또는 약간 늘려도 됨 */
+  gap: 0;
+  border: 1px solid #ccc;
+  border-radius: 16px;
+  overflow: hidden;
+  background-color: white;
 }
+
 .cat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;  /* ← 왼쪽 정렬 */
+  justify-content: center;
+  padding: 1.3rem 2rem;     /* ← 상하좌우 여백 추가 */
+  border-right: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  transition: all 0.3s ease;
+  background-color: white;
+  cursor: pointer;
+  position: relative;
+}
+
+/* 오른쪽 열 마지막 border-right 제거 */
+.cat-item:nth-child(2),
+.cat-item:nth-child(4) {
+  border-right: none;
+}
+
+/* 하단 row border-bottom 제거 */
+.cat-item:nth-child(3),
+.cat-item:nth-child(4) {
+  border-bottom: none;
+}
+
+.cat-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 0.6rem;
+}
+
+.cat-icon {
+  width: 50px;
+  height: 50px;
+  margin-top: auto; /* ← 하단에 붙도록 */
+  align-self: flex-start; /* 아이콘도 왼쪽 정렬 */
+}
+
+.cat-item:hover,
+.cat-item.active {
+  background-color: #e74c3c;
+}
+
+.cat-item:hover .cat-title,
+.cat-item.active .cat-title {
+  color: white;
+}
+
+.cat-item:hover .cat-icon,
+.cat-item.active .cat-icon {
+  filter: brightness(0) invert(1); /* 아이콘 반전 */
+}
+
+
+/* .cat-item {
   background-color: #f4f4f4;
   border-radius: 12px;
   font-weight: bold;
@@ -177,12 +218,12 @@ html, body {
   align-items: center;
   transition: background-color 0.3s ease;
   cursor: pointer;
-}
-.cat-item:hover,
+} */
+/* .cat-item:hover,
 .cat-item.active {
   background-color: #e74c3c;
   color: white;
-}
+} */
 /* 모바일 반응형 */
 @media (max-width: 768px) {
   .main {
@@ -198,21 +239,20 @@ html, body {
   }
 }
 /* 세 번째 섹션*/
-
-    .card-grid {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1.2rem;
-      margin-top: 2rem;
-    }
-    .card {
-      background-color: white;
-      padding: 1rem;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      width: 180px;
-      text-align: center;
-      font-size: 0.95rem;
-      line-height: 1.4;
-    }
+.card-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.2rem;
+  margin-top: 2rem;
+}
+.card {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  width: 180px;
+  text-align: center;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}

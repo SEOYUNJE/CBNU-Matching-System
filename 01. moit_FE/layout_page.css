@@ -92,6 +92,10 @@ main > section {
   padding: 0.3rem 0.7rem;
 }
 
+.nav a:hover {
+  color: #e74c3c; /* 오렌지색으로 변경 */
+}
+
 .util {
   font-size: 0.85rem;
 }
