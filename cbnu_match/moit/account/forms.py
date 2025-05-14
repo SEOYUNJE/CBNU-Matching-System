@@ -71,8 +71,5 @@ class ProfileForm(forms.Form):
                                 )
     
     self_introduce = forms.CharField(max_length=50, required=False, label="한줄 자기소개",
-                                     error_messages={
-                                        'max_length':'입력 가능한 글자 수를 초과했습니다',
-                                    },
                                      widget=forms.Textarea(attrs={'placeholder': '자기소개를 입력하세요(50자 이내)'}))  
     

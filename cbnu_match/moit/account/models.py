@@ -42,7 +42,7 @@ class Profile(models.Model):
     ]
     
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
-    profile_img = models.ImageField(upload_to='profile_images/',blank=True,null=True)
+    profile_img = models.ImageField(blank=True,null=True)
     nickname = models.CharField(max_length=100) 
     mbti = models.CharField(max_length=4,
                             choices=MBTI_CHOICES,
