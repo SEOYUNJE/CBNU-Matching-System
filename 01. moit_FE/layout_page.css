@@ -1,0 +1,117 @@
+/* =============================
+   layout_main.css (리팩토링 버전)
+   ============================= */
+
+/* 2025-05-14 은재 수정 */
+/* 모든 페이지에 공통 적용될 내부 콘텐츠 여백 */
+/* div같은 블록 하나 더 만들어서 사용해주세요. */
+/* 예시 
+<main class="main">
+  <section class="section-top">
+    <div class="container">
+      <div class="filter-buttons">...</div>
+      <div class="card-grid">...</div>
+    </div>
+  </section>
+
+  <section class="section-bottom">
+    <div class="container">
+        <div class="category-header">...</div>
+        <div class="list-layout">...</div>
+    </div>
+  </section>
+</main>
+*/
+/* 페이지 기본 설정 */
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+  font-family: "Montserrat", sans-serif;
+}
+
+html {
+  height: 100%;
+}
+
+/* 헤더 고정 */
+.header {
+  background-color: white;
+  height: 65px;
+  display: flex;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+/* 공통 컨테이너-여백을 위한 클래스 */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* 메인 영역 */
+main {
+  flex: 1;
+  padding-top: 65px;
+}
+
+main > section {
+  min-height: 100vh;
+}
+
+/* 로고 / 네비게이션 / 유틸 */
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #e74c3c;
+}
+
+.nav {
+  display: flex;
+  justify-content: center;
+  background-color: #f2f2f2;
+  border-radius: 2rem;
+  padding: 0.2rem 1.2rem;
+  gap: 1.5rem;
+}
+
+.nav a {
+  font-size: 0.75rem;
+  text-decoration: none;
+  color: #444;
+  font-weight: 500;
+  padding: 0.3rem 0.7rem;
+}
+
+.util {
+  font-size: 0.85rem;
+}
+
+/* 푸터 */
+.footer {
+  padding: 1rem 0;
+  background-color: #f3f3f3;
+  font-size: 0.85rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.footer .container {
+  max-width: 1200px;
+  padding: 0 2rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
