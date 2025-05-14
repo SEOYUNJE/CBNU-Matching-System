@@ -23,7 +23,7 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('chat/', include('chat.urls')),
+    path('room/', include('room.urls')),
     path('account/', include('account.urls')),
 ]
 
