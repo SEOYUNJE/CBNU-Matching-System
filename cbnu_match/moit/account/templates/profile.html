@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>프로필 작성</title>
+</head>
+<body>
+    <h1>{{ username }}님의 Profile Setup</h1>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <label for="nickname">{{ form.nickname.label }} (필수):</label><br>
+        {{ form.nickname }}
+        {% if form.nickname.help_text %}
+            <small>{{ form.nickname.help_text }}</small>
+        {% endif %}
+
+        <p>
+            <label for="mbti">MBTI(선택):</label><br>
+            {{ form.mbti }}
+        </p>
+
+        <p>
+            <label for="gender">성별(선택):</label><br>
+            {{ form.gender }}
+        </p>
+
+        <p>
+            <label for="age">나이(선택):</label><br>
+            {{ form.age }}
+        </p>
+
+        <p>
+            <label for="college">대학(선택):</label><br>
+            {{ form.college }}
+        </p>
+
+        <p>
+            <label for="self_introduce">자기소개(선택):</label><br>
+            {{ form.self_introduce }}
+        </p>
+
+        <p>
+            <label for="profile_img">프로필 이미지(선택):</label><br>
+            {{ form.profile_img }}
+        </p>
+
+        <button type="submit">저장</button>
+    </form>
+</body>
+</html>
