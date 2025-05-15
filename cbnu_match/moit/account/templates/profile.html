@@ -11,37 +11,37 @@
         
         <label for="nickname">{{ form.nickname.label }} (필수):</label><br>
         {{ form.nickname }}
-        {% if form.nickname.help_text %}
-            <small>{{ form.nickname.help_text }}</small>
+        {% if form.nickname.errors %}
+            <span style="color: red;">{{ form.nickname.errors }}</span>
         {% endif %}
 
         <p>
-            <label for="mbti">MBTI(선택):</label><br>
+            <label for="mbti">{{ form.mbti.label }} (선택):</label><br>
             {{ form.mbti }}
         </p>
 
         <p>
-            <label for="gender">성별(선택):</label><br>
+            <label for="gender">{{ form.gender.label }} (선택):</label><br>
             {{ form.gender }}
         </p>
 
         <p>
-            <label for="age">나이(선택):</label><br>
-            {{ form.age }}
+            <label for="age">{{ form.grade.label }} (선택):</label><br>
+            {{ form.grade }}
         </p>
 
         <p>
-            <label for="college">대학(선택):</label><br>
+            <label for="college">{{ form.college.label }} (선택):</label><br>
             {{ form.college }}
         </p>
 
         <p>
-            <label for="self_introduce">자기소개(선택):</label><br>
+            <label for="self_introduce">{{ form.self_introduce.label }} (선택):</label><br>
             {{ form.self_introduce }}
         </p>
 
         <p>
-            <label for="profile_img">프로필 이미지(선택):</label><br>
+            <label for="profile_img">{{ form.profile_img.label }} (선택):</label><br>
             {{ form.profile_img }}
         </p>
 

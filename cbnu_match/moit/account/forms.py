@@ -1,26 +1,61 @@
 from django import forms
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
+from django.contrib.auth.password_validation import validate_password
 
+class SignupForm(forms.Form):
+    username = forms.CharField(label="아이디",
+                               widget=forms.TextInput(attrs={'placeholder': '아이디 입력'}))
+    email = forms.EmailField(label="이메일",
+                             widget=forms.TextInput(attrs={'placeholder': '이메일 입력'}))
+    password = forms.CharField(label="비밀번호", widget=forms.TextInput(attrs={'placeholder': '비밀번호 입력'}))
+    password_check = forms.CharField(label="비밀번호 확인", widget=forms.TextInput(attrs={'placeholder': '비밀번호 확인'}))
+
+    # valid 검사 전 아이디 중복 체크
+    def clean_username(self):
+        username = self.cleaned_data['username']
+        if User.objects.filter(username=username).exists():
+            raise ValidationError("이미 사용 중인 아이디입니다.")
+        return username ## Error: form.username.errors
+
+    # clean 이전에 먼저 clean_username이 작동
+    def clean(self):
+        cleaned_data = super().clean() # clean data를 가져온다
+        password = cleaned_data.get("password")
+        password_check = cleaned_data.get("password_check")
+        username = cleaned_data.get("username")
+
+        if password and password_check and password != password_check:
+            self.add_error('password_check', "비밀번호가 일치하지 않습니다.")
+            # Error: form.password_check.errors
+        # 비밀번호 유효성 검사
+        if password:
+            try:
+                validate_password(password, user=User(username=username))
+            except ValidationError as e:
+                self.add_error('password', e.messages)
+            # Error: form.password.erros
+# 사용자 정의 Model을 이용한 Form
 class ProfileForm(forms.Form):
     
     MBTI_CHOICES = [
-        ('INTJ', 'INTJ'),
-        ('INTP', 'INTP'),
-        ('ENTJ', 'ENTJ'),
-        ('ENTP', 'ENTP'),
-        ('INFJ', 'INFJ'),
-        ('INFP', 'INFP'),
-        ('ENFJ', 'ENFJ'),
-        ('ENFP', 'ENFP'),
-        ('ISTJ', 'ISTJ'),
-        ('ISFJ', 'ISFJ'),
-        ('ESTJ', 'ESTJ'),
-        ('ESFJ', 'ESFJ'),
-        ('ISTP', 'ISTP'),
-        ('ISFP', 'ISFP'),
-        ('ESTP', 'ESTP'),
-        ('ESFP', 'ESFP'),
-    ]
+    ('ENFJ', 'ENFJ'),
+    ('ENFP', 'ENFP'),
+    ('ENTJ', 'ENTJ'),
+    ('ENTP', 'ENTP'),
+    ('ESFJ', 'ESFJ'),
+    ('ESFP', 'ESFP'),
+    ('ESTJ', 'ESTJ'),
+    ('ESTP', 'ESTP'),
+    ('INFJ', 'INFJ'),
+    ('INFP', 'INFP'),
+    ('INTJ', 'INTJ'),
+    ('INTP', 'INTP'),
+    ('ISFJ', 'ISFJ'),
+    ('ISFP', 'ISFP'),
+    ('ISTJ', 'ISTJ'),
+    ('ISTP', 'ISTP'),
+        ]
     GENDER_CHOICES=[('남성','남성'), ('여성', '여성')]
     
     COLLEGE_CHOICES = [
@@ -42,6 +77,12 @@ class ProfileForm(forms.Form):
         ('예술학과군', '예술학과군'),
     ]
     
+    GRADE_CHOICES=[
+        ('1학년','1학년'), 
+        ('2학년', '2학년'),
+        ('3학년', '3학년'),
+        ('4학년', '4학년')]
+    
     profile_img = forms.ImageField(required=False, label="프로필 이미지")
     
     nickname = forms.CharField(max_length=100,
@@ -60,16 +101,12 @@ class ProfileForm(forms.Form):
     gender = forms.ChoiceField(choices=GENDER_CHOICES, required=False, label="성별",
                                )
     
-    age = forms.IntegerField(required=False, label="나이", min_value=0, 
-                             error_messages={
-                                'min_value':'나이가 0보다 작습니다',
-                                },
-                              widget=forms.NumberInput(attrs={'placeholder': '나이를 입력하세요'})
-                             )
-    
+    grade =  forms.ChoiceField(choices=GRADE_CHOICES, required=False, label="학년",
+                               )
     college = forms.ChoiceField(choices=COLLEGE_CHOICES, required=False, label="단과대학",
                                 )
     
     self_introduce = forms.CharField(max_length=50, required=False, label="한줄 자기소개",
+
                                      widget=forms.Textarea(attrs={'placeholder': '자기소개를 입력하세요(50자 이내)'}))  
     

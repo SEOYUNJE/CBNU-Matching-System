@@ -3,23 +3,23 @@ from django.contrib.auth.models import User
 
 class Profile(models.Model):
     MBTI_CHOICES = [
-        ('INTJ', 'INTJ'),
-        ('INTP', 'INTP'),
-        ('ENTJ', 'ENTJ'),
-        ('ENTP', 'ENTP'),
-        ('INFJ', 'INFJ'),
-        ('INFP', 'INFP'),
-        ('ENFJ', 'ENFJ'),
-        ('ENFP', 'ENFP'),
-        ('ISTJ', 'ISTJ'),
-        ('ISFJ', 'ISFJ'),
-        ('ESTJ', 'ESTJ'),
-        ('ESFJ', 'ESFJ'),
-        ('ISTP', 'ISTP'),
-        ('ISFP', 'ISFP'),
-        ('ESTP', 'ESTP'),
-        ('ESFP', 'ESFP'),
-    ]
+    ('ENFJ', 'ENFJ'),
+    ('ENFP', 'ENFP'),
+    ('ENTJ', 'ENTJ'),
+    ('ENTP', 'ENTP'),
+    ('ESFJ', 'ESFJ'),
+    ('ESFP', 'ESFP'),
+    ('ESTJ', 'ESTJ'),
+    ('ESTP', 'ESTP'),
+    ('INFJ', 'INFJ'),
+    ('INFP', 'INFP'),
+    ('INTJ', 'INTJ'),
+    ('INTP', 'INTP'),
+    ('ISFJ', 'ISFJ'),
+    ('ISFP', 'ISFP'),
+    ('ISTJ', 'ISTJ'),
+    ('ISTP', 'ISTP'),
+]
     GENDER_CHOICES=[('남성','남성'), ('여성', '여성')]
     
     COLLEGE_CHOICES = [
@@ -41,8 +41,14 @@ class Profile(models.Model):
         ('예술학과군', '예술학과군'),
     ]
     
+    GRADE_CHOICES=[
+        ('1학년','1학년'), 
+        ('2학년', '2학년'),
+        ('3학년', '3학년'),
+        ('4학년', '4학년')]
+    
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
-    profile_img = models.ImageField(blank=True,null=True)
+    profile_img = models.ImageField(upload_to='user_img/',blank=True,null=True)
     nickname = models.CharField(max_length=100) 
     mbti = models.CharField(max_length=4,
                             choices=MBTI_CHOICES,
@@ -51,7 +57,11 @@ class Profile(models.Model):
         max_length=10,
         choices=GENDER_CHOICES,
         )
-    age = models.PositiveIntegerField(null=True)
+    grade =  models.CharField(
+        max_length=10,
+        choices=GRADE_CHOICES,
+        null=True, blank=True
+        )
     college = models.CharField(max_length=50,
                                choices=COLLEGE_CHOICES,
                                null=True, blank=True)

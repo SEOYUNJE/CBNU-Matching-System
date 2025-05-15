@@ -5,8 +5,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
-from .forms import ProfileForm
+from .forms import ProfileForm, SignupForm
 from .models import Profile
+import random
 
 def main(request):
     return HttpResponse("안녕하세요")
@@ -27,36 +28,21 @@ def login(request):
     
 def signup(request):
     if request.method == "POST":
-        
-        username = request.POST["username"]
-        password = request.POST["password"]
-        password_check = request.POST["password_check"]
-        email = request.POST["email"]
-        
-        if password != password_check:
-            return render(request, "signup.html", {"password_check_error": "비밀번호가 일치하지 않습니다."})
+        form = SignupForm(request.POST)
+        if form.is_valid():
+            user = User.objects.create_user(
+                username=form.cleaned_data["username"],
+                email=form.cleaned_data["email"],
+                password=form.cleaned_data["password"],
+            )
+            return redirect("profile", username=user.username)
+        else:
+            return render(request, "signup.html", {'form': form})
+    else:
+        form = SignupForm()
+        return render(request, "signup.html", {'form': form})
 
-        try:
-            # Django의 비밀번호 유효성 검사기 사용
-            validate_password(password)
-        except ValidationError as e:
-            return render(request, "signup.html", {"password_min_error": e.messages[0]})
-
-        user = User(username=username)
-
-        try:
-            # 비밀번호와 사용자 속성의 유사성 검사
-            validate_password(password, user)
-        except ValidationError as e:
-            # 유사성 검사 실패 시 에러 반환
-            return render(request, "signup.html", {"password_sim_error": e.messages[0]})
-
-        # 모든 조건 만족 시 유저 생성
-        User.objects.create_user(username=username, password=password, email=email)
-        return redirect('profile', username=user.username)
-
-    return render(request, "signup.html")
-
+    
 def profile(request, username):
     if request.method == 'POST':
         form= ProfileForm(request.POST, request.FILES)
@@ -70,10 +56,15 @@ def profile(request, username):
             profile.age = form.cleaned_data['age']
             profile.college = form.cleaned_data['college']
             profile.self_introduce = form.cleaned_data['self_introduce']
-            profile.profile_img = form.cleaned_data.get('profile_img')
             
+            if form.cleaned_data.get('profile_img'):
+                profile.profile_img = form.cleaned_data['profile_img']
+            else:
+                random_default = f"default{random.randint(1, 6)}.jpg"
+                profile.profile_img = random_default
+        
             profile.save()
-            return redirect('main')
+            return redirect('login')
         else:
             return render(request, 'profile.html', {'form': form, 'errors': form.errors, 'username': username})     
     else:
