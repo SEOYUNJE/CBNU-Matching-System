@@ -1,63 +1,130 @@
+<!-- 2025-05-11  -->
+<!-- 메인페이지 -->
+<!-- 작성자: 최은재 -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Moit Full Page Scroll</title>
-    <link rel="stylesheet" href="mainpage2.css">
-
+  <meta charset="UTF-8">
+  <title>Moit Full Page Scroll</title>
+  <link rel="stylesheet" href="mainpage2.css">
+  <link rel="stylesheet" href="popup_create.css">
 </head>
 
 <body>
   <header class="header">
     <div class="container">
       <div class="logo">moit</div>
-        <nav class="nav">
-          <a href="#">meals</a>
-          <a href="#">study</a>
-          <a href="#">game</a>
-          <a href="#">exercise</a>
-        </nav>
+      <nav class="nav">
+        <a href="#">meals</a>
+        <a href="#">study</a>
+        <a href="#">game</a>
+        <a href="#">exercise</a>
+      </nav>
       <div class="util">🔍 👤</div>
     </div>
   </header>
 
-  <main class="scroll-grid">
+  <!-- 2025-05-17 -->
+  <!-- 모임 생성 팝업 추가-->
+  <!-- 작성자: 최은재 -->
+  <div id="modalOverlay" class="modal-overlay">
+    <div class="modal-content">
+      <span id="closeModal" class="close-btn">&times;</span>
+      <form id="groupForm">
+        <div class="modal-group">
+          <label for="group-title">모임 제목</label>
+          <input id="group-title" name="title" type="text" placeholder="모임 제목을 작성해주세요.">
+        </div>
 
-    <section class="intro"  tabindex="0">
+        <div class="modal-row">
+          <div class="modal-group">
+            <label for="group-type">모임 종류</label>
+            <select id="group-type" name="category">
+              <option>스터디</option>
+              <option>운동</option>
+              <option>식사</option>
+              <option>게임</option>
+            </select>
+          </div>
+          <div class="modal-group">
+            <label for="group-date">모임 날짜</label>
+            <input id="group-date" name="end_time" type="datetime-local">
+          </div>
+          <div class="modal-group">
+            <label for="group-people">모임 인원</label>
+            <select id="group-people" name="max_member">
+              <option value="2">2명</option>
+              <option value="3">3명</option>
+              <option value="4">4명</option>
+              <option value="5">5명</option>
+              <option value="6">6명이상 10명 미만</option>
+              <option value="11">11명 이상 15명 미만</option>
+              <option value="15">15명 이상 20명 미만</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="modal-group">
+          <label for="group-description">상세 정보 입력</label>
+          <textarea id="group-description" name="introduction" placeholder="자세한 모임 설명을 작성해주세요."></textarea>
+        </div>
+
+        <button class="submit-btn" type="submit">입장하기</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 로그인 안내 팝업 -->
+  <div id="loginPrompt" class="modal-overlay">
+    <div class="modal-content" style="align-items: center; text-align: center; position: relative;">
+      <span id="closeLoginPrompt" class="close-btn">&times;</span>
+      <p style="font-size: 1.1rem; font-weight: 500;">
+        로그인하지 않은 상태입니다.<br>
+        로그인 후 서비스를 이용해주세요!
+      </p>
+      <button id="goToLogin" class="submit-btn" style="max-width: 200px; margin-top: 1.2rem;">
+        로그인하러 가기
+      </button>
+    </div>
+  </div>
+
+  <!-- 메인 콘텐츠 -->
+  <main class="scroll-grid">
+    <section class="intro" tabindex="0">
       <h1>Meet it. Love it. Moit.</h1>
       <h2>Moit: Meet it Live it</h2>
     </section>
 
     <section class="section welcome">
-  <div class="container">
-    <div class="welcome-left">
-      <h2>Welcome</h2>
-      <button class="create-btn">모임 생성</button>
-    </div>
-    <div class="welcome-right">
-      <h3 class="category-title">CATEGORY</h3>
-      <div class="categories">
-        <div class="cat-item" data-category="study">
-          <span class="cat-title">STUDY</span>
-          <img src="/icons/book.svg" alt="Study Icon" class="cat-icon" />
+      <div class="container">
+        <div class="welcome-left">
+          <h2>Welcome</h2>
+          <button class="create-btn">모임 생성</button>
         </div>
-        <div class="cat-item" data-category="game">
-          <span class="cat-title">GAME</span>
-          <img src="/icons/gamepad.svg" alt="Game Icon" class="cat-icon" />
-        </div>
-        <div class="cat-item" data-category="exercise">
-          <span class="cat-title">EXERCISE</span>
-          <img src="/icons/tennis.svg" alt="Exercise Icon" class="cat-icon" />
-        </div>
-        <div class="cat-item" data-category="meals">
-          <span class="cat-title">MEALS</span>
-          <img src="/icons/meal.svg" alt="Meal Icon" class="cat-icon" />
+        <div class="welcome-right">
+          <h3 class="category-title">CATEGORY</h3>
+          <div class="categories">
+            <div class="cat-item" data-category="study">
+              <span class="cat-title">STUDY</span>
+              <img src="/icons/book.svg" alt="Study Icon" class="cat-icon" />
+            </div>
+            <div class="cat-item" data-category="game">
+              <span class="cat-title">GAME</span>
+              <img src="/icons/gamepad.svg" alt="Game Icon" class="cat-icon" />
+            </div>
+            <div class="cat-item" data-category="exercise">
+              <span class="cat-title">EXERCISE</span>
+              <img src="/icons/tennis.svg" alt="Exercise Icon" class="cat-icon" />
+            </div>
+            <div class="cat-item" data-category="meals">
+              <span class="cat-title">MEALS</span>
+              <img src="/icons/meal.svg" alt="Meal Icon" class="cat-icon" />
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-</section>
-
+    </section>
 
     <section class="group-list">
       <h2>enjoy <span class="highlight">Moit</span></h2>
@@ -70,10 +137,11 @@
     </section>
   </main>
 
-    <footer class="footer">
-        &copy; 2025 moit. All rights reserved.
-    </footer> 
-    <!-- 반드시 </body> 전에 추가 -->
-    <script src="mainpage2.js"></script>
+  <footer class="footer">
+    &copy; 2025 moit. All rights reserved.
+  </footer>
+
+  <script src="popup_create.js"></script>
+  <script src="mainpage2.js"></script>
 </body>
 </html>

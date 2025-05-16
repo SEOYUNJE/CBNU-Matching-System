@@ -19,7 +19,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     document.addEventListener('wheel', (e) => {
         if (isScrolling) return;
-        e.preventDefault(); // ✅ 브라우저 기본 스크롤 방지
+        e.preventDefault(); // 브라우저 기본 스크롤 방지
 
         if (e.deltaY > 0 && currentIndex < sections.length - 1) {
             scrollToSection(currentIndex + 1);
@@ -28,3 +28,5 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     }, { passive: false });
 });
+
+
