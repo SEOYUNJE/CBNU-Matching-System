@@ -10,6 +10,8 @@
     overflow-y: auto;
 }
 
+/* 스크롤 관련 스타일 */
+
 .scroll-grid {
   /* height: 100%; ← 이거 삭제 또는 주석 처리 */
   scroll-snap-type: y mandatory;
@@ -34,6 +36,31 @@
   align-items: center;
 }
 
+/* 스크롤 인디케이터 */
+.scroll-indicator {
+  position: fixed;
+  right: 30px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 999;
+}
+
+.scroll-indicator .dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #ccc;
+  transition: background-color 0.3s ease;
+}
+
+.scroll-indicator .dot.active {
+  background-color: #e74c3c; /* 오렌지 강조 */
+}
+
+/* 컨텐츠 */
 html, body {
   margin: 0;
   padding: 0;
@@ -79,7 +106,7 @@ h3{
   justify-content: space-between;
   /* align-items: stretch; */
   /* padding: 4rem 6rem; */
-  padding: 4rem 0rem; 
+  padding: 4rem 10rem; 
   height: 80%;
   gap: 4rem;
 }
@@ -90,7 +117,9 @@ h3{
   align-items: flex-start;
   align-self: flex-start;
   gap: 1.5rem;
-  margin-top: 1rem; /*  살짝 아래로 배치 */
+  /* 왼쪽은 컨텐츠가 없어서 왼쪽 여백이 더 커보이는 느낌음 */
+  /* 그래서 좀 더 중앙으로 옮김 */
+  padding-left: 3rem;
 }
 
 .welcome-left h2 {
@@ -102,7 +131,7 @@ h3{
 .welcome-message {
   font-size: 1.1rem;
   color: #666;
-  margin-top: -1rem;
+  margin-top: -1.5rem;
   margin-bottom: 0.5rem;
 }
 
@@ -124,7 +153,8 @@ h3{
 }
 .welcome-right {
   display: flex;
-  margin-top: -20px;     /* ← 딱 보기 좋게 위로 당겨줌 */
+  /* 위로 당겨줌 */
+  /* margin-top: -20px;      */
   padding-top: 0rem;
   flex-direction: column;
   align-items: flex-start; /* ← 왼쪽 정렬로 변경 */
