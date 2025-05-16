@@ -74,6 +74,42 @@
       </form>
     </div>
   </div>
+  <!-- 모임 참가 팝업  -->
+
+  <div id="joinPopup" class="modal-overlay">
+    <div class="modal-content">
+      <!-- 닫기 버튼 -->
+      <span id="closeJoinPopup" class="close-btn">&times;</span>
+
+      <!-- 제목 및 날짜 -->
+      <div class="popup-header">
+        <h3 id="joinTitle">같이 초밥 시켜실분</h3>
+        <span id="joinDate" class="popup-date">2025-05-08</span>
+      </div>
+
+      <!-- 구분선 -->
+      <hr class="divider" />
+
+      <!-- 설명 -->
+      <p id="joinDescription" class="description">
+        최소 주문 금액 17,000원 부담돼서 함께 주문하려고 해요<br>
+        배송비도, 최소금액도 나눠 부담해요!<br>
+        가능하신 분 채팅방 들어와주세요!
+      </p>
+
+      <!-- 구분선 -->
+      <hr class="divider" />
+
+      <!-- 태그 영역 -->
+      <div class="tag-row">
+        <span class="tag" id="joinCategory">🍱 MEALS</span>
+        <span class="tag" id="joinMembers">모집인원 3/4</span>
+        <span class="tag" id="joinDeadline">마감기한 5/12 21:00</span>
+      </div>
+      <button class="submit-btn">채팅방 입장하기</button>
+    </div>
+  </div>
+
 
   <!-- 로그인 안내 팝업 -->
   <div id="loginPrompt" class="modal-overlay">
@@ -91,15 +127,18 @@
 
   <!-- 메인 콘텐츠 -->
   <main class="scroll-grid">
+    <!-- 첫 번째 섹션: 슬로건건 -->
     <section class="intro" tabindex="0">
       <h1>Meet it. Love it. Moit.</h1>
-      <h2>Moit: Meet it Live it</h2>
+      <h2>Make your life </h2>
     </section>
 
+    <!-- 두 번째 섹션: 모임생성 및 카테고리 소개 -->
     <section class="section welcome">
       <div class="container">
         <div class="welcome-left">
           <h2>Welcome</h2>
+          <p class="welcome-message">로그인 후에 모임을 생성 해보세요!</p>
           <button class="create-btn">모임 생성</button>
         </div>
         <div class="welcome-right">
@@ -107,19 +146,19 @@
           <div class="categories">
             <div class="cat-item" data-category="study">
               <span class="cat-title">STUDY</span>
-              <img src="/icons/book.svg" alt="Study Icon" class="cat-icon" />
+              <img src="/icons/book.svg" alt="" class="cat-icon" />
             </div>
             <div class="cat-item" data-category="game">
               <span class="cat-title">GAME</span>
-              <img src="/icons/gamepad.svg" alt="Game Icon" class="cat-icon" />
+              <img src="/icons/gamepad.svg" alt="" class="cat-icon" />
             </div>
             <div class="cat-item" data-category="exercise">
               <span class="cat-title">EXERCISE</span>
-              <img src="/icons/tennis.svg" alt="Exercise Icon" class="cat-icon" />
+              <img src="/icons/tennis.svg" alt="" class="cat-icon" />
             </div>
             <div class="cat-item" data-category="meals">
               <span class="cat-title">MEALS</span>
-              <img src="/icons/meal.svg" alt="Meal Icon" class="cat-icon" />
+              <img src="/icons/meal.svg" alt="" class="cat-icon" />
             </div>
           </div>
         </div>
@@ -127,21 +166,66 @@
     </section>
 
     <section class="group-list">
-      <h2>enjoy <span class="highlight">Moit</span></h2>
-      <div class="card-grid">
-        <div class="card">농구 같이 하실분</div>
-        <div class="card">도서관에서 공부해요</div>
-        <div class="card">초밥 먹으러 가요</div>
-        <div class="card">테니스 랠리</div>
+    <div class="group-wrapper">
+      <h3><span class="highlight">enjoy</span> Moit</h3>
+      <div class="masonry-grid">
+        <div class="block tall" style="background-image: url('/images/basketball.jpg')">
+          <div class="card-overlay">
+            <h3>농구 같이 하실분</h3>
+            <p>4월 11일 금요일<br>모집인원 4/8</p>
+          </div>
+        </div>
+
+        <div class="block" style="background-image: url('/images/study2.jpg')">
+          <div class="card-overlay">
+            <h3>도서관에서 공부해요</h3>
+            <p>4월 11일 금요일<br>모집인원 4/8</p>
+          </div>
+        </div>
+
+        <div class="block" style="background-image: url('/images/game.jpg')">
+          <div class="card-overlay">
+            <h3>도서관에서 공부해요</h3>
+            <p>4월 11일 금요일<br>모집인원 4/8</p>
+          </div>
+        </div>
+
+        <div class="block" style="background-image: url('/images/dinner.jpg')">
+          <div class="card-overlay">
+            <h3>도서관에서 공부해요</h3>
+            <p>4월 11일 금요일<br>모집인원 4/8</p>
+          </div>
+        </div>
+
+        <div class="block" style="background-image: url('/images/tennis.jpg')">
+          <div class="card-overlay">
+            <h3>도서관에서 공부해요</h3>
+            <p>4월 11일 금요일<br>모집인원 4/8</p>
+          </div>
+        </div>
+
       </div>
+    </div> 
     </section>
+
   </main>
-
   <footer class="footer">
-    &copy; 2025 moit. All rights reserved.
+    <div class="container footer-content">
+      <div class="footer-left">
+        <h2>enjoy your life</h2>
+      </div>
+      <div class="footer-right">
+        <p>12, gaesin-dong, seooone-gum<br>
+         chungju, Republic of Korea<br>
+         T 043.261.2114<br>
+         moit@cbnu.com
+        </p>
+      </div>
+    </div>
   </footer>
-
   <script src="popup_create.js"></script>
+  <script src="popup_join.js"></script>
   <script src="mainpage2.js"></script>
+
 </body>
 </html>

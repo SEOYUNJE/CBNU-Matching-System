@@ -1,32 +1,36 @@
+// 2025-05-17
+// 리팩토링: 스크롤 끊기는 현상 해결
+// 작성자: 최은재 
+
 window.addEventListener('DOMContentLoaded', () => {
-    const sections = document.querySelectorAll('.scroll-grid > section');
-    let currentIndex = 0;
-    let isScrolling = false;
+  const sections = document.querySelectorAll('.scroll-grid > section');
+  let currentIndex = 0;
+  let isScrolling = false;
 
-    function scrollToSection(index) {
-        if (index < 0 || index >= sections.length) return;
+  function scrollToSection(index) {
+    if (index < 0 || index > sections.length) return;
 
-        isScrolling = true;
-        const targetOffset = sections[index].offsetTop;
+    isScrolling = true;
 
-        window.scrollTo({ top: targetOffset, behavior: 'smooth' });
-
-        setTimeout(() => {
-            isScrolling = false;
-            currentIndex = index;
-        }, 800); // 스크롤 애니메이션 시간과 맞춰야 함
+    if (index < sections.length) {
+      sections[index].scrollIntoView({ behavior: 'smooth' });
+    } else {
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
     }
 
-    document.addEventListener('wheel', (e) => {
-        if (isScrolling) return;
-        e.preventDefault(); // 브라우저 기본 스크롤 방지
+    setTimeout(() => {
+      isScrolling = false;
+      currentIndex = index;
+    }, 700); // 애니메이션 시간과 맞춰줘야 정확함
+  }
 
-        if (e.deltaY > 0 && currentIndex < sections.length - 1) {
-            scrollToSection(currentIndex + 1);
-        } else if (e.deltaY < 0 && currentIndex > 0) {
-            scrollToSection(currentIndex - 1);
-        }
-    }, { passive: false });
+  document.addEventListener('wheel', (e) => {
+    if (isScrolling) return;
+    e.preventDefault();
+
+    const direction = e.deltaY > 0 ? 1 : -1;
+    const nextIndex = currentIndex + direction;
+
+    scrollToSection(nextIndex);
+  }, { passive: false });
 });
-
-
