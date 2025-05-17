@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>로그인</title>
+</head>
+<body>
+    <h2>안녕하세요<br><span style="color:#FF5722;">Moit</span> 입니다</h2>
+    <small>로그인을 하시면 더욱 다양한 서비스를 이용하실 수 있습니다.</small>
+
+    <form action="" method="POST">
+        {% csrf_token %}
+        
+        {% if error %}
+            <div style="color:red;">{{error}}</div>
+        {% endif %}
+
+        <!-- 로그인 -->
+        <div>
+            <label for="username"></label>
+            <input type='text'id='username'name='username'size="100"placeholder=" 아이디 "autocomplete="off"></input>
+        </div>
+
+        <div>
+            <label for="password"></label>
+            <input type='text'id='password'name='password'size="100"placeholder=" 비밀번호 "autocomplete="off"></input>
+        </div>
+
+        <div style="margin-bottom: 10px; font-size: 13px;">
+            <a href="{% url 'find_login' %}" style="margin-right: 10px; text-decoration: none; color: #555;">아이디 찾기</a>
+            <a href="{% url 'password_check' %}" style="margin-right: 10px; text-decoration: none; color: #555;">비밀번호 재설정</a>
+            <a href="{% url 'signup' %}" style="text-decoration: none; color: #555;">회원가입</a>
+        </div>
+        
+        <button type="submit">로그인</button>
+    </form>
+</body>
+</html>

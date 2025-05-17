@@ -9,23 +9,73 @@ from .forms import ProfileForm, SignupForm
 from .models import Profile
 import random
 
-def main(request):
-    return HttpResponse("안녕하세요")
-
-def login(request):
+def login_view(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
         if user is not None:
-            user.save()
             login(request,user)
-            return HttpResponseRedirect(reverse('main'))
+            return redirect('main', username=username)
         else:
-            return render(request, 'index.html', {'error': 'Invalid username or password'})
+            return render(request, 'login.html', {'error': 'Invalid username or password'})
     else:
-        return render(request, 'index.html')
+        return render(request, 'login.html')
     
+def find_login(request):
+    if request.method == "POST":
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
+        email = request.POST['email']
+        
+        user = User.objects.filter(first_name=first_name, last_name=last_name,
+                            email=email)
+        
+        if user.exists():
+            
+            return render(request, 'config_login.html', {
+                    'username': user[0].username,
+                    'login_date': user[0].date_joined,
+                    })
+        else:
+            return render(request, "find_login.html", {'error': 'No account was found matching the information you entered'})
+    else:
+        return render(request, "find_login.html")
+
+def password_check(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        nickname = request.POST['nickname']
+        
+        user = User.objects.get(username = username)
+        profile = Profile.objects.get(user = user)
+        
+        if profile.nickname == nickname:
+            return render(request, 'reset_password.html', {'username': username})
+        else:
+            return render(request, "check_password.html", {'error': "We couldn't find a password that matches the information you provided"})
+        
+    else:
+        return render(request, "check_password.html")
+
+def password_reset(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        new_password = request.POST['new_password']
+        new_password_check = request.POST['new_password_check']
+                
+        if new_password == new_password_check:
+            user = User.objects.get(username = username)
+            user.set_password(new_password)
+            user.save()
+            
+            return redirect('login')
+        else:
+            return render(request, "reset_password.html", {'error': "비밀번호가 일치하지 않습니다"})
+        
+    else:
+        return render(request, "reset_password.html")
+
 def signup(request):
     if request.method == "POST":
         form = SignupForm(request.POST)
@@ -34,6 +84,8 @@ def signup(request):
                 username=form.cleaned_data["username"],
                 email=form.cleaned_data["email"],
                 password=form.cleaned_data["password"],
+                first_name=form.cleaned_data["first_name"],
+                last_name=form.cleaned_data["last_name"],
             )
             return redirect("profile", username=user.username)
         else:
@@ -53,7 +105,7 @@ def profile(request, username):
             profile.nickname = form.cleaned_data['nickname']
             profile.mbti = form.cleaned_data['mbti']
             profile.gender = form.cleaned_data['gender']
-            profile.age = form.cleaned_data['age']
+            profile.grade = form.cleaned_data['grade']
             profile.college = form.cleaned_data['college']
             profile.self_introduce = form.cleaned_data['self_introduce']
             

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>아이디 찾기</title>
+</head>
+<body>
+    <h1>가입된 계정 확인</h1>
+
+    <div>
+        <p>아이디: {{username}}</p>
+        <p>가입일: {{login_date}}</p>
+    </div>
+    
+    <div>
+    <a href="{% url 'login' %}" style="text-decoration: none;">
+        <button type="button">로그인하기</button>
+    </a>    
+    </div>
+
+    <div>
+    <a href="{% url 'password_check' %}" style="text-decoration: none;">
+        <button type="button">비밀번호 재설정</button>
+    </a>
+    </div>
+    
+</body>
+</html>

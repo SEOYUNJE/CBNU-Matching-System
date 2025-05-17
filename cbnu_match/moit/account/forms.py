@@ -10,7 +10,9 @@ class SignupForm(forms.Form):
                              widget=forms.TextInput(attrs={'placeholder': '이메일 입력'}))
     password = forms.CharField(label="비밀번호", widget=forms.TextInput(attrs={'placeholder': '비밀번호 입력'}))
     password_check = forms.CharField(label="비밀번호 확인", widget=forms.TextInput(attrs={'placeholder': '비밀번호 확인'}))
-
+    first_name = forms.CharField(label="성", widget=forms.TextInput(attrs={'placeholder': '성 입력'}))
+    last_name = forms.CharField(label="이름", widget=forms.TextInput(attrs={'placeholder': '이름 입력'}))
+    
     # valid 검사 전 아이디 중복 체크
     def clean_username(self):
         username = self.cleaned_data['username']
