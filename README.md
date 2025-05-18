@@ -15,8 +15,9 @@
   - [2Weeks](https://github.com/SEOYUNJE/CBNU-Matching-System/blob/main/README.md#2weeks20250326)
   - [3Weeks](https://github.com/SEOYUNJE/CBNU-Matching-System/blob/main/README.md#3weeks20250402)
   - [4Weeks](https://github.com/SEOYUNJE/CBNU-Matching-System/blob/main/README.md#4weeks20250409)
-  - [9Weeks](https://github.com/SEOYUNJE/CBNU-Matching-System/blob/main/README.md#9weeks20250409)
-  - [10Weeks](https://github.com/SEOYUNJE/CBNU-Matching-System/blob/main/README.md#10weeks20250409)
+  - [9Weeks](https://github.com/SEOYUNJE/CBNU-Matching-System/blob/main/README.md#9weeks20250430)
+  - [10Weeks](https://github.com/SEOYUNJE/CBNU-Matching-System/blob/main/README.md#10weeks20250507)
+  - [11Weeks](https://github.com/SEOYUNJE/CBNU-Matching-System/blob/main/README.md#10weeks20250514)
 
 
 ## 🏀 Project Introduction
@@ -177,7 +178,7 @@
 
 </details>
 
-#### 9Weeks(2025/04/09)
+#### 9Weeks(2025/04/30)
 
 
  <details> 
@@ -189,7 +190,7 @@
 
 </details>
 
-#### 10Weeks(2025/04/09)
+#### 10Weeks(2025/05/07)
 
 
  <details> 
@@ -204,5 +205,26 @@
 - [dev branch] create and register “profile” model in account app
 
 - [dev branch] create signup.html in accout app
+
+</details>
+
+
+#### 11Weeks(2025/05/14)
+
+
+ <details> 
+<summary> 회의 내용 </summary>
+<br>
+
+
+ - User 생성 시 Profile Model 1대1 자동 생성으로 데이터베이스 설계
+ 
+ - Profile 생성 시 Profile 이미지 추가(선택 안할 시 Default 사진 중 임의로 배정) 
+
+ -  Django View Page 작성 시 Forms.py를 통해 유효성 검사 진행하기
+
+ -  모임 생성 시 최대 인원은 8명으로 제한
+
+ - 로그인 Page 내 비밀번호 찾기 -> 비밀번호 재설정으로 변경 
 
 </details>
