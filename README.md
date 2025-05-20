@@ -8,6 +8,8 @@
   - [Project Member](https://github.com/SEOYUNJE/CBNU-Matching-System/blob/main/README.md#-project-member)
   - [Project Architecture Diagram](https://github.com/SEOYUNJE/CBNU-Matching-System/blob/main/README.md#-project-architecture-diagram)
 
+[Git Commit Message](https://github.com/SEOYUNJE/CBNU-Matching-System/blob/main/README.md#-git-commit-message)
+
 [Website Design](https://github.com/SEOYUNJE/CBNU-Matching-System/blob/main/README.md#-website-design)
     
 [Weekly Summary](https://github.com/SEOYUNJE/CBNU-Matching-System/blob/main/README.md#-weekly-Summary)
@@ -62,6 +64,21 @@
 <br>
   
 ![프로그램 구성도](https://github.com/user-attachments/assets/e2d49b01-80c1-4a27-982f-2b658e9af8d9)
+
+</details>
+
+## 📢 Git Commit Message
+
+| 커밋 유형      | 설명                        | 예시 메시지                                            |
+| ---------- | ------------------------- | ------------------------------------------------- |
+| `feat`     | 새로운 기능 추가                 | `feat: 사용자 로그인 기능 구현`                             |
+| `fix`      | 버그 수정                     | `fix: 회원가입 시 비밀번호 검증 오류 수정`                       |
+| `refactor` | 코드 리팩토링 (기능 변화 없음)        | `refactor: views.py 코드 구조 개선`                     |
+| `style`    | 코드 스타일 수정 (공백, 세미콜론 등)    | `style: 코드 포맷 정리 및 주석 정비`                         |
+| `docs`     | 문서 수정 (README, API 문서 등)  | `docs: API 명세서 업데이트`                              |
+| `test`     | 테스트 코드 추가 및 수정            | `test: 로그인 기능 단위 테스트 추가`                          |
+| `chore`    | 기타 변경사항 (빌드 설정, 패키지 추가 등) | `chore: requirements.txt에 djangorestframework 추가` |
+| `revert`   | 이전 커밋 되돌리기                | `revert: 로그인 기능 수정 커밋 되돌림`                        |
 
 </details>
 
