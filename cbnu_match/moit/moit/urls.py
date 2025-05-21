@@ -1,3 +1,5 @@
+# moit/urls.py
+import os
 from django.contrib import admin
 from django.urls import path, include
 
@@ -6,6 +8,9 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 urlpatterns = [
+    # 추가가 - 연동
+    path('', include('meet.urls')),  # 루트 경로 → meet 앱 메인페이지(mainpage)로 연결
+
     path('admin/', admin.site.urls),
     path('main/', include('main.urls')),
     path('account/', include('account.urls')),
@@ -14,3 +19,7 @@ urlpatterns = [
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# 추가
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=os.path.join(settings.BASE_DIR, 'static'))
