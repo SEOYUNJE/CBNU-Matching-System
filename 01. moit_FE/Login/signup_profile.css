@@ -1,5 +1,4 @@
 @import url('../layout_main.css');
-@import url('../layout_main.css');
 
 body {
   margin: 0;
@@ -12,6 +11,49 @@ main {
   justify-content: center;
   align-items: flex-start;
   padding: 3rem 0;
+}
+/* 프로필 이미지 박스 */
+.profile-image-field {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.profile-image-field img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 1px solid #ddd;
+  margin-bottom: 1rem;
+}
+
+/* 버튼 그룹 */
+.profile-image-field .btn-group {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom:1 rem;
+}
+
+.profile-image-field button {
+  flex: 1;          
+  padding: 0.5rem 1rem;
+  background: #f2f2f2;
+  border: 1px solid #ddd;
+  border-radius: 0.40rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background .2s, color .2s;
+}
+
+.profile-image-field button:hover {
+  background: #e0e0e0;
+}
+/* 활성 상태 */
+.profile-image-field button.active {
+  background: #e74c3c;
+  color: #fff;
+  border-color: #e74c3c;
 }
 
 /* 컨테이너 */

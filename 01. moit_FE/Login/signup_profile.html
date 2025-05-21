@@ -22,29 +22,40 @@
 
   <main>
     <div class="profile-container">
-      <h1 class="title">Profile Setup</h1>
+      <h1 class="title">프로필 설정</h1>
       <form id="profile-form">
+
+          <!-- (1) 프로필 이미지 -->
+        <div class="profile-image-field">
+          <img id="profile-img" src="../Images/profile.png" alt="프로필 이미지">
+          <div class="btn-group">
+            <button type="button" id="use-default" class="active">기본이미지 사용</button>
+            <button type="button" id="choose-photo">사진 선택하기</button>
+          </div>
+          <!-- 숨겨진 파일 입력 -->
+          <input type="file" id="photo-input" accept="image/*" style="display:none">
+        </div>
+
         <!-- 닉네임 -->
         <div class="field">
-          <label for="nickname">닉네임</label>
+          <label for="nickname">닉네임(선택)</label>
           <input id="nickname" type="text" placeholder="닉네임을 입력해주세요." required />
         </div>
 
         <!-- 성별 -->
         <div class="field">
-          <label for="gender">성별</label>
-          <select id="gender" required>
+          <label for="gender">성별(선택)</label>
+          <select id="gender">
             <option value="" disabled selected>성별을 선택해주세요</option>
             <option value="female">여성</option>
             <option value="male">남성</option>
-            <option value="other">기타</option>
           </select>
         </div>
 
         <!-- MBTI -->
         <div class="field">
-          <label for="mbti">MBTI</label>
-          <select id="mbti" required>
+          <label for="mbti">MBTI(선택)</label>
+          <select id="mbti">
               <option value="" disabled selected>MBTI를 선택해주세요</option>
               <option value="ISTJ">ISTJ</option>
               <option value="ISFJ">ISFJ</option>
@@ -67,8 +78,8 @@
 
         <!-- 단과대학 -->
         <div class="field">
-          <label for="faculty">단과대학</label>
-          <select id="faculty" required>
+          <label for="faculty">단과대학(선택)</label>
+          <select id="faculty">
             <option value="" disabled selected>단과대학을 선택해주세요</option>
             <option value="engineering">공과대학</option>
             <option value="science">자연과학대학</option>
@@ -79,13 +90,65 @@
 
         <!-- 한줄 자기소개 -->
         <div class="field">
-          <label for="intro">한줄 자기소개</label>
-          <textarea id="intro" type="text" maxlength="50" placeholder="자기소개를 입력해주세요. (50자 이내)" required></textarea>
+          <label for="intro">한줄 자기소개(선택)</label>
+          <textarea id="intro" type="text" maxlength="50" placeholder="자기소개를 입력해주세요. (50자 이내)"></textarea>
         </div>
 
-        <button type="submit" class="btn-submit">프로필 설정</button>
+        <button type="submit" class="btn-submit">확인하기</button>
       </form>
     </div>
   </main>
+
+  <script>
+$(function(){
+  //defaultImg는 django서버에서 디폴트 사진중에서 랜덤으로 선택된다.
+  const defaultSrc  = '../Images/profile.png';
+  const $img        = $('#profile-img');
+  const $input      = $('#photo-input');
+  const $btnDefault = $('#use-default');
+  const $btnChoose  = $('#choose-photo');
+
+  function setDefault() {
+    $img.attr('src', defaultSrc);
+  }
+
+  // (1) 디폴트 버튼 클릭
+  $btnDefault.on('click', () => {
+    setDefault();
+    $btnDefault.addClass('active');
+    $btnChoose.removeClass('active');
+    $input.val('');
+  });
+
+  // (2) 사진 선택 버튼 클릭
+  $btnChoose.on('click', () => {
+    $btnChoose.addClass('active');
+    $btnDefault.removeClass('active');
+    $input.trigger('click');
+  });
+
+  // (3) 파일 입력 시 미리보기 + default 토글 해제
+  $input.on('change', function(){
+    const file = this.files[0];
+    if (!file) {
+      // 파일 선택 취소 시, 기본 상태 유지
+      setDefault();
+      $btnDefault.addClass('active');
+      $btnChoose.removeClass('active');
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = e => {
+      $img.attr('src', e.target.result);
+    };
+    reader.readAsDataURL(file);
+  });
+
+  // 페이지 로드 시 디폴트 이미지 & 버튼 상태 보장
+  setDefault();
+  $btnDefault.addClass('active');
+});
+</script>
+
 </body>
 </html>

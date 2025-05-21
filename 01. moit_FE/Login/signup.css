@@ -30,6 +30,35 @@ main {
   text-align: center;
 }
 
+/*  성 • 이름 그리드 레이아웃 */
+.name-fields {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;  /* 다른 .field와 동일 */
+}
+.name-fields .field-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  color: #333;
+}
+.name-fields .field-group input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 0.25rem;
+  background-color: #f7f7f7;
+  font-size: 0.9rem;
+  box-sizing: border-box;
+  transition: border-color .2s, box-shadow .2s;
+}
+.name-fields .field-group input:focus {
+  outline: none;
+  border-color: #e74c3c;
+  box-shadow: 0 0 0 2px rgba(231,76,60,0.2);
+}
+
 /* 각 입력 필드 묶음 */
 .signup-container .field {
   margin-bottom: 1.5rem;

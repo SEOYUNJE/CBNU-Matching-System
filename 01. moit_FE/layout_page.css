@@ -75,7 +75,7 @@ html {
 /* 메인 영역 */
 main {
   flex: 1;
-  padding-top: 65px;
+  /* padding-top: 65px; */
 }
 
 main > section {

@@ -33,7 +33,7 @@
 
   <main>
     <div class="signup-container">
-      <h1 class="title">Sign up</h1>
+      <h1 class="title">회원가입</h1>
 
       <form id="signup-form" novalidate>
         <!-- 아이디 -->
@@ -55,9 +55,10 @@
           <input
             id="password"
             type="password"
-            oninput="pwCheck()"
-            placeholder="대문자+숫자+특수문자 조합"
+            oninput="validateForm()"
+            placeholder="영문,숫자 8~25자 조합"
             required />
+          <p class="error-message" id="pw-pattern-error">비밀번호는 영문자와 숫자를 포함한 8~25자여야 합니다.</p> 
         </div>
 
         <!-- 비밀번호 확인 -->
@@ -66,10 +67,28 @@
           <input
             id="password-confirm"
             type="password"
-            oninput="pwCheck()"
+            oninput="validateForm()"
             placeholder="비밀번호 재입력"
             required />
-          <p class="error-message" id="pw-error">비밀번호가 일치하지 않습니다.</p>
+          <p class="error-message" id="pw-match-error">비밀번호가 일치하지 않습니다.</p>
+        </div>
+
+         <!-- 성 • 이름 필드 (2열 그리드) -->
+        <div class="field name-fields">
+          <div class="field-group">
+            <label for="last-name">성</label>
+            <input id="last-name"
+                   type="text"
+                   placeholder="성 입력"
+                   required>
+          </div>
+          <div class="field-group">
+            <label for="first-name">이름</label>
+            <input id="first-name"
+                   type="text"
+                   placeholder="이름 입력"
+                   required>
+          </div>
         </div>
 
         <!-- 이메일 -->
@@ -83,7 +102,7 @@
         </div>
 
         <!-- 가입 버튼 -->
-        <button type="submit" class="btn-signup" disabled>회원가입</button>
+        <button type="submit" class="btn-signup" disabled>가입하기</button>
       </form>
     </div>
   </main>
@@ -94,81 +113,86 @@
 
   <!-- validation & password-check 스크립트 -->
   <script>
-  $(function(){
-    // 변수 선언
-    const $idField  = $('#user-id');
-    const $p1       = $('#password');
-    const $p2       = $('#password-confirm');
-    const $email    = $('#email');
-    const $msg      = $('#pw-error');
-    const $submit   = $('.btn-signup');
+$(function(){
+  // 변수 선언
+  const $idField      = $('#user-id');
+  const $p1           = $('#password');
+  const $p2           = $('#password-confirm');
+  const $lastname     = $('#last-name');
+  const $firstname    = $('#first-name');
+  const $email        = $('#email');
+  const $patternError = $('#pw-pattern-error');  // 패턴 에러 메시지
+  const $matchError   = $('#pw-match-error');    // 일치 에러 메시지
+  const $submit       = $('.btn-signup');
 
-    const reg = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,25}$/;
+  // 영문+숫자 조합, 8~25자
+  const reg = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,25}$/;
 
-    // 전체 폼 검증 함수
-    function validateForm(){
-      const idVal    = $idField.val().trim();
-      const p1Val    = $p1.val();
-      const p2Val    = $p2.val();
-      const emailVal = $email.val().trim();
+  function validateForm(){
+    const idVal    = $idField.val().trim();
+    const p1Val    = $p1.val();
+    const p2Val    = $p2.val();
+    const LnameVal = $lastname.val().trim();
+    const FnameVal = $firstname.val().trim();
+    const emailVal = $email.val().trim();
 
-      // 1) 네 필드 중 하나라도 비어 있으면
-      if (!idVal || !p1Val || !p2Val || !emailVal) {
-        $msg.hide();
-        $submit.prop('disabled', true);
-        return;
-      }
-
-        if (!reg.test(p1Val)) {
-      $msg
+    // 1) 비밀번호 패턴 검사
+    if (p1Val && !reg.test(p1Val)) {
+      $patternError
         .text('비밀번호는 영문자와 숫자를 포함한 8~25자여야 합니다.')
         .css({ color: 'orange', display: 'block' });
+      $matchError.hide();
+      $submit.prop('disabled', true);
+      return;
+    } else {
+      $patternError.hide();
+    }
+
+    // 2) 비밀번호 확인 일치 검사
+    if (p2Val && p1Val !== p2Val) {
+      $matchError
+        .text('비밀번호가 일치하지 않습니다.')
+        .css({ color: 'red', display: 'block' });
+      $submit.prop('disabled', true);
+      return;
+    } else {
+      $matchError.hide();
+    }
+
+    // 3) 나머지 필드 빈값 체크
+    if (!idVal || !p1Val || !p2Val || !LnameVal || !FnameVal || !emailVal) {
       $submit.prop('disabled', true);
       return;
     }
 
-      // 2) 비밀번호 불일치 시
-      if (p1Val !== p2Val) {
-        $msg
-          .text('비밀번호가 일치하지 않습니다.')
-          .css({ color: 'red', display: 'block' });
-        $submit.prop('disabled', true);
-        return;
-      }
+    // 4) 통과 시 활성화
+    $submit.prop('disabled', false);
+  }
 
-      // 3) 모두 채워졌고 비밀번호 일치 시
-      $msg.hide();
-      $submit.prop('disabled', false);
-    }
+  // 이벤트 바인딩
+  window.pwCheck = validateForm;  // inline oninput 용
+  $idField
+    .add($p1)
+    .add($p2)
+    .add($lastname)
+    .add($firstname)
+    .add($email)
+    .on('input', validateForm);
 
-    // pwCheck()는(validateForm과 동일) inline oninput을 위해 남겨둠
-    window.pwCheck = validateForm;
+  // 초기 검증
+  validateForm();
 
-    // 이벤트 바인딩: 모든 필드 변화 시 검증
-    $idField
-      .add($p1)
-      .add($p2)
-      .add($email)
-      .on('input', validateForm);
-
-    // 초기 검증
-    validateForm();
-
-    // 제출 안전장치
-    $('#signup-form').on('submit', function(e){
-      if ($submit.prop('disabled')) {
-        e.preventDefault();
-      }
-    });
-  });
-
-   // 폼 제출 시 실제 이동 백엔드랑 합치면 지우기(프론트에서 이동할려고 구현한것)
+  // 제출 방지
   $('#signup-form').on('submit', function(e){
-    e.preventDefault();
-    // TODO: 실제 회원가입 API 호출 후
-    // location.replace('/profile.html');
-    window.location.href = 'profile.html';
+    if ($submit.prop('disabled')) e.preventDefault();
   });
-  </script>
+});
+
+// 임시 프론트내 이동
+$('#signup-form').on('submit', function(e){
+  e.preventDefault();
+  window.location.href = 'profile.html';
+});
+</script>
 </body>
 </html>
