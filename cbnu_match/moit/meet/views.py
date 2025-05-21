@@ -5,6 +5,15 @@ from .models import *
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
+##############수정#############
+from .models import Meet
+
+def mainpage(request):
+    meets = Meet.objects.all()
+    return render(request, 'meet/mainpage2.html', {'meets': meets})
+
+###############################
+
 # Create your views here.
 @login_required
 def create_meet(request):

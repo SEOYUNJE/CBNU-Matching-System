@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>모임 생성</title>
+</head>
+<body>
+    <h1></h1>
+
+    <form action="" method="POST">
+        {% csrf_token %}
+        
+        <p>
+            <label for="title">{{ form.title.label }}:</label><br>
+            {{ form.title }}
+        </p>
+
+        <p>
+            <label for="category">{{ form.category.label }}:</label><br>
+            {{ form.category}}
+        </p>
+
+        <p>
+            <label for="deadline">{{ form.deadline.label }}:</label><br>
+            {{ form.deadline }}
+        </p>
+
+        <p>
+            <label for="max_member">{{ form.max_member.label }}:</label><br>
+            {{ form.max_member }}
+        </p>
+
+        <p>
+            <label for="meet_introduce">{{ form.meet_introduce.label }}:</label><br>
+            {{ form.meet_introduce }}
+        </p>
+
+
+        <button type="submit">생성하기</button>
+    </form>
+</body>
+</html>

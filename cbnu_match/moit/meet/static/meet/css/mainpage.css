@@ -1,0 +1,336 @@
+@import url('../layout_page.css');
+    
+
+/* 메인 콘텐츠 영역 */
+/* 추후 예지와 협의해서 레이아웃 파일에 작성 */
+/* 메인 그리드 말고 바디 전체로?? */
+.main {
+    grid-area: main;
+    padding: 0 4rem; /* 좌우 여백 한 번에 부여 */
+    overflow-y: auto;
+}
+
+/* 스크롤 관련 스타일 */
+
+.scroll-grid {
+  /* height: 100%; ← 이거 삭제 또는 주석 처리 */
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  display: flex;
+  flex-direction: column;
+  /* grid-auto-rows: 100vh; ← 이것도 삭제 또는 조정 */
+}
+.scroll-grid > section {
+  scroll-snap-align: start;
+  /* min-height: 100vh; */
+  min-height: calc(100vh - 60px);
+
+}
+
+/* intro, group-list에만 flex 정렬 적용 */
+.scroll-grid > .intro,
+.scroll-grid > .group-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 스크롤 인디케이터 */
+.scroll-indicator {
+  position: fixed;
+  right: 30px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 999;
+}
+
+.scroll-indicator .dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #ccc;
+  transition: background-color 0.3s ease;
+}
+
+.scroll-indicator .dot.active {
+  background-color: #e74c3c; /* 오렌지 강조 */
+}
+
+/* 컨텐츠 */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: auto;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+
+.intro {
+  background-color: #fff; 
+  /* 헤더에 씹히는 문제 */
+  /* padding-top: 65px */
+}
+.welcome { background-color: #f8f8f8; }
+.group-list { background-color: #f0f0f0; }
+
+h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-align: center;
+}  
+h2 {
+  font-size: 2rem;
+  color: #e74c3c;
+  text-align: center;
+}
+h3{
+  font-size: 1.8rem;
+}
+.highlight {
+  color: #e74c3c;
+  font-weight: bold;
+}
+
+/* 두 번째 섹션 */
+/* .section.welcome {
+  height: 80%;
+} */
+.welcome {
+  display: flex;
+  justify-content: space-between;
+  /* align-items: stretch; */
+  /* padding: 4rem 6rem; */
+  padding: 4rem 10rem; 
+  height: 80%;
+  gap: 4rem;
+}
+/* 두 번째 섹션의 왼쪽 파트 */
+.welcome-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  align-self: flex-start;
+  gap: 1.5rem;
+  /* 왼쪽은 컨텐츠가 없어서 왼쪽 여백이 더 커보이는 느낌음 */
+  /* 그래서 좀 더 중앙으로 옮김 */
+  padding-left: 3rem;
+}
+
+.welcome-left h2 {
+  font-size: 4rem;           
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  color: #333333;
+}
+.welcome-message {
+  font-size: 1.1rem;
+  color: #666;
+  margin-top: -1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* 모임생성 버튼 */
+.create-btn {
+  background-color: #e0e0e0;  /* 기본: 연한 회색 */
+  color: #333;
+  border: none;
+  padding: 0.8rem 1.6rem;
+  border-radius: 20px;
+  font-weight: 500;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.create-btn:hover {
+  background-color: #e74c3c;
+  color: #fff;
+}
+.welcome-right {
+  display: flex;
+  /* 위로 당겨줌 */
+  /* margin-top: -20px;      */
+  padding-top: 0rem;
+  flex-direction: column;
+  align-items: flex-start; /* ← 왼쪽 정렬로 변경 */
+  justify-content: flex-start;
+  gap: 1rem;
+  /* padding-top: 0.5rem; */
+  transform: translateY(-20px);
+}
+
+.category-title {
+  font-size: 1.4rem;        /* ← 크기 키움 */
+  font-weight: 800;
+  color: #e74c3c;
+  margin: 0 0 1.2rem 0;     /* ← 아래쪽 margin만 부여 */
+  padding-left: 0.2rem;     /* ← 살짝 들여쓰기 효과 */
+}
+/* 2X2 표 내부 카테고리리 */
+.categories {
+  display: grid;
+  grid-template-columns: repeat(2, 250px); /* 가로 넓게 */
+  grid-template-rows: repeat(2, 200px);    /* 세로는 유지 또는 약간 늘려도 됨 */
+  gap: 0;
+  border: 1px solid #ccc;
+  border-radius: 16px;
+  overflow: hidden;
+  background-color: white;
+}
+
+.cat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;  /* ← 왼쪽 정렬 */
+  justify-content: center;
+  padding: 1.3rem 2rem;     /* ← 상하좌우 여백 추가 */
+  border-right: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  transition: all 0.3s ease;
+  background-color: white;
+  cursor: pointer;
+  position: relative;
+}
+
+/* 오른쪽 열 마지막 border-right 제거 */
+.cat-item:nth-child(2),
+.cat-item:nth-child(4) {
+  border-right: none;
+}
+
+/* 하단 row border-bottom 제거 */
+.cat-item:nth-child(3),
+.cat-item:nth-child(4) {
+  border-bottom: none;
+}
+
+.cat-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 0.6rem;
+}
+
+.cat-icon {
+  width: 50px;
+  height: 50px;
+  margin-top: auto;       /* ← 하단에 붙도록 */
+  align-self: flex-start; /* 아이콘도 왼쪽 정렬 */
+}
+
+.cat-item:hover,
+.cat-item.active {
+  background-color: #e74c3c;
+}
+
+.cat-item:hover .cat-title,
+.cat-item.active .cat-title {
+  color: white;
+}
+
+.cat-item:hover .cat-icon,
+.cat-item.active .cat-icon {
+  filter: brightness(0) invert(1); /* 아이콘 반전 */
+}
+
+/* 세번 째 섹션 */
+.group-list {
+  background-color: #ffffff;
+  padding: 2rem 0;
+}
+/* 가운데 정렬과 최대 폭 제한 */
+.group-wrapper {
+  max-width: 1450px;  /* 넓게 */
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+.group-list h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-align: left;
+  margin-bottom: 2rem;
+  color: #333;
+}
+.group-list .highlight {
+  color: #e74c3c;
+}
+.masonry-grid {
+  display: grid;
+  /* grid-template-columns: 1.2fr 1fr 1fr; */
+  grid-template-columns: 1.5fr 1.05fr 1.05fr;
+  grid-template-rows: repeat(2, 1fr);
+  gap: 2rem;
+}
+
+/* 공통 블록 스타일 */
+.block {
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  border-radius: 12px;
+  overflow: hidden;
+
+  display: flex;
+  align-items: flex-end;
+
+  height: auto;
+  min-height: 250px;
+  aspect-ratio: 4.5 / 5; /* ← 가로 4, 세로 5 비율 (세로가 더 김) */
+
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  will-change: transform;
+  
+}
+
+.block:hover {
+  transform: translateY(-6px);
+  box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.75);  /* blur 더 줄이고 진하게 */
+  cursor: pointer;
+}
+
+/* 왼쪽 큰 블록 (2행 span) */
+.block.tall {
+  grid-row: span 2;
+  aspect-ratio: auto;  /* 세로형 비율 무시 */
+  min-height: 100%;
+}
+
+/* 블록 오버레이 */
+.card-overlay {
+  background: rgba(81, 81, 81, 0.5);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  width: 100%;
+}
+
+.card-overlay h3 {
+  font-size: 1rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.card-overlay p {
+  font-size: 0.8rem;
+  margin: 0.3rem 0;
+  line-height: 1.4;
+}
+
+/* 모바일 반응형 */
+@media (max-width: 768px) {
+  .main {
+    padding: 0 1.2rem; /* 모바일에서는 여백을 좁게 */
+  }
+  .welcome {
+    grid-template-columns: 1fr;
+    text-align: center;
+    padding: 2rem;
+  }
+  .welcome-left {
+    margin-bottom: 2rem;
+  }
+}
