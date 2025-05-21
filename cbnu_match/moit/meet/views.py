@@ -10,7 +10,7 @@ from .models import Meet
 
 def mainpage(request):
     meets = Meet.objects.all()
-    return render(request, 'meet/mainpage2.html', {'meets': meets})
+    return render(request, 'meet/mainpage.html', {'meets': meets})
 
 ###############################
 
@@ -31,6 +31,7 @@ def create_meet(request):
                     meet_introduce=form.cleaned_data['meet_introduce']
                 )
             meet.save()
+            meet.participant.add(request.user)
             
             # 최종 목적지: 마이 페이지 내 채팅방 
             
