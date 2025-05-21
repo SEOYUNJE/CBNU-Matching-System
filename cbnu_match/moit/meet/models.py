@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Meet(models.Model):
@@ -20,7 +21,11 @@ class Meet(models.Model):
         ('8명', '8명'),
     ]
     
-    username = models.CharField(max_length=50, blank=True, null=True)
+    # User 모델: User.objects.all()
+    # user = User.objects.get()
+    # meets = user.meets.all()
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='meets')
+    participant = models.ManyToManyField(User, related_name='joined_meets', blank=True)
     title = models.CharField(max_length=100)
     category = models.CharField(max_length=10, choices = CATEGORY_CHOICES)
     created_at = models.DateTimeField(auto_now_add=True)

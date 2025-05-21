@@ -4,6 +4,7 @@ from .views import *
 urlpatterns = [
     # 기본 경로 : localhost:8000/account/
     path("login/", login_view, name="login"),
+    path('logout/', logout_view, name='logout'),
     path("signup/", signup, name = "signup"),
     path("find_login/", find_login, name = "find_login"),
     path('password_check/', password_check, name = 'password_check'),

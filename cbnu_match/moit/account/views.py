@@ -16,11 +16,15 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request,user)
-            return redirect('main', username=username)
+            return redirect('main')
         else:
             return render(request, 'login.html', {'error': 'Invalid username or password'})
     else:
         return render(request, 'login.html')
+    
+def logout_view(request):
+    logout(request)
+    return redirect('main')
     
 def find_login(request):
     if request.method == "POST":
