@@ -5,28 +5,7 @@ from .forms import *
 from .models import *
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-
-
-##############수정#############
 from django.http import JsonResponse
-
-def mainpage(request):
-    meets = Meet.objects.all()
-    categories = [
-        ("study", "book.svg"),
-        ("game", "gamepad.svg"),
-        ("exercise", "tennis.svg"),
-        ("meals", "meal.svg"),
-    ]
-    return render(request, 'meet/mainpage.html', {
-        'meets': meets,
-        'categories': categories
-    })
-
-
-# def mainpage(request):
-#     meets = Meet.objects.all()
-#     return render(request, 'meet/mainpage.html', {'meets': meets})
 
 @login_required
 def create_meet(request):

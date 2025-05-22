@@ -13,6 +13,7 @@ urlpatterns = [
 
     path('admin/', admin.site.urls),
     path('main/', include('main.urls')),
+    path('search/', include('search.urls')),
     path('account/', include('account.urls')),
     path('meet/', include('meet.urls')),
     path('chat/', include('chat.urls')),

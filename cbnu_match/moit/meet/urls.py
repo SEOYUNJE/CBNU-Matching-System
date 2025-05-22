@@ -1,13 +1,12 @@
 # urls.py (meet)
 from django.urls import path
-from .views import mainpage, create_meet 
+from .views import * 
 
 # from django.urls import path
 # from .views import *
 
 urlpatterns = [
 
-    path('', mainpage, name='mainpage'),
     path('create_meet/', create_meet, name='create_meet'),
     # path('join_meet/<int:meet_id>', join_meet, name='join_meet'),
 ]

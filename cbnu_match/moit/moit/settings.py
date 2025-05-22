@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'main',
     'meet',
     'chat',
+    'search',
 ]
 
 ASGI_APPLICATION = 'moit.asgi.application'
