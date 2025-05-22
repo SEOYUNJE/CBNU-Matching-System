@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="signup.css" />
+    
+    <!-- 변경 전: href="signup.css" -->
+    <!-- 변경 후: href="account/css/signup.css" -->
+    <link rel="stylesheet" href="{% static 'account/css/signup.css' %}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
       /* 버튼 disabled 스타일 */
@@ -191,7 +194,9 @@ $(function(){
 // 임시 프론트내 이동
 $('#signup-form').on('submit', function(e){
   e.preventDefault();
-  window.location.href = 'profile.html';
+
+  
+  window.location.href = 'account/profile.html';
 });
 </script>
 </body>
