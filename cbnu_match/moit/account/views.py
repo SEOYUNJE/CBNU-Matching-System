@@ -18,9 +18,9 @@ def login_view(request):
             login(request,user)
             return redirect('main')
         else:
-            return render(request, 'login.html', {'error': 'Invalid username or password'})
+            return render(request, 'account/login.html', {'error': '아이디 또는 비밀번호가 잘못되었습니다.'})
     else:
-        return render(request, 'login.html')
+        return render(request, 'account/login.html')
     
 def logout_view(request):
     logout(request)
@@ -37,30 +37,31 @@ def find_login(request):
         
         if user.exists():
             
-            return render(request, 'config_login.html', {
+            return render(request, 'account/config_login.html', {
                     'username': user[0].username,
                     'login_date': user[0].date_joined,
                     })
         else:
-            return render(request, "find_login.html", {'error': 'No account was found matching the information you entered'})
+            return render(request, "account/find_login.html", {'error': 'No account was found matching the information you entered'})
     else:
-        return render(request, "find_login.html")
+        return render(request, "account/find_login.html")
 
 def password_check(request):
     if request.method == 'POST':
         username = request.POST['username']
-        nickname = request.POST['nickname']
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
         
-        user = User.objects.get(username = username)
-        profile = Profile.objects.get(user = user)
+        user = User.objects.filter(username = username,
+                                first_name=first_name, last_name=last_name)
         
-        if profile.nickname == nickname:
-            return render(request, 'reset_password.html', {'username': username})
+        if user.exists():
+            return render(request, 'account/reset_password.html', {'username': username})
         else:
-            return render(request, "check_password.html", {'error': "We couldn't find a password that matches the information you provided"})
+            return render(request, "account/check_password.html", {'error': "We couldn't find a password that matches the information you provided"})
         
     else:
-        return render(request, "check_password.html")
+        return render(request, "account/check_password.html")
 
 def password_reset(request):
     if request.method == 'POST':
@@ -75,10 +76,10 @@ def password_reset(request):
             
             return redirect('login')
         else:
-            return render(request, "reset_password.html", {'error': "비밀번호가 일치하지 않습니다"})
+            return render(request, "account/reset_password.html", {'error': "비밀번호가 일치하지 않습니다"})
         
     else:
-        return render(request, "reset_password.html")
+        return render(request, "account/reset_password.html")
 
 def signup(request):
     if request.method == "POST":
@@ -93,10 +94,10 @@ def signup(request):
             )
             return redirect("profile", username=user.username)
         else:
-            return render(request, "signup.html", {'form': form})
+            return render(request, "account/signup.html", {'form': form})
     else:
         form = SignupForm()
-        return render(request, "signup.html", {'form': form})
+        return render(request, "account/signup.html", {'form': form})
 
     
 def profile(request, username):
@@ -122,7 +123,7 @@ def profile(request, username):
             profile.save()
             return redirect('login')
         else:
-            return render(request, 'profile.html', {'form': form, 'errors': form.errors, 'username': username})     
+            return render(request, 'account/profile.html', {'form': form, 'errors': form.errors, 'username': username})     
     else:
         form = ProfileForm()
-        return render(request, 'profile.html', {'form': form, 'username': username})
+        return render(request, 'account/profile.html', {'form': form, 'username': username})
