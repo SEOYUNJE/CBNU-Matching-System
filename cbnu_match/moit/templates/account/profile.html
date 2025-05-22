@@ -1,51 +1,154 @@
 <!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>프로필 작성</title>
+    <title>Title</title>
+    <link rel="stylesheet" href="signup_profile.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
 </head>
 <body>
-    <h1>{{ username }}님의 Profile Setup</h1>
 
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        
-        <label for="nickname">{{ form.nickname.label }} (필수):</label><br>
-        {{ form.nickname }}
-        {% if form.nickname.errors %}
-            <span style="color: red;">{{ form.nickname.errors }}</span>
-        {% endif %}
+   <header class="header">
+    <div class="logo">moit</div>
+    <nav class="nav">
+      <a href="#">meals</a>
+      <a href="#">study</a>
+      <a href="#">game</a>
+      <a href="#">exercise</a>
+    </nav>
+    <div class="util">🔍 👤</div>
+  </header>
 
-        <p>
-            <label for="mbti">{{ form.mbti.label }} (선택):</label><br>
-            {{ form.mbti }}
-        </p>
+  <main>
+    <div class="profile-container">
+      <h1 class="title">프로필 설정</h1>
+      <form id="profile-form">
 
-        <p>
-            <label for="gender">{{ form.gender.label }} (선택):</label><br>
-            {{ form.gender }}
-        </p>
+          <!-- (1) 프로필 이미지 -->
+        <div class="profile-image-field">
+          <img id="profile-img" src="../Images/profile.png" alt="프로필 이미지">
+          <div class="btn-group">
+            <button type="button" id="use-default" class="active">기본이미지 사용</button>
+            <button type="button" id="choose-photo">사진 선택하기</button>
+          </div>
+          <!-- 숨겨진 파일 입력 -->
+          <input type="file" id="photo-input" accept="image/*" style="display:none">
+        </div>
 
-        <p>
-            <label for="age">{{ form.grade.label }} (선택):</label><br>
-            {{ form.grade }}
-        </p>
+        <!-- 닉네임 -->
+        <div class="field">
+          <label for="nickname">닉네임(선택)</label>
+          <input id="nickname" type="text" placeholder="닉네임을 입력해주세요." required />
+        </div>
 
-        <p>
-            <label for="college">{{ form.college.label }} (선택):</label><br>
-            {{ form.college }}
-        </p>
+        <!-- 성별 -->
+        <div class="field">
+          <label for="gender">성별(선택)</label>
+          <select id="gender">
+            <option value="" disabled selected>성별을 선택해주세요</option>
+            <option value="female">여성</option>
+            <option value="male">남성</option>
+          </select>
+        </div>
 
-        <p>
-            <label for="self_introduce">{{ form.self_introduce.label }} (선택):</label><br>
-            {{ form.self_introduce }}
-        </p>
+        <!-- MBTI -->
+        <div class="field">
+          <label for="mbti">MBTI(선택)</label>
+          <select id="mbti">
+              <option value="" disabled selected>MBTI를 선택해주세요</option>
+              <option value="ISTJ">ISTJ</option>
+              <option value="ISFJ">ISFJ</option>
+              <option value="INFJ">INFJ</option>
+              <option value="INTJ">INTJ</option>
+              <option value="ISTP">ISTP</option>
+              <option value="ISFP">ISFP</option>
+              <option value="INFP">INFP</option>
+              <option value="INTP">INTP</option>
+              <option value="ESTP">ESTP</option>
+              <option value="ESFP">ESFP</option>
+              <option value="ENFP">ENFP</option>
+              <option value="ENTP">ENTP</option>
+              <option value="ESTJ">ESTJ</option>
+              <option value="ESFJ">ESFJ</option>
+              <option value="ENFJ">ENFJ</option>
+              <option value="ENTJ">ENTJ</option>
+          </select>
+        </div>
 
-        <p>
-            <label for="profile_img">{{ form.profile_img.label }} (선택):</label><br>
-            {{ form.profile_img }}
-        </p>
+        <!-- 단과대학 -->
+        <div class="field">
+          <label for="faculty">단과대학(선택)</label>
+          <select id="faculty">
+            <option value="" disabled selected>단과대학을 선택해주세요</option>
+            <option value="engineering">공과대학</option>
+            <option value="science">자연과학대학</option>
+            <option value="humanities">인문대학</option>
+            <option value="social">사회과학대학</option>
+          </select>
+        </div>
 
-        <button type="submit">저장</button>
-    </form>
+        <!-- 한줄 자기소개 -->
+        <div class="field">
+          <label for="intro">한줄 자기소개(선택)</label>
+          <textarea id="intro" type="text" maxlength="50" placeholder="자기소개를 입력해주세요. (50자 이내)"></textarea>
+        </div>
+
+        <button type="submit" class="btn-submit">확인하기</button>
+      </form>
+    </div>
+  </main>
+
+  <script>
+$(function(){
+  //defaultImg는 django서버에서 디폴트 사진중에서 랜덤으로 선택된다.
+  const defaultSrc  = '../Images/profile.png';
+  const $img        = $('#profile-img');
+  const $input      = $('#photo-input');
+  const $btnDefault = $('#use-default');
+  const $btnChoose  = $('#choose-photo');
+
+  function setDefault() {
+    $img.attr('src', defaultSrc);
+  }
+
+  // (1) 디폴트 버튼 클릭
+  $btnDefault.on('click', () => {
+    setDefault();
+    $btnDefault.addClass('active');
+    $btnChoose.removeClass('active');
+    $input.val('');
+  });
+
+  // (2) 사진 선택 버튼 클릭
+  $btnChoose.on('click', () => {
+    $btnChoose.addClass('active');
+    $btnDefault.removeClass('active');
+    $input.trigger('click');
+  });
+
+  // (3) 파일 입력 시 미리보기 + default 토글 해제
+  $input.on('change', function(){
+    const file = this.files[0];
+    if (!file) {
+      // 파일 선택 취소 시, 기본 상태 유지
+      setDefault();
+      $btnDefault.addClass('active');
+      $btnChoose.removeClass('active');
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = e => {
+      $img.attr('src', e.target.result);
+    };
+    reader.readAsDataURL(file);
+  });
+
+  // 페이지 로드 시 디폴트 이미지 & 버튼 상태 보장
+  setDefault();
+  $btnDefault.addClass('active');
+});
+</script>
+
 </body>
 </html>

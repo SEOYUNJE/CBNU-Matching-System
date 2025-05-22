@@ -1,67 +1,198 @@
 <!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>회원가입</title>
+    <title>Title</title>
+    <link rel="stylesheet" href="signup.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+      /* 버튼 disabled 스타일 */
+      .btn-signup:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+      /* 에러 메시지 기본 숨김 */
+      #pw-error {
+        display: none;
+        font-size: 0.8rem;
+        margin-top: 0.5rem;
+      }
+    </style>
 </head>
 <body>
-    <h2>회원가입</h2>
+  <header class="header">
+    <div class="logo">moit</div>
+    <nav class="nav">
+      <a href="#">meals</a>
+      <a href="#">study</a>
+      <a href="#">game</a>
+      <a href="#">exercise</a>
+    </nav>
+    <div class="util">🔍 👤</div>
+  </header>
 
-    <form action='' method="POST">
-        {% csrf_token %}
-        
-        <!-- 사용자명 -->
-        <div>
-            <label for="username">{{form.username.label}}:</label>
-            {{ form.username }}
-            {% if form.username.errors %}
-                <div style="color:red;">{{ form.username.errors.0 }}</div>
-            {% endif %}
+  <main>
+    <div class="signup-container">
+      <h1 class="title">회원가입</h1>
+
+      <form id="signup-form" novalidate>
+        <!-- 아이디 -->
+        <div class="field">
+          <label for="user-id">아이디</label>
+          <div class="inline-group">
+            <input
+              id="user-id"
+              type="text"
+              placeholder="아이디 입력"
+              required />
+            <button type="button" class="btn-check">중복확인</button>
+          </div>
         </div>
 
         <!-- 비밀번호 -->
-        <div>
-            <label for="password">{{form.password.label}}:</label>
-            {{ form.password }}
-            {% if form.password.errors %}
-                <div style="color:red;">
-                    {% for error in form.password.errors %}
-                        <div>{{error}}</div>    
-                    {% endfor %}
-                </div>
-            {% endif %}
+        <div class="field">
+          <label for="password">비밀번호</label>
+          <input
+            id="password"
+            type="password"
+            oninput="validateForm()"
+            placeholder="영문,숫자 8~25자 조합"
+            required />
+          <p class="error-message" id="pw-pattern-error">비밀번호는 영문자와 숫자를 포함한 8~25자여야 합니다.</p> 
         </div>
 
         <!-- 비밀번호 확인 -->
-        <div>
-            <label for="password_check">{{form.password_check.label}}:</label>
-            {{ form.password_check }}
-            {% if form.password_check.errors %}
-                <div style="color:red;">{{ form.password_check.errors.0 }}</div>
-            {% endif %}
+        <div class="field">
+          <label for="password-confirm">비밀번호 확인</label>
+          <input
+            id="password-confirm"
+            type="password"
+            oninput="validateForm()"
+            placeholder="비밀번호 재입력"
+            required />
+          <p class="error-message" id="pw-match-error">비밀번호가 일치하지 않습니다.</p>
         </div>
 
-        <!-- 성 -->
-        <div>
-            <label for="first_name">{{form.first_name.label}}:</label>
-            {{ form.first_name }}
-        </div>
-
-        <!-- 이름 -->
-        <div>
-            <label for="last_name">{{form.last_name.label}}:</label>
-            {{ form.last_name }}
+         <!-- 성 • 이름 필드 (2열 그리드) -->
+        <div class="field name-fields">
+          <div class="field-group">
+            <label for="last-name">성</label>
+            <input id="last-name"
+                   type="text"
+                   placeholder="성 입력"
+                   required>
+          </div>
+          <div class="field-group">
+            <label for="first-name">이름</label>
+            <input id="first-name"
+                   type="text"
+                   placeholder="이름 입력"
+                   required>
+          </div>
         </div>
 
         <!-- 이메일 -->
-        <div>
-            <label for="email">{{form.email.label}}:</label>
-            {{ form.email }}
-            {% if form.email.errors %}
-                <div style="color:red;">{{ form.email.errors.0 }}</div>
-            {% endif %}
+        <div class="field">
+          <label for="email">이메일</label>
+          <input
+            id="email"
+            type="email"
+            placeholder="이메일 입력"
+            required />
         </div>
-        
-        <button type="submit">가입하기</button>
-    </form>
+
+        <!-- 가입 버튼 -->
+        <button type="submit" class="btn-signup" disabled>가입하기</button>
+      </form>
+    </div>
+  </main>
+
+  <footer>
+    <!-- footer 내용 -->
+  </footer>
+
+  <!-- validation & password-check 스크립트 -->
+  <script>
+$(function(){
+  // 변수 선언
+  const $idField      = $('#user-id');
+  const $p1           = $('#password');
+  const $p2           = $('#password-confirm');
+  const $lastname     = $('#last-name');
+  const $firstname    = $('#first-name');
+  const $email        = $('#email');
+  const $patternError = $('#pw-pattern-error');  // 패턴 에러 메시지
+  const $matchError   = $('#pw-match-error');    // 일치 에러 메시지
+  const $submit       = $('.btn-signup');
+
+  // 영문+숫자 조합, 8~25자
+  const reg = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,25}$/;
+
+  function validateForm(){
+    const idVal    = $idField.val().trim();
+    const p1Val    = $p1.val();
+    const p2Val    = $p2.val();
+    const LnameVal = $lastname.val().trim();
+    const FnameVal = $firstname.val().trim();
+    const emailVal = $email.val().trim();
+
+    // 1) 비밀번호 패턴 검사
+    if (p1Val && !reg.test(p1Val)) {
+      $patternError
+        .text('비밀번호는 영문자와 숫자를 포함한 8~25자여야 합니다.')
+        .css({ color: 'orange', display: 'block' });
+      $matchError.hide();
+      $submit.prop('disabled', true);
+      return;
+    } else {
+      $patternError.hide();
+    }
+
+    // 2) 비밀번호 확인 일치 검사
+    if (p2Val && p1Val !== p2Val) {
+      $matchError
+        .text('비밀번호가 일치하지 않습니다.')
+        .css({ color: 'red', display: 'block' });
+      $submit.prop('disabled', true);
+      return;
+    } else {
+      $matchError.hide();
+    }
+
+    // 3) 나머지 필드 빈값 체크
+    if (!idVal || !p1Val || !p2Val || !LnameVal || !FnameVal || !emailVal) {
+      $submit.prop('disabled', true);
+      return;
+    }
+
+    // 4) 통과 시 활성화
+    $submit.prop('disabled', false);
+  }
+
+  // 이벤트 바인딩
+  window.pwCheck = validateForm;  // inline oninput 용
+  $idField
+    .add($p1)
+    .add($p2)
+    .add($lastname)
+    .add($firstname)
+    .add($email)
+    .on('input', validateForm);
+
+  // 초기 검증
+  validateForm();
+
+  // 제출 방지
+  $('#signup-form').on('submit', function(e){
+    if ($submit.prop('disabled')) e.preventDefault();
+  });
+});
+
+// 임시 프론트내 이동
+$('#signup-form').on('submit', function(e){
+  e.preventDefault();
+  window.location.href = 'profile.html';
+});
+</script>
 </body>
 </html>
