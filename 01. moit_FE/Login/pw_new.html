@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="pw_new.css" />
-    <link rel="stylesheet" href="search.css?v=2">
+    <script src="../layout_profile_menu.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
    
 </head>
 <body>
@@ -19,7 +21,26 @@
     </nav>
     <div class="util">
         <i class="bi bi-search" id="search"></i> 
-        <i class="bi bi-person-circle" id="person"></i>
+         <div class="profile-wrapper">
+            <i class="bi bi-person-circle" id="profileBtn"></i>
+          
+            <div class="profile-menu" id="profileMenu">
+              <div class="profile-info">
+                <span id="name"><p>토마토님</p></span>
+                <span id="manner"><p>매너온도 40도</p></span>
+              </div>
+              <hr>
+              <a href="#" class="menu-item">
+                <i class="bi bi-person-fill"></i> profile
+              </a>
+              <a href="#" class="menu-item">
+                <i class="bi bi-chat-dots"></i> moit chat
+              </a>
+              <a href="#" class="menu-item">
+                <i class="bi bi-box-arrow-right"></i> log out
+              </a>
+            </div>
+        </div>
      </div>
   </header>
 
