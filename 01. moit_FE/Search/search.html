@@ -116,5 +116,17 @@
   <div class="dot"></div>
 </div>
 
+<script>
+  document.getElementById("searchForm").addEventListener("submit", function (e) {
+    e.preventDefault(); // 새로고침 방지
+    const searchSection = document.getElementById("searchSection");
+    const resultSection = document.getElementById("resultSection");
+
+    // 검색창을 위로, 결과는 보여지게
+    searchSection.classList.add("shrink");
+    resultSection.classList.remove("hidden");
+  });
+</script>
+
 </body>
 </html>

@@ -24,11 +24,11 @@
     </div>
   </header>
 
-  <!-- 메인 콘텐츠 -->
+  <!-- 메인 콘텐츠 ------------------------------------------------>
 
  <main>
-  <!-- 🔍 검색 입력 영역 -->
-  <section class="search-section">
+  <!-- 검색 입력 영역 -->
+  <!-- <section class="search-section">
     <h1 class="search-title">SEARCH</h1>
     <form class="search-box" method="GET" action="{% url 'search' %}">
       <input
@@ -39,13 +39,104 @@
       />
       <button type="submit"><i class="bi bi-search"></i></button>
     </form>
+  </section> -->
+
+  
+  <!-- 검색창 섹션 -->
+  <section id="searchSection" class="search-section">
+    <h1 class="search-title">SEARCH</h1>
+    <form id="searchForm" class="search-box">
+      <input type="text" placeholder="검색어를 입력하세요..." />
+      <button type="submit"><i class="bi bi-search"></i></button>
+    </form>
   </section>
 
+
   <!-- 검색 결과 영역 (검색어 있을 때만 표시) -->
+<section id="resultSection" class="result-section hidden">
+  <div class="container">
+    <h2 class="result-title">검색결과</h2>
+    <div class="list-layout">
+      <!-- 반복 가상 데이터 -->
+      {% comment %} 아래는 백엔드 연결 전용 가상 콘텐츠 {% endcomment %}
+      <div class="list-item">
+        <h4 class="item-title">같이 초밥 시키실분</h4>
+        <div class="item-meta">
+          <span class="tag">MEALS</span>
+          <span class="info">마감 5/12 21:00</span>
+        </div>
+      </div>
+      <!-- (7개 더 반복) -->
+            <div class="list-item">
+        <h4 class="item-title">같이 초밥 시키실분</h4>
+        <div class="item-meta">
+          <span class="tag">MEALS</span>
+          <span class="info">마감 5/12 21:00</span>
+        </div>
+      </div>
+            <div class="list-item">
+        <h4 class="item-title">같이 초밥 시키실분</h4>
+        <div class="item-meta">
+          <span class="tag">MEALS</span>
+          <span class="info">마감 5/12 21:00</span>
+        </div>
+      </div>
+            <div class="list-item">
+        <h4 class="item-title">같이 초밥 시키실분</h4>
+        <div class="item-meta">
+          <span class="tag">MEALS</span>
+          <span class="info">마감 5/12 21:00</span>
+        </div>
+      </div>
+            <div class="list-item">
+        <h4 class="item-title">같이 초밥 시키실분</h4>
+        <div class="item-meta">
+          <span class="tag">MEALS</span>
+          <span class="info">마감 5/12 21:00</span>
+        </div>
+      </div>
+            <div class="list-item">
+        <h4 class="item-title">같이 초밥 시키실분</h4>
+        <div class="item-meta">
+          <span class="tag">MEALS</span>
+          <span class="info">마감 5/12 21:00</span>
+        </div>
+      </div>
+
+            <div class="list-item">
+        <h4 class="item-title">같이 초밥 시키실분</h4>
+        <div class="item-meta">
+          <span class="tag">MEALS</span>
+          <span class="info">마감 5/12 21:00</span>
+        </div>
+      </div>
+            <div class="list-item">
+        <h4 class="item-title">같이 초밥 시키실분</h4>
+        <div class="item-meta">
+          <span class="tag">MEALS</span>
+          <span class="info">마감 5/12 21:00</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pagination">
+      <button>&laquo;</button>
+      <button class="active">1</button>
+      <button>2</button>
+      <button>3</button>
+      <button>&raquo;</button>
+    </div>
+  </div>
+</section>
 
 
 
-<!-- -----------------------------------------------------  -->
+
+
+
+
+
+  <!-- --------------------------------------------------------------->
   <footer class="footer">
     <div class="container footer-content">
       <div class="footer-left">
@@ -70,6 +161,13 @@
   <div class="dot"></div>
   <div class="dot"></div>
 </div>
+<script>
+  document.getElementById("searchForm").addEventListener("submit", function (e) {
+    e.preventDefault(); // 실제 제출 막기
+    document.getElementById("searchSection").classList.add("shrink");
+    document.getElementById("resultSection").classList.remove("hidden");
+  });
+</script>
 
 </body>
 </html>
