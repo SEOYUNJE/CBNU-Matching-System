@@ -9,6 +9,8 @@ from django.conf import settings
 
 urlpatterns = [
     # 추가 - 연동
+    path('', include('meet.urls')),  # 루트 경로 → meet 앱 메인페이지(mainpage)로 연결
+
     path('admin/', admin.site.urls),
     path('main/', include('main.urls')),
     path('search/', include('search.urls')),
