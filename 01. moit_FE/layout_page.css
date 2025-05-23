@@ -75,7 +75,11 @@ html {
 /* 메인 영역 */
 main {
   flex: 1;
-  /* padding-top: 65px; */
+
+  /* 은재 수정-테스트 중 */
+  display: flex;
+  flex-direction: column;
+
 }
 
 main > section {

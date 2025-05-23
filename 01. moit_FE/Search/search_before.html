@@ -1,0 +1,75 @@
+<!-- 2025-05-11  -->
+<!-- 메인페이지 -->
+<!-- 작성자: 최은재 -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Moit Full Page Scroll</title>
+  <link rel="stylesheet" href="search.css">
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+      <div class="logo">moit</div>
+      <nav class="nav">
+        <a href="#">meals</a>
+        <a href="#">study</a>
+        <a href="#">game</a>
+        <a href="#">exercise</a>
+      </nav>
+      <div class="util">🔍 👤</div>
+    </div>
+  </header>
+
+  <!-- 메인 콘텐츠 -->
+
+ <main>
+  <!-- 🔍 검색 입력 영역 -->
+  <section class="search-section">
+    <h1 class="search-title">SEARCH</h1>
+    <form class="search-box" method="GET" action="{% url 'search' %}">
+      <input
+        type="text"
+        name="query"
+        placeholder="검색어를 입력하세요..."
+        value="{{ request.GET.query|default:'' }}"
+      />
+      <button type="submit"><i class="bi bi-search"></i></button>
+    </form>
+  </section>
+
+  <!-- 검색 결과 영역 (검색어 있을 때만 표시) -->
+
+
+
+<!-- -----------------------------------------------------  -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <div class="footer-left">
+        <h2>enjoy your life</h2>
+      </div>
+      <div class="footer-right">
+        <p>12, gaesin-dong, seooone-gu<br>
+         chungju, Republic of Korea<br>
+         T 043.261.2114<br>
+         moit@cbnu.com
+        </p>
+      </div>
+    </div>
+  </footer>
+  <script src="popup_create.js"></script>
+  <script src="popup_join.js"></script>
+  <script src="mainpage2.js"></script>
+
+  <!-- 스크롤 인디케이터 -->
+<div class="scroll-indicator">
+  <div class="dot active"></div>
+  <div class="dot"></div>
+  <div class="dot"></div>
+</div>
+
+</body>
+</html>
