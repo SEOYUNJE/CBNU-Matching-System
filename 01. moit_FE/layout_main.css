@@ -44,10 +44,14 @@ body {
     padding: 0.3rem 0.7rem;
 }
 .util {
-    justify-self: end;
-    font-size: 0.85rem;
+  justify-self: end;
+  font-size: 0.85rem;
 }
 .util .bi {
-  font-size: 1.5rem;      /* 원하시는 크기 */
-  color: #6c757d;         /* gray-600 */
+  font-size: 1.3rem;     
+  color: #9a9fa3;   
+}
+.util .bi.bi-search {
+  font-size: 1.2rem;  /* 공백 없이 bi.bi-search */
+   margin-right: 15px;    
 }
