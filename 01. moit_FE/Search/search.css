@@ -11,7 +11,7 @@
   justify-content: center;   
   align-items: center;
   transform: translateY(-5vh);   */
-  
+ 
 }
 
 /* .search-section.shrink {
@@ -35,8 +35,8 @@
 }
 
 .search-section.shrink {
-  transform: translateY(-120px); /* ✅ 더 적당하게 */
-  min-height: 400px;             /* ✅ 너무 작게 하면 내부 콘텐츠 못 보임 */
+  transform: translateY(-120px); 
+  min-height: 400px;             
   padding-top: 0;
   margin-bottom: 2rem;
 }

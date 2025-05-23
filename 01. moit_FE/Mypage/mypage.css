@@ -1,100 +1,135 @@
- @import url('../layout_share.css');
+@import url('../layout_my.css');  /* 헤더/푸터 공통 스타일 */
 
-/* Title */
-.page-title {
-    grid-area: title;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-}
-.page-title::before,
-.page-title::after {
-    content: "";
-    flex: 1;
-    height: 1px;
-    background-color: #e74c3c;
-    opacity: 0.6;
-}
-.page-title h1 {
-    color: #e74c3c;
-    font-size: 1.2rem;
-    font-weight: bold;
+/* -------------------- 타이틀 영역 -------------------- */
+/* .title {
+  margin-top: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 1rem 2rem;
+  box-sizing: border-box;
 }
 
-/* Sidebar */
-.sidebar {
-    grid-area: sidebar;
-    padding: 2rem 1rem;
-    border-right: 1px solid #ccc;
-}
-.tab {
-    display: block;
-    margin-bottom: 1rem;
-    background-color: #eee;
-    border: none;
-    padding: 0.6rem 1rem;
-    border-radius: 10px;
-    font-weight: bold;
-}
-.tab.active {
-    background-color: #e74c3c;
-    color: white;
+.title::before,
+.title::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background-color: #e74c3c;
+  opacity: 0.5;
+  margin: 0 1rem;
 }
 
-/* Main */
+.title h1 {
+  color: #e74c3c;
+  font-size: 1.3rem;
+  font-weight: bold;
+  white-space: nowrap;
+  margin: 0;
+} */
+
+/* -------------------- 메인 콘텐츠 -------------------- */
 .main {
-    grid-area: main;
-    padding: 2rem;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
 }
+
+/* 프로필 박스 */
 .profile-box {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
 }
-.add_img {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    background-color: #ccc;
+
+/* 프로필 이미지 */
+.profile-image {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background-color: #ccc;
+  overflow: hidden;
+  margin-bottom: 1rem;
 }
+
+.profile-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* 구분선 */
+.divider {
+  width: 25%;
+  height: 1px;
+  background-color: #ddd;
+  border: none;
+  margin: 0.2rem auto 0.4rem auto;
+}
+
+/* -------------------- 입력 폼 -------------------- */
 .info {
-    margin-top: 1rem;
-    width: 300px;
+  margin-top: 0.8rem;
+  width: 350px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
-.info label {
-    display: block;
-    margin-top: 1rem;
-    font-weight: bold;
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
 }
-.info input, .info textarea {
-    width: 100%;
-    margin-top: 4px;
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 0.9rem;
+
+.info-row label {
+  font-weight: bold;
+  width: 100px;
+  margin-right: 1rem;
+  text-align: right;
+  flex-shrink: 0;
 }
+
+/* input & textarea 공통 */
+.info-row input,
+.info-row textarea {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 0.9rem;
+}
+
+/* input 전용 */
+.info-row input {
+  flex: 1;
+}
+
+/* textarea 전용 */
+.info-row textarea {
+  width: 100%;
+  height: 3.5rem;
+  resize: none;
+}
+
+/* 한줄 소개만 label 위 정렬 */
+.info-row.intro {
+  align-items: flex-start;
+}
+
+/* -------------------- 버튼 -------------------- */
 .edit-btn {
-    display: block;
-    /* 가로 중앙 정렬 */
-    margin: 1rem auto;
-    background-color: #e74c3c;
-    color: white;
-    border: none;
-    padding: 0.7rem 1.2rem;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-}
-/* Footer */
-.footer {
-    margin-top: 1rem;
-    grid-area: footer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #f3f3f3;
-    font-size: 0.85rem;
+  display: block;
+  margin: 1rem auto;
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 0.7rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
 }
