@@ -11,7 +11,7 @@ main.chat-container > * {
 /* 4) 메인 그리드 레이아웃 */
 main.chat-container {
   display: grid;
-  grid-template-columns: 300px 1fr 250px;
+  grid-template-columns: 300px 1fr 210px;
   gap: 1px;
   margin-top: 0;                          /* .title 아래부터 시작 */
   /* 헤더(65px) + title(약 50px) 높이를 빼려면 calc 조정 필요 */
@@ -21,7 +21,7 @@ main.chat-container {
 
 /* 5) 왼쪽: 나의 모임 리스트 */
 .chat-list {
-  padding: 1rem;
+  padding: 2rem;
   padding-top: 0;
   background: #ffffff;
   position: relative; /* sticky가 부모 컨테이너를 기준으로 작동하게 */
@@ -50,6 +50,8 @@ main.chat-container {
   margin-left: 3px;
   padding: 0.75rem;
   cursor: pointer;
+  word-break: break-word;/* 긴 단어도 줄바꿈 */
+  
 }
 .chat-list li.active,
 .chat-list li:hover {
@@ -92,12 +94,12 @@ main.chat-container {
   border-radius: 2rem;
   padding: 0.3rem 0.8rem;
   font-size: 0.9rem;
-  color: #333;
+  color: #948c8c;
 }
 .chat-room .chat-date i {
   margin-right: 0.4rem;
   font-size: 1rem;
-  color: #777;
+  color: #a8a7a7;
 }
 /* 메시지 목록 */
 .chat-room .messages {
@@ -135,13 +137,55 @@ main.chat-container {
 }
 .chat-room .msg.received {
   display: flex;
-  justify-content: flex-start;
-  align-items: flex-end;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 1rem;
 }
+.chat-room .msg.received .msg-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.25rem;
+}
+.chat-room .msg.received .avatar {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 0.5rem;
+}
+.chat-room .msg.received .sender-name {
+  margin: 0;
+  font-weight: 400;
+  color: #333;
+}
+.chat-room .msg.received .bi {
+  margin-left:5px;
+  color: rgb(224, 42, 72);
+}
+.chat-room .msg.received .msg-body {
+  display: inline-flex;       
+  align-items: flex-end;
+  width: 100%;
+  margin-left: 10px;
+}
+.chat-room .msg.received .bubble {
+  max-width: 60%;
+  padding: 0.2rem 1rem;
+  background: #fff;
+  border: 1px solid #e74c3c;
+  border-radius: 1rem;
+  word-break: break-word;
+}
+.chat-room .msg.received time {
+  margin-left: 0.5rem;
+  font-size: 0.75rem;
+  color: #666;
+  white-space: nowrap;
+}
+
 /* received는 [버블]|시간 */
 .chat-room .msg .bubble {
   order: 1;
-  margin-right: 0.5rem;   
+  margin-right: 0.1rem;   
 }
 .chat-room .msg time {
   order: 2;
@@ -164,9 +208,7 @@ main.chat-container {
   margin-right: 0.5rem;
   overflow: hidden;
 }
-.chat-room .avatar.tomato {
-  background: url('../images/tomato.png') center/cover;
-}
+
 /* 말풍선 */
 .chat-room .bubble {
   max-width: 60%;
@@ -203,8 +245,12 @@ main.chat-container {
   border: 1px solid #ddd;
   border-radius: 2rem;
   margin-right: 0.5rem;
-   white-space: pre-wrap; /* 줄바꿈 유지 */
+  white-space: pre-wrap; /* 줄바꿈 유지 */
   word-break: break-word;/* 긴 단어도 줄바꿈 */
+}
+.chat-room .chat-input input:focus{
+  border-color: #e74c3c;   
+  outline: none;            /* 기본 네이티브 아웃라인 제거 */
 }
 .chat-room .chat-input button {
   padding: 0.75rem 1.5rem;
@@ -217,7 +263,7 @@ main.chat-container {
 
 /* 8) 오른쪽: 멤버 리스트 */
 .member-list {
-  padding: 1rem;
+  padding: 0rem 1rem;
   background: #fafafa;
   border-left: 1px solid #ddd;
   display: flex;
@@ -225,7 +271,7 @@ main.chat-container {
   overflow-y: auto;
 }
 .member-list h2 {
-  font-size: 1rem;
+  font-size: 1.2rem;
   margin-bottom: 0.5rem;
 }
 .member-list ul {
@@ -238,19 +284,20 @@ main.chat-container {
 .member-list li {
   display: flex;
   align-items: center;
-  padding: 0.5rem 0;
 }
 .member-list .avatar {
   width: 32px; height: 32px;
   border-radius: 50%;
   background: #ccc;
   margin-right: 0.5rem;
+   overflow: hidden;
 }
-.member-list .badge {
-  margin-left: 0.25rem;
+.member-list .bi {
+  margin-left:5px;
+  color: rgb(224, 42, 72);
 }
 .member-list .leave {
-  margin-top: 1rem;
+  margin: 0.5rem 0rem;
   padding: 0.75rem;
   background: #ddd;
   border: none;
