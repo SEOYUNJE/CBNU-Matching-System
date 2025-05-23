@@ -12,7 +12,7 @@
   <script>
     window.isLoggedIn = {{ user.is_authenticated|yesno:"true,false" }};
   </script>
-  <link rel="stylesheet" href="{% static 'meet/css/mainpage.css' %}">
+  <link rel="stylesheet" href="{% static 'main/css/mainpage.css' %}">
   <link rel="stylesheet" href="{% static 'meet/css/popup_create.css' %}">
 </head>
 <body>
@@ -143,7 +143,7 @@
 
   <script src="{% static 'meet/js/popup_create.js' %}"></script>
   <script src="{% static 'meet/js/popup_join.js' %}"></script>
-  <script src="{% static 'meet/js/mainpage.js' %}"></script>
+  <script src="{% static 'main/js/mainpage.js' %}"></script>
 
   <div class="scroll-indicator">
     <div class="dot active"></div>

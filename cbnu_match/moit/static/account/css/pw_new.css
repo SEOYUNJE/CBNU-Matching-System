@@ -11,7 +11,7 @@ main {
 }
 
 /* 컨테이너: max-width 360px */
-.signup-container {
+.pw_change-container {
   background-color: white;
   padding: 3rem 2rem;
   border-radius: 0.5rem;
@@ -23,67 +23,30 @@ main {
 }
 
 /* 제목 */
-.signup-container .title {
+.pw_change-container .title {
   margin: 0 0 2rem;
   font-size: 2rem;
   font-weight: 700;
   text-align: center;
 }
 
-/*  성 • 이름 그리드 레이아웃 */
-.name-fields {
-  display: grid;
-  grid-template-columns: 100px 1fr;
-  gap: 1rem;
-  margin-bottom: 1.5rem;  /* 다른 .field와 동일 */
-}
-.name-fields .field-group label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-size: 0.9rem;
-  color: #333;
-}
-.name-fields .field-group input {
-  width: 100%;
-  padding: 0.75rem 1rem;
-  border: 1px solid #ddd;
-  border-radius: 0.25rem;
-  background-color: #f7f7f7;
-  font-size: 0.9rem;
-  box-sizing: border-box;
-  transition: border-color .2s, box-shadow .2s;
-}
-.name-fields .field-group input:focus {
-  outline: none;
-  border-color: #e74c3c;
-  box-shadow: 0 0 0 2px rgba(231,76,60,0.2);
-}
+
 
 /* 각 입력 필드 묶음 */
-.signup-container .field {
+.pw_change-container .field {
   margin-bottom: 1.5rem;
 }
 
 /* 레이블 */
-.signup-container .field label {
+.pw_change-container .field label {
   display: block;
   margin-bottom: 0.5rem;
   font-size: 0.9rem;
   color: #333;
 }
 
-/* inline-group: 아이디 + 중복확인 버튼 */
-.inline-group {
-  display: flex;
-  gap: 0.5rem;
-}
-
-.inline-group input {
-  flex: 1;
-}
-
 /* 입력창 기본 */
-.signup-container input {
+.pw_change-container input {
   width: 100%;
   padding: 0.75rem 1rem;
   border: 1px solid #ddd;
@@ -94,7 +57,7 @@ main {
   transition: border-color .2s, box-shadow .2s;
 }
 
-.signup-container input:focus {
+.pw_change-container input:focus {
   outline: none;
   border-color: #e74c3c;
   box-shadow: 0 0 0 2px rgba(231,76,60,0.2);
@@ -108,23 +71,11 @@ main {
   color: #e74c3c;
 }
 
-/* 중복확인 버튼 */
-.btn-check {
-  padding: 0 1rem;
-  background-color: #ddd;
-  border: none;
-  border-radius: 0.25rem;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: background-color .2s;
-}
 
-.btn-check:hover {
-  background-color: #ccc;
-}
 
-/* 회원가입 버튼 */
-.btn-signup {
+
+/* 버튼 */
+.btn-pw {
   display: block;
   width: 100%;
   padding: 0.8rem 0;
@@ -139,6 +90,21 @@ main {
   transition: background-color .2s;
 }
 
-.btn-signup:hover {
+.btn-pw:hover {
   background-color: #cf3e2e;
+}
+/* 하단 링크 */
+.links {
+  text-align: center;
+  font-size: 0.8rem;
+  color: #777;
+  margin-top: 20px;
+}
+.links a {
+  color: #777;
+  text-decoration: none;
+  margin: 0 0.5rem;
+}
+.links a:hover {
+  text-decoration: underline;
 }

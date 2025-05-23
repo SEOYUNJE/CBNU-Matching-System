@@ -56,12 +56,12 @@ def password_check(request):
                                 first_name=first_name, last_name=last_name)
         
         if user.exists():
-            return render(request, 'account/reset_password.html', {'username': username})
+            return render(request, 'account/pw_new.html', {'username': username})
         else:
-            return render(request, "account/check_password.html", {'error': "We couldn't find a password that matches the information you provided"})
+            return render(request, "account/pw_set.html", {'error': "We couldn't find a password that matches the information you provided"})
         
     else:
-        return render(request, "account/check_password.html")
+        return render(request, "account/pw_set.html")
 
 def password_reset(request):
     if request.method == 'POST':
@@ -76,10 +76,10 @@ def password_reset(request):
             
             return redirect('login')
         else:
-            return render(request, "account/reset_password.html", {'error': "비밀번호가 일치하지 않습니다"})
+            return render(request, "account/pw_new.html", {'error': "비밀번호가 일치하지 않습니다"})
         
     else:
-        return render(request, "account/reset_password.html")
+        return render(request, "account/pw_new.html")
 
 def signup(request):
     if request.method == "POST":
