@@ -2,47 +2,43 @@
 
 /* ─────────────── 검색 섹션 ─────────────── */
 .search-section {
-    /* 헤더 + 푸터 높이 제외 */
-    /* min-height: calc(100vh - 65px - 160px);  */
-    /* 헤더 공간 고려 */
-    /* min-height: 100vh;
-    margin-top: 100px;                    
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center; */
-    
 
-  /* flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding-bottom: 3rem;  */
-  /* 푸터 밀림 방지 */
-/* 
-  min-height: calc(100vh - 120px);
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  padding-top: 80px;
-  padding-bottom: 3rem; */
-
-  /* 검색창 위로 올라가는 효과*/
-  transition: transform 0.4s ease, padding-top 0.4s ease;
+  /* transition: transform 0.4s ease, padding-top 0.4s ease;
 
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;   /* 정중앙 정렬 */
+  justify-content: center;   
   align-items: center;
-  transform: translateY(-5vh);  /* 살짝 위로 올림 */
+  transform: translateY(-5vh);   */
+  
+}
+
+/* .search-section.shrink {
+  transform: translateY(-220px);
+  padding-top: 20px;
+} */
+/* .search-section.shrink {
+  min-height: 300px;
+  transform: translateY(-120px);
+  padding-top: 20px;
+  margin-bottom: 1rem;
+} */
+
+.search-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.4s ease;
+  min-height: 100vh;
 }
 
 .search-section.shrink {
-  transform: translateY(-100px);
-  padding-top: 30px;
+  transform: translateY(-120px); /* ✅ 더 적당하게 */
+  min-height: 400px;             /* ✅ 너무 작게 하면 내부 콘텐츠 못 보임 */
+  padding-top: 0;
+  margin-bottom: 2rem;
 }
 
 .result-section {
