@@ -1,0 +1,177 @@
+@import url('../layout_my.css');
+
+/* -------------------- 타이틀 -------------------- */
+.title {
+  margin-top: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 1rem 2rem;
+  box-sizing: border-box;
+}
+.title::before,
+.title::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background-color: #e74c3c;
+  opacity: 0.5;
+  margin: 0 1rem;
+}
+.title h1 {
+  color: #e74c3c;
+  font-size: 1.3rem;
+  font-weight: bold;
+  white-space: nowrap;
+  margin: 0;
+}
+
+/* -------------------- 메인 -------------------- */
+.main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+}
+.profile-box {
+  width: 350px;
+  max-width: 90vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin: 0 auto;
+}
+
+/* -------------------- 프로필 이미지 -------------------- */
+.profile-image-box {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.profile-image {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background-color: #ccc;
+  overflow: hidden;
+}
+.profile-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.image-btns {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.custom-upload {
+  display: inline-block;
+  background-color: #e74c3c;
+  color: white;
+  padding: 0.4rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+.custom-upload:hover {
+  background-color: #c0392b;
+}
+
+.image-btns button {
+  background-color: white;
+  border: 1px solid #999;
+  padding: 0.4rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+.image-btns button:hover {
+  background-color: #f2f2f2;
+}
+
+.divider {
+  width: 25%;
+  height: 1px;
+  background-color: #ddd;
+  border: none;
+  margin: 0.2rem auto 0.4rem auto;
+}
+
+/* -------------------- 입력 폼 -------------------- */
+.info {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.info-row {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1rem;
+}
+.info-row label {
+  font-weight: bold;
+  width: 100px;
+  margin-right: 1rem;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* input & textarea 공통 */
+.info-row input,
+.info-row textarea {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  text-align: left;
+  transition: border-color 0.2s;
+}
+.info-row input:focus,
+.info-row textarea:focus {
+  outline: none;
+  border-color: #e74c3c;
+}
+
+/* 일반 input */
+.info-row input {
+  width: 180px;
+}
+
+/* 한줄 소개 전용 */
+.info-row.textarea-align-top {
+  align-items: flex-start;
+}
+.info-row.textarea-align-top textarea {
+  width: 260px;
+  height: 2.5rem;
+  resize: vertical;
+}
+
+/* -------------------- 저장 버튼 -------------------- */
+.edit-btn {
+  width: 150px;
+  text-align: center;
+  margin: 1rem auto;
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 0.7rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+.edit-btn:hover {
+  background-color: #c0392b;
+}

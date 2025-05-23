@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>프로필 수정</title>
+  <link rel="stylesheet" href="edit_profile.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+</head>
+<body>
+ <header class="header">
+    <div class="container">
+      <div class="logo">moit</div>
+      <nav class="nav">
+        <a href="#">meals</a>
+        <a href="#">study</a>
+        <a href="#">game</a>
+        <a href="#">exercise</a>
+      </nav>
+        <div class="util">
+          <i class="bi bi-search" id="search"></i> 
+          <i class="bi bi-person-circle" id="person"></i>
+        </div>
+    </div>
+  </header>
+
+  <div class="title">
+    <h1>Profile </h1>
+  </div>
+
+  <main class="main">
+    <div class="profile-box">
+      <!-- 프로필 이미지 -->
+<div class="profile-image-box">
+  <div class="profile-image" id="preview-container">
+    <img id="preview" src="default_profile.png" alt="프로필 이미지" />
+  </div>
+  <div class="image-btns">
+    <button type="button" onclick="useDefaultImage()">기본 이미지로 사용</button>
+    <label for="profile-img-upload" class="custom-upload">사진 선택하기</label>
+    <input type="file" id="profile-img-upload" name="profile_image" accept="image/*" onchange="previewImage(event)" hidden />
+  </div>
+</div>
+
+      <hr class="divider" />
+
+      <!-- 프로필 정보 수정 폼 -->
+      <form class="info" action="/submit-profile" method="post">
+        <div class="info-row">
+          <label for="nickname">닉네임</label>
+          <input type="text" id="nickname" name="nickname" value="토마토" required />
+        </div>
+
+        <div class="info-row">
+          <label for="gender">성별</label>
+          <input type="text" id="gender" name="gender" value="비공개" />
+        </div>
+
+        <div class="info-row">
+          <label for="mbti">MBTI</label>
+          <input type="text" id="mbti" name="mbti" value="ESFP" />
+        </div>
+
+        <div class="info-row">
+          <label for="college">단과 대학</label>
+          <input type="text" id="college" name="college" value="전자정보대학" />
+        </div>
+
+        <div class="info-row textarea-align-top">
+          <label for="intro">한줄 소개</label>
+          <textarea id="intro" name="intro">저는 다양한 운동을 좋아해요! 운동 끝나고 치맥하는게 삶의 낙입니다ㅎㅎ</textarea>
+        </div>
+
+        <button type="submit" class="edit-btn">저장하기</button>
+      </form>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 moit. All rights reserved.</p>
+  </footer>
+  <script src="edit_profile.js"></script>
+</body>
+</html>
