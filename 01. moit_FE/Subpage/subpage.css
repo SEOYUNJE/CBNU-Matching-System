@@ -14,7 +14,7 @@
 .section-top {
     grid-area: top;
     background-color: #f8f8f8;
-    padding: 2rem;
+    padding: 1rem;
     margin-top: 3rem; /* 헤더와 간격 */
 }
 

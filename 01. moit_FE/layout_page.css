@@ -16,7 +16,7 @@
         <a href="#">game</a>
         <a href="#">exercise</a>
       </nav>
-      <div class="util">🔍 👤</div>
+       <div class="util"><i class="bi bi-search"></i> <i class="bi bi-person-circle"></i></div>
     </div>
   </header>
   <main class="main">
@@ -112,6 +112,10 @@ main > section {
 
 .util {
   font-size: 0.85rem;
+}
+.util .bi {
+  font-size: 1.5rem;      /* 원하시는 크기 */
+  color: #6c757d;         /* gray-600 */
 }
 
 /* 푸터 */

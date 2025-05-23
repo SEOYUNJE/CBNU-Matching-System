@@ -47,3 +47,7 @@ body {
     justify-self: end;
     font-size: 0.85rem;
 }
+.util .bi {
+  font-size: 1.5rem;      /* 원하시는 크기 */
+  color: #6c757d;         /* gray-600 */
+}
