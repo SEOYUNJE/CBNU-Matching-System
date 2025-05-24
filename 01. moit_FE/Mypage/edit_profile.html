@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="profile.css" />
   <link rel="stylesheet" href="edit_profile.css" />
   <script src="../layout_profile_menu.js"></script>
+  <script src="edit_profile.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" />
 </head>
 <body>
@@ -32,7 +33,7 @@
               <span id="manner"><p>매너온도 40도</p></span>
             </div>
             <hr>
-            <a href="mypage.html" class="menu-item">
+            <a href="profile.html" class="menu-item">
               <i class="bi bi-person-fill"></i> profile
             </a>
             <a href="../Chating/chat.html" class="menu-item">
@@ -49,7 +50,7 @@
 
   <!-- 타이틀 -->
   <section class="title">
-    <h1>profile</h1>
+    <h1>profile edit</h1>
   </section>
 
   <!-- 메인 콘텐츠 -->
@@ -127,9 +128,23 @@
               <option>예술학과군</option>
             </select>
           </div>
+          <!-- 디폴트로 나오는 메세지는 유저 DB에 저장된 한 줄 소개임 -->
+          <!-- <div class="info-row intro">
+            <label>한줄 소개</label>
+            <textarea id="intro" maxlength="100" oninput="checkLength(this)">
+            {{ user_profile.introduction }}
+            </textarea>
+            <p id="counter">0 / 100</p>
+          </div> -->
+
           <div class="info-row intro">
             <label>한줄 소개</label>
-            <textarea>저는 다양한 운동을 좋아해요! 운동 끝나고 치맥하는게 삶의 낙입니다ㅎㅎ</textarea>
+            <div class="intro-wrapper">
+              <textarea id="intro" maxlength="100" oninput="checkLength(this)">
+              ... {{ user_profile.introduction }}
+              </textarea>
+              <p id="counter">0 / 100</p>
+            </div>
           </div>
         </form>
       </div>
@@ -143,20 +158,5 @@
   <footer class="footer">
     <!-- 기존 footer 내용 동일 -->
   </footer>
-
-  <script>
-    function previewImage(event) {
-      const reader = new FileReader();
-      reader.onload = function () {
-        document.getElementById('profilePreview').src = reader.result;
-      };
-      reader.readAsDataURL(event.target.files[0]);
-    }
-
-    function useDefaultImage() {
-      document.getElementById('profilePreview').src = '../Images/profile.png';
-      document.getElementById('profileImage').value = '';
-    }
-  </script>
 </body>
 </html>
