@@ -1,14 +1,19 @@
+<!-- 2025-05-24 -->
+<!-- 프로필 페이지 레이아웃 배치 수정 -->
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <title>프로필 수정</title>
-  <link rel="stylesheet" href="edit_profile.css">
+  <title>profile edit</title>
+  <link rel="stylesheet" href="profile.css" />
+  <link rel="stylesheet" href="edit_profile.css" />
   <script src="../layout_profile_menu.js"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" />
 </head>
 <body>
-<header class="header">
+  <!-- 고정 헤더 -->
+  <header class="header">
     <div class="container">
       <a href="../Mainpage/mainpage2.html"><div class="logo">moit</div></a>
       <nav class="nav">
@@ -17,87 +22,141 @@
         <a href="../Subpage/subpage_game.html">game</a>
         <a href="../Subpage/subpage_exercise.html">exercise</a>
       </nav> 
-        <div class="util">
-          <a href="../Search/search_before.html"><i class="bi bi-search" id="search"></i></a>
-          <div class="profile-wrapper">
-            <i class="bi bi-person-circle" id="profileBtn"></i>
-          
-            <div class="profile-menu" id="profileMenu">
-              <div class="profile-info">
-                <span id="name"><p>토마토님</p></span>
-                <span id="manner"><p>매너온도 40도</p></span>
-              </div>
-              <hr>
-              <a href="mypage.html" class="menu-item">
-                <i class="bi bi-person-fill"></i> profile
-              </a>
-              <a href="../Chating/chat.html" class="menu-item">
-                <i class="bi bi-chat-dots"></i> moit chat
-              </a>
-              <a href="../Mainpage/mainpage2.html" class="menu-item">
-               <i class="bi bi-box-arrow-right"></i> log out
-              </a>
+      <div class="util">
+        <a href="../Search/search_before.html"><i class="bi bi-search" id="search"></i></a>
+        <div class="profile-wrapper">
+          <i class="bi bi-person-circle" id="profileBtn"></i>
+          <div class="profile-menu" id="profileMenu">
+            <div class="profile-info">
+              <span id="name"><p>토마토님</p></span>
+              <span id="manner"><p>매너온도 40도</p></span>
+            </div>
+            <hr>
+            <a href="mypage.html" class="menu-item">
+              <i class="bi bi-person-fill"></i> profile
+            </a>
+            <a href="../Chating/chat.html" class="menu-item">
+              <i class="bi bi-chat-dots"></i> moit chat
+            </a>
+            <a href="../Mainpage/mainpage2.html" class="menu-item">
+              <i class="bi bi-box-arrow-right"></i> log out
+            </a>
           </div>
         </div>
       </div>
     </div>
   </header>
 
-  <div class="title">
-    <h1>Profile </h1>
-  </div>
+  <!-- 타이틀 -->
+  <section class="title">
+    <h1>profile</h1>
+  </section>
 
+  <!-- 메인 콘텐츠 -->
   <main class="main">
     <div class="profile-box">
-      <!-- 프로필 이미지 -->
-<div class="profile-image-box">
-  <div class="profile-image" id="preview-container">
-    <img id="preview" src="default_profile.png" alt="프로필 이미지" />
-  </div>
-  <div class="image-btns">
-    <button type="button" onclick="useDefaultImage()"></button>
-    <label for="profile-img-upload" class="custom-upload">사진 선택하기</label>
-    <input type="file" id="profile-img-upload" name="profile_image" accept="image/*" onchange="previewImage(event)" hidden />
-  </div>
-</div>
-
-      <hr class="divider" />
-
-      <!-- 프로필 정보 수정 폼 -->
-      <form class="info" action="/submit-profile" method="post">
-        <div class="info-row">
-          <label for="nickname">닉네임</label>
-          <input type="text" id="nickname" name="nickname" value="토마토" required />
+      <!-- 왼쪽: 프로필 이미지 -->
+      <div class="left-section">
+        <div class="profile-image">
+          <img src="../Images/profile.png" alt="profile" id="profilePreview" />
         </div>
-
-        <div class="info-row">
-          <label for="gender">성별</label>
-          <input type="text" id="gender" name="gender" value="비공개" />
+        <div class="image-buttons">
+          <button type="button" onclick="useDefaultImage()">기본 이미지 사용</button>
+          <label for="profileImage">사진 선택하기</label>
+          <input type="file" id="profileImage" accept="image/*" onchange="previewImage(event)" />
         </div>
+      </div>
 
-        <div class="info-row">
-          <label for="mbti">MBTI</label>
-          <input type="text" id="mbti" name="mbti" value="ESFP" />
-        </div>
+      <!-- 디바이더 -->
+      <div class="v-divider"></div>
 
-        <div class="info-row">
-          <label for="college">단과 대학</label>
-          <input type="text" id="college" name="college" value="전자정보대학" />
-        </div>
-
-        <div class="info-row textarea-align-top">
-          <label for="intro">한줄 소개</label>
-          <textarea id="intro" name="intro">저는 다양한 운동을 좋아해요! 운동 끝나고 치맥하는게 삶의 낙입니다ㅎㅎ</textarea>
-        </div>
-
-        <button type="submit" class="edit-btn">저장하기</button>
-      </form>
+      <!-- 오른쪽: 정보 입력 폼 -->
+      <div class="right-section">
+        <form class="info">
+          <div class="info-row">
+            <label>닉네임</label>
+            <input type="text" value="토마토" />
+          </div>
+          <div class="info-row">
+            <label>성별</label>
+            <select>
+              <option>여성</option>
+              <option>남성</option>
+              <option selected>비공개</option>
+            </select>
+          </div>
+          <div class="info-row">
+            <label>MBTI</label>
+            <select>
+              <option>INTJ</option>
+              <option>INTP</option>
+              <option>INFJ</option>
+              <option>INFP</option>
+              <option>ISTP</option>
+              <option>ISTJ</option>
+              <option>ISFP</option>
+              <option>ISFJ</option>
+              <option>ENTJ</option>
+              <option>ENTP</option>
+              <option>ENFP</option>
+              <option>ENFJ</option>
+              <option>ESTJ</option>
+              <option>ESTP</option>
+              <option>ESFJ</option>
+              <option>ESFP</option>
+            </select>
+          </div>
+          <div class="info-row">
+            <label>단과대학</label>
+            <select>
+              <option>인문대학</option>
+              <option>사회과학대학</option>
+              <option>자연과학대학</option>
+              <option>경영대학</option>
+              <option>공과대학</option>
+              <option>전자정보대학</option>
+              <option>농업생명환경대학</option>
+              <option>사범대학</option>
+              <option>생활과학대학</option>
+              <option>수의과대학</option>
+              <option>약학대학</option>
+              <option>의과대학</option>
+              <option>간호대학</option>
+              <option>창의융합대학</option>
+              <option>충북PRIDE공유대학</option>
+              <option>예술학과군</option>
+            </select>
+          </div>
+          <div class="info-row intro">
+            <label>한줄 소개</label>
+            <textarea>저는 다양한 운동을 좋아해요! 운동 끝나고 치맥하는게 삶의 낙입니다ㅎㅎ</textarea>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div style="text-align: center;">
+      <button type="submit" class="save-button">변경내용 저장</button>
     </div>
   </main>
 
-  <footer>
-    <p>&copy; 2025 moit. All rights reserved.</p>
+  <!-- 푸터 -->
+  <footer class="footer">
+    <!-- 기존 footer 내용 동일 -->
   </footer>
-  <script src="edit_profile.js"></script>
+
+  <script>
+    function previewImage(event) {
+      const reader = new FileReader();
+      reader.onload = function () {
+        document.getElementById('profilePreview').src = reader.result;
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
+
+    function useDefaultImage() {
+      document.getElementById('profilePreview').src = '../Images/profile.png';
+      document.getElementById('profileImage').value = '';
+    }
+  </script>
 </body>
 </html>
