@@ -14,9 +14,9 @@
     <div class="container">
       <a href="../Mainpage/mainpage2.html"><div class="logo">moit</div></a>
       <nav class="nav">
-        <a href="subpage_meals.html" class="active">meals</a>
+        <a href="subpage_meals.html">meals</a>
         <a href="subpage_study.html">study</a>
-        <a href="subpage_game.html">game</a>
+        <a href="subpage_game.html" class="active">game</a>
         <a href="subpage_exercise.html">exercise</a>
       </nav> 
         <div class="util">
@@ -156,12 +156,25 @@
           <button>인원마감</button>
         </div>
         <div class="card-grid">
-          <!-- 서버 연결할때 이 부분은 db로 내용 넣기기 -->
+          <!-- 카드 형태 -->
+          <div class="card">
+            <!-- 제목 -->
+            <h3 class="card-title">같이 초밥 시키실분</h3>
+            <!-- 설명 -->
+            <p class="card-desc">배달 최소 금액 때문에 각자 사시는 분 중에 같이 드실 분 구해요. 사이드만 시켜도 괜찮으니 편하게 들어오세요~~ 기숙사는 양진제입니다.</p>
+            <!-- 부가 정보 -->
+            <div class="card-meta">
+              <span class="info"><i class="bi-controller"></i>GAME</span>
+              <span class="info"><i class="bi bi-person-fill"></i>3/4</span>
+              <span class="info"><i class="bi bi-calendar-event"></i>5/12 21:00</span>
+            </div>
+          </div>
+          
           <div class="card">
             <h3 class="card-title">같이 초밥 시키실분</h3>
             <p class="card-desc">배달 최소 금액 때문에 각자 사시는 분 중에 같이 드실 분 구해요. 사이드만 시켜도 괜찮으니 편하게 들어오세요~~ 기숙사는 양진제입니다.</p>
             <div class="card-meta">
-              <span class="info"><i class="bi bi-fork-knife"></i>MEALS</span>
+              <span class="info"><i class="bi-controller"></i>GAME</span>
               <span class="info"><i class="bi bi-person-fill"></i>3/4</span>
               <span class="info"><i class="bi bi-calendar-event"></i>5/12 21:00</span>
             </div>
@@ -169,8 +182,8 @@
           <div class="card">
             <h3 class="card-title">같이 초밥 시키실분</h3>
             <p class="card-desc">배달 최소 금액 때문에 각자 사시는 분 중에 같이 드실 분 구해요. 사이드만 시켜도 괜찮으니 편하게 들어오세요~~ 기숙사는 양진제입니다.</p>
-             <div class="card-meta">
-              <span class="info"><i class="bi bi-fork-knife"></i>MEALS</span>
+            <div class="card-meta">
+              <span class="info"><i class="bi-controller"></i>GAME</span>
               <span class="info"><i class="bi bi-person-fill"></i>3/4</span>
               <span class="info"><i class="bi bi-calendar-event"></i>5/12 21:00</span>
             </div>
@@ -178,127 +191,121 @@
           <div class="card">
             <h3 class="card-title">같이 초밥 시키실분</h3>
             <p class="card-desc">배달 최소 금액 때문에 각자 사시는 분 중에 같이 드실 분 구해요. 사이드만 시켜도 괜찮으니 편하게 들어오세요~~ 기숙사는 양진제입니다.</p>
-             <div class="card-meta">
-              <span class="info"><i class="bi bi-fork-knife"></i>MEALS</span>
+            <div class="card-meta">
+              <span class="info"><i class="bi-controller"></i>GAME</span>
               <span class="info"><i class="bi bi-person-fill"></i>3/4</span>
               <span class="info"><i class="bi bi-calendar-event"></i>5/12 21:00</span>
             </div>
           </div>
-          <div class="card">
-            <h3 class="card-title">같이 초밥 시키실분</h3>
-            <p class="card-desc">배달 최소 금액 때문에 각자 사시는 분 중에 같이 드실 분 구해요. 사이드만 시켜도 괜찮으니 편하게 들어오세요~~ 기숙사는 양진제입니다.</p>
-             <div class="card-meta">
-              <span class="info"><i class="bi bi-fork-knife"></i>MEALS</span>
-              <span class="info"><i class="bi bi-person-fill"></i>3/4</span>
-              <span class="info"><i class="bi bi-calendar-event"></i>5/12 21:00</span>
-            </div>
-          </div>
-        </div>
-      </div>
+          
     </section>
 
     <!-- Bottom-------------------------------------------- -->
     <section class="section-bottom">
       <div class="container">
         <div class="category-header">
-          <h2>CATEGORY <span class="highlight">MEALS</span></h2>
+          <h2>CATEGORY <span class="highlight">GAME</span></h2>
           <!-- 모임 생성 팝업을 위해 클래스 추가 -->
           <button class="sort-btn create-btn">모임생성</button>
         </div>
 
         <div class="list-layout">
-          <!-- db -->
+          <!-- 리스트 세부 정보 -->
           <div class="list-item">
-            <h4 class="item-title">같이 초밥 시키실분</h4>
+            <!-- 제목 -->
+            <h4 class="item-title">같이 게임 하실분</h4>
+            <!-- 설명 -->
+            <p class="item-p">배달 최소 금액 때문에 각자 사시는 분 중에 같이 드실 분 구해요. 사이드만 시켜도 괜찮으니 편하게 들어오세요~~ 기숙사는 양진제입니다.</p>
+            <!-- 부가 정보 -->
+            <div class="item-meta">
+              <span class="info"><i class="bi-controller"></i>GAME</span>
+              <span class="info"><i class="bi bi-person-fill"></i>3/4</span>
+              <span class="info"><i class="bi bi-calendar-event"></i>마감 5/12 21:00</span>
+            </div>
+          </div>
+          <!-- 여기부터는 내용 채울려고 걍 쓴거------------------------------------------------------- -->
+          <div class="list-item">
+            <h4 class="item-title">같이 게임 하실분</h4>
             <p class="item-p">배달 최소 금액 때문에 각자 사시는 분 중에 같이 드실 분 구해요. 사이드만 시켜도 괜찮으니 편하게 들어오세요~~ 기숙사는 양진제입니다.</p>
             <div class="item-meta">
-              <span class="info"><i class="bi bi-fork-knife"></i>MEALS</span>
+              <span class="info"><i class="bi-controller"></i>GAME</span>
               <span class="info"><i class="bi bi-person-fill"></i>3/4</span>
               <span class="info"><i class="bi bi-calendar-event"></i>마감 5/12 21:00</span>
             </div>
           </div>
           <div class="list-item">
-            <h4 class="item-title">같이 초밥 시키실분</h4>
+            <h4 class="item-title">같이 게임 하실분</h4>
             <p class="item-p">배달 최소 금액 때문에 각자 사시는 분 중에 같이 드실 분 구해요. 사이드만 시켜도 괜찮으니 편하게 들어오세요~~ 기숙사는 양진제입니다.</p>
             <div class="item-meta">
-              <span class="info"><i class="bi bi-fork-knife"></i>MEALS</span>
+              <span class="info"><i class="bi-controller"></i>GAME</span>
               <span class="info"><i class="bi bi-person-fill"></i>3/4</span>
               <span class="info"><i class="bi bi-calendar-event"></i>마감 5/12 21:00</span>
             </div>
           </div>
           <div class="list-item">
-            <h4 class="item-title">같이 초밥 시키실분</h4>
+            <h4 class="item-title">같이 게임 하실분</h4>
             <p class="item-p">배달 최소 금액 때문에 각자 사시는 분 중에 같이 드실 분 구해요. 사이드만 시켜도 괜찮으니 편하게 들어오세요~~ 기숙사는 양진제입니다.</p>
             <div class="item-meta">
-              <span class="info"><i class="bi bi-fork-knife"></i>MEALS</span>
+              <span class="info"><i class="bi-controller"></i>GAME</span>
               <span class="info"><i class="bi bi-person-fill"></i>3/4</span>
               <span class="info"><i class="bi bi-calendar-event"></i>마감 5/12 21:00</span>
             </div>
           </div>
           <div class="list-item">
-            <h4 class="item-title">같이 초밥 시키실분</h4>
+            <h4 class="item-title">같이 게임 하실분</h4>
             <p class="item-p">배달 최소 금액 때문에 각자 사시는 분 중에 같이 드실 분 구해요. 사이드만 시켜도 괜찮으니 편하게 들어오세요~~ 기숙사는 양진제입니다.</p>
             <div class="item-meta">
-              <span class="info"><i class="bi bi-fork-knife"></i>MEALS</span>
+              <span class="info"><i class="bi-controller"></i>GAME</span>
               <span class="info"><i class="bi bi-person-fill"></i>3/4</span>
               <span class="info"><i class="bi bi-calendar-event"></i>마감 5/12 21:00</span>
             </div>
           </div>
           <div class="list-item">
-            <h4 class="item-title">같이 초밥 시키실분</h4>
+            <h4 class="item-title">같이 게임 하실분</h4>
             <p class="item-p">배달 최소 금액 때문에 각자 사시는 분 중에 같이 드실 분 구해요. 사이드만 시켜도 괜찮으니 편하게 들어오세요~~ 기숙사는 양진제입니다.</p>
             <div class="item-meta">
-              <span class="info"><i class="bi bi-fork-knife"></i>MEALS</span>
+              <span class="info"><i class="bi-controller"></i>GAME</span>
               <span class="info"><i class="bi bi-person-fill"></i>3/4</span>
               <span class="info"><i class="bi bi-calendar-event"></i>마감 5/12 21:00</span>
             </div>
           </div>
           <div class="list-item">
-            <h4 class="item-title">같이 초밥 시키실분</h4>
+            <h4 class="item-title">같이 게임 하실분</h4>
             <p class="item-p">배달 최소 금액 때문에 각자 사시는 분 중에 같이 드실 분 구해요. 사이드만 시켜도 괜찮으니 편하게 들어오세요~~ 기숙사는 양진제입니다.</p>
             <div class="item-meta">
-              <span class="info"><i class="bi bi-fork-knife"></i>MEALS</span>
+              <span class="info"><i class="bi-controller"></i>GAME</span>
               <span class="info"><i class="bi bi-person-fill"></i>3/4</span>
               <span class="info"><i class="bi bi-calendar-event"></i>마감 5/12 21:00</span>
             </div>
           </div>
           <div class="list-item">
-            <h4 class="item-title">같이 초밥 시키실분</h4>
+            <h4 class="item-title">같이 게임 하실분</h4>
             <p class="item-p">배달 최소 금액 때문에 각자 사시는 분 중에 같이 드실 분 구해요. 사이드만 시켜도 괜찮으니 편하게 들어오세요~~ 기숙사는 양진제입니다.</p>
             <div class="item-meta">
-              <span class="info"><i class="bi bi-fork-knife"></i>MEALS</span>
+              <span class="info"><i class="bi-controller"></i>GAME</span>
               <span class="info"><i class="bi bi-person-fill"></i>3/4</span>
               <span class="info"><i class="bi bi-calendar-event"></i>마감 5/12 21:00</span>
             </div>
           </div>
           <div class="list-item">
-            <h4 class="item-title">같이 초밥 시키실분</h4>
+            <h4 class="item-title">같이 게임 하실분</h4>
             <p class="item-p">배달 최소 금액 때문에 각자 사시는 분 중에 같이 드실 분 구해요. 사이드만 시켜도 괜찮으니 편하게 들어오세요~~ 기숙사는 양진제입니다.</p>
             <div class="item-meta">
-              <span class="info"><i class="bi bi-fork-knife"></i>MEALS</span>
+              <span class="info"><i class="bi-controller"></i>GAME</span>
               <span class="info"><i class="bi bi-person-fill"></i>3/4</span>
               <span class="info"><i class="bi bi-calendar-event"></i>마감 5/12 21:00</span>
             </div>
           </div>
           <div class="list-item">
-            <h4 class="item-title">같이 초밥 시키실분</h4>
+            <h4 class="item-title">같이 게임 하실분</h4>
             <p class="item-p">배달 최소 금액 때문에 각자 사시는 분 중에 같이 드실 분 구해요. 사이드만 시켜도 괜찮으니 편하게 들어오세요~~ 기숙사는 양진제입니다.</p>
             <div class="item-meta">
-              <span class="info"><i class="bi bi-fork-knife"></i>MEALS</span>
+              <span class="info"><i class="bi-controller"></i>GAME</span>
               <span class="info"><i class="bi bi-person-fill"></i>3/4</span>
               <span class="info"><i class="bi bi-calendar-event"></i>마감 5/12 21:00</span>
             </div>
           </div>
-          <div class="list-item">
-            <h4 class="item-title">같이 초밥 시키실분</h4>
-            <p class="item-p">배달 최소 금액 때문에 각자 사시는 분 중에 같이 드실 분 구해요. 사이드만 시켜도 괜찮으니 편하게 들어오세요~~ 기숙사는 양진제입니다.</p>
-            <div class="item-meta">
-              <span class="info"><i class="bi bi-fork-knife"></i>MEALS</span>
-              <span class="info"><i class="bi bi-person-fill"></i>3/4</span>
-              <span class="info"><i class="bi bi-calendar-event"></i>마감 5/12 21:00</span>
-            </div>
-          </div>
-          <!-- --------------------------------------------------- -->
+          <!-- ------------------------------------------------------------------------------ -->
         </div>
 
         <div class="pagination">
