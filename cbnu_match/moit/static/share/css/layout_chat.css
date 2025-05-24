@@ -1,15 +1,18 @@
-/* 페이지 기본 설정 */
+
 body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   margin: 0;
   font-family: "Montserrat", sans-serif;
+  height: 100%;
+  overflow: hidden;
 }
 
 html {
   height: 100%;
 }
+
 
 /* 헤더 고정 */
 .header {

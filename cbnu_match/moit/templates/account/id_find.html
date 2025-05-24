@@ -1,9 +1,10 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="id_find.css" />
+    <link rel="stylesheet" href="{% static 'account/css/id_find.css' %}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     
 </head>
@@ -23,13 +24,16 @@
     <div class="id_find-container">
       <h1 class="title">아이디 찾기</h1>
 
-      <form id="input-form" novalidate>
+      <form action=""method="POST"id="input-form" novalidate>
+        <!--csrf_token 추가-->
+        {% csrf_token %}
  <!-- 성 • 이름 필드 (2열 그리드) -->
         <div class="field name-fields">
           <div class="field-group">
             <label for="last-name">성</label>
             <input id="last-name"
                    type="text"
+                   name="last_name"
                    placeholder="성 입력"
                    required>
           </div>
@@ -37,6 +41,7 @@
             <label for="first-name">이름</label>
             <input id="first-name"
                    type="text"
+                   name="first_name"
                    placeholder="이름 입력"
                    required>
           </div>
@@ -48,17 +53,25 @@
           <input
             id="email"
             type="email"
+            name="email"
             placeholder="이메일 입력"
             required />
         </div>
 
+        <!-- 에러 메시지 위치 (여기!) -->
+        {% if error %}
+          <div class="error-message" style="color: red; font-size: 0.85rem; margin: 6px 0;">
+            {{ error }}
+          </div>
+        {% endif %}
+        
         <!-- 가입 버튼 -->
         <button type="submit" class="btn-id_find" disabled>아이디 찾기</button>
       </form>
       <div class="links">
-        <a href="#">아이디 찾기</a> | 
-        <a href="#">비밀번호 재설정</a> | 
-        <a href="#">회원가입</a>
+      <!--아이디 찾기, 비밀번호 재설정 삭제 -->
+      <!--회원가입 경로 추가--> 
+        <a href="{% url 'signup' %}">회원가입</a>
       </div>
     </div>
   </main>
@@ -66,53 +79,15 @@
  
 
 <script>
-  /*1. input에 입력이 있어야 버튼 활성화됨
-  2. 폼제출시 
-  성공-> 결과 페이지로 이동
-  실패-> 일치 아이디 없다고 alert뜸
-  error-> alert
-
-  */
+  //1. input에 입력이 있어야 버튼 활성화됨
   
-  // 1) 모든 input에 입력이 있어야 버튼 활성화
+
   $('#input-form input').on('input', function() {
     const allFilled = $('#input-form input').toArray().every(el => el.value.trim() !== '');
     $('.btn-id_find').prop('disabled', !allFilled);
   });
 
-  // 2) 폼 제출 처리
-  $('#input-form').on('submit', function(e) {
-    e.preventDefault();
-
-    const last  = $('#last-name').val().trim();
-    const first = $('#first-name').val().trim();
-    const email = $('#email').val().trim();
-
-    $.ajax({
-      url: '/api/find-id/',    // 실제 API 엔드포인트에 맞게 수정
-      type: 'POST',
-      data: {
-        last_name: last,
-        first_name: first,
-        email: email
-      },
-      dataType: 'json',
-      success: function(res) {
-        if (res && res.id) {
-          // 성공: 결과 페이지로 이동
-          window.location.href = 'id_find_result.html?userId=' + encodeURIComponent(res.id);
-        } else {
-          // 실패: 일치하는 아이디 없음
-          alert('입력하신 정보와 일치하는 아이디가 없습니다. 다시 확인해주세요.');
-        }
-      },
-      error: function() {
-        alert('서버 통신 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
-      }
-    });
-  });
 </script>
-
 
 </body>
 </html>

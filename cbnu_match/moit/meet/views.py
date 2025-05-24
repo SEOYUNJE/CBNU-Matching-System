@@ -7,6 +7,9 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 
+def subpage(request):
+    return render(request, 'subpage/subpage_ver2.html')
+    
 @login_required
 def create_meet(request):
     if request.method == 'POST':

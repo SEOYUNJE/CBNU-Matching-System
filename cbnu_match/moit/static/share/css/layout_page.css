@@ -16,7 +16,7 @@
         <a href="#">game</a>
         <a href="#">exercise</a>
       </nav>
-      <div class="util">🔍 👤</div>
+       <div class="util"><i class="bi bi-search"></i> <i class="bi bi-person-circle"></i></div>
     </div>
   </header>
   <main class="main">
@@ -75,7 +75,11 @@ html {
 /* 메인 영역 */
 main {
   flex: 1;
-  padding-top: 65px;
+
+  /* 은재 수정-테스트 중 */
+  display: flex;
+  flex-direction: column;
+
 }
 
 main > section {
@@ -111,7 +115,79 @@ main > section {
 }
 
 .util {
+  justify-self: end;
   font-size: 0.85rem;
+}
+.util .bi {
+  font-size: 1.3rem;     
+  color: #9a9fa3;   
+}
+.util .bi.bi-search {
+  font-size: 1.2rem;  /* 공백 없이 bi.bi-search */
+   margin-right: 15px;    
+}
+
+/* menu_profile-------------------------------------------------------------------------------------- */
+.profile-wrapper {
+  position: relative;
+  display: inline-block;
+}
+/* 메뉴 숨기기 */
+.profile-menu {
+  position: absolute;
+  top: 100%;        /* 아이콘 바로 아래 */
+  right: 0;         /* 오른쪽 정렬 */
+  width: 200px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  padding: 8px 0;
+  display: none;    /* 기본 숨김 */
+  z-index: 1000;
+}
+
+/* 메뉴 보이기 */
+.profile-wrapper.open .profile-menu {
+  display: block;
+}
+
+/* 메뉴 내부 스타일 */
+.profile-menu .profile-info {
+  padding: 0 12px;
+  margin-bottom: 8px;
+}
+.profile-menu .profile-info #name p {
+  font-size:17px;
+  font-weight: bold;
+  display: block;
+}
+.profile-menu .profile-info #manner p {
+  color: #000000;
+  font-size: 0.85rem;
+}
+.profile-menu  hr {
+  width: 180px;
+  margin-top: 15px;
+  border: none;                   /* 기존 모든 테두리 제거 */
+  border-top: 1px solid #D9D7D7;     /* 위쪽에만 흰색 실선 적용 */
+}
+
+
+.profile-menu .menu-item {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  color: #817f7f;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+.profile-menu .menu-item i {
+  margin-right: 8px;
+}
+/* hover 효과 */
+.profile-menu .menu-item:hover {
+  background: #f5f5f5;
 }
 
 /* 푸터 */

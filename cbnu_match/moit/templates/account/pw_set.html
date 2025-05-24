@@ -24,22 +24,28 @@
     <div class="pw_set-container">
       <h1 class="title">본인 인증하기</h1>
 
-      <form id="input-form" novalidate>
+      <form action="" method="POST" id="input-form" novalidate>
+        <!--csrf_token 추가-->
+        {% csrf_token %}
  <!-- 성 • 이름 필드 (2열 그리드) -->
         <div class="field name-fields">
 
           <div class="field-group">
             <label for="last-name">성</label>
+            <!--name: last_name 추가-->
             <input id="last-name"
                    type="text"
+                   name="last_name"
                    placeholder="성 입력"
                    required>
           </div>
 
           <div class="field-group">
             <label for="first-name">이름</label>
+            <!--name: first_name 추가-->
             <input id="first-name"
                    type="text"
+                   name="first_name"
                    placeholder="이름 입력"
                    required>
           </div>
@@ -48,20 +54,29 @@
         <!-- 아이디 -->
         <div class="field">
           <label for="user-id">아이디</label>
+          <!--name: username 추가 -->
           <input
             id="user-id"
             type="text"
+            name="username"
             placeholder="아이디 입력"
             required />
         </div>
 
+        <!-- 에러 메시지 위치 (여기!) -->
+        {% if error %}
+          <div class="error-message" style="color: red; font-size: 0.85rem; margin: 6px 0;">
+            {{ error }}
+          </div>
+        {% endif %}
+        
         <!-- 가입 버튼 -->
         <button type="submit" class="btn-id_find" disabled>확인하기</button>
       </form>
       <div class="links">
-        <a href="#">아이디 찾기</a> | 
-        <a href="#">비밀번호 재설정</a> | 
-        <a href="#">회원가입</a>
+        <!--아이디 찾기, 회원가입 url 추가-->
+        <a href="{% url 'find_login' %}">아이디 찾기</a> |
+        <a href="{% url 'signup' %}">회원가입</a>
       </div>
     </div>
   </main>
@@ -69,13 +84,7 @@
  
 
 <script>
-  /*1. input에 입력이 있어야 버튼 활성화됨
-  2. 폼제출시 
-  성공-> 결과 페이지로 이동
-  실패-> 일치 아이디 없다고 alert뜸
-  error-> alert
-
-  */
+  /*1. input에 입력이 있어야 버튼 활성화됨 */
   
   // 1) 모든 input에 입력이 있어야 버튼 활성화
   $('#input-form input').on('input', function() {
@@ -83,37 +92,6 @@
     $('.btn-id_find').prop('disabled', !allFilled);
   });
 
-  // 2) 폼 제출 처리
-  $('#input-form').on('submit', function(e) {
-    e.preventDefault();
-
-    const last  = $('#last-name').val().trim();
-    const first = $('#first-name').val().trim();
-    const userId = $('#user-id').val().trim();
-
-    $.ajax({
-      url: '/api/find-id/',    // 실제 API 엔드포인트에 맞게 수정
-      type: 'POST',
-      data: {
-        last_name: last,
-        first_name: first,
-        userId: userId
-      },
-      dataType: 'json',
-      success: function(res) {
-        if (res && res.id) {
-          // 성공: 결과 페이지로 이동
-          window.location.href = 'id_find_result.html?userId=' + encodeURIComponent(res.id);
-        } else {
-          // 실패: 일치하는 아이디 없음
-          alert('입력하신 정보와 일치하는 아이디가 없습니다. 다시 확인해주세요.');
-        }
-      },
-      error: function() {
-        alert('서버 통신 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
-      }
-    });
-  });
 </script>
 
 

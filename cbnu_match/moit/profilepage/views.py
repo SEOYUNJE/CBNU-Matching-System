@@ -1,5 +1,5 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 
-def search(request):
-    return render(request, "search/search_before.html")
+def profilepage(request):
+    return render(request, 'profilepage/mypage.html')

@@ -8,13 +8,13 @@
 <head>
   <meta charset="UTF-8">
   <title>Moit Full Page Scroll</title>
-  <meta name="csrf-token" content="{{ csrf_token }}">
-  <script>
-    window.isLoggedIn = {{ user.is_authenticated|yesno:"true,false" }};
-  </script>
   <link rel="stylesheet" href="{% static 'main/css/mainpage.css' %}">
   <link rel="stylesheet" href="{% static 'meet/css/popup_create.css' %}">
+  <script src="{% static 'share/js/layout_profile_menu.js' %}"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
 </head>
+
 <body>
   <header class="header">
     <div class="container">
@@ -25,11 +25,35 @@
         <a href="#">game</a>
         <a href="#">exercise</a>
       </nav>
-      <div class="util">🔍 👤</div>
+        <div class="util">
+          <i class="bi bi-search" id="search"></i> 
+          <div class="profile-wrapper">
+            <i class="bi bi-person-circle" id="profileBtn"></i>
+          
+            <div class="profile-menu" id="profileMenu">
+              <div class="profile-info">
+                <span id="name"><p>토마토님</p></span>
+                <span id="manner"><p>매너온도 40도</p></span>
+              </div>
+              <hr>
+              <a href="#" class="menu-item">
+                <i class="bi bi-person-fill"></i> profile
+              </a>
+              <a href="#" class="menu-item">
+                <i class="bi bi-chat-dots"></i> moit chat
+              </a>
+              <a href="#" class="menu-item">
+                <i class="bi bi-box-arrow-right"></i> log out
+              </a>
+            </div>
+        </div>
+        </div>
     </div>
   </header>
 
-  {% comment %} 모임 생성 팝업 {% endcomment %}
+  <!-- 2025-05-17 -->
+  <!-- 모임 생성 팝업 추가-->
+  <!-- 작성자: 최은재 -->
   <div id="modalOverlay" class="modal-overlay">
     <div class="modal-content">
       <span id="closeModal" class="close-btn">&times;</span>
@@ -38,44 +62,104 @@
           <label for="group-title">모임 제목</label>
           <input id="group-title" name="title" type="text" placeholder="모임 제목을 작성해주세요.">
         </div>
+
         <div class="modal-row">
           <div class="modal-group">
             <label for="group-type">모임 종류</label>
             <select id="group-type" name="category">
-              <option value="STUDY">스터디</option>
-              <option value="EXERCISE">운동</option>
-              <option value="MEALS">식사</option>
-              <option value="GAME">게임</option>
+              <option>스터디</option>
+              <option>운동</option>
+              <option>식사</option>
+              <option>게임</option>
             </select>
           </div>
           <div class="modal-group">
             <label for="group-date">모임 날짜</label>
-            <input id="group-date" name="deadline" type="datetime-local">
+            <input id="group-date" name="end_time" type="datetime-local">
           </div>
           <div class="modal-group">
             <label for="group-people">모임 인원</label>
             <select id="group-people" name="max_member">
-              {% for n in "2345678" %}
-              <option value="{{ n }}명">{{ n }}명</option>
-              {% endfor %}
+              <option value="2">2명</option>
+              <option value="3">3명</option>
+              <option value="4">4명</option>
+              <option value="5">5명</option>
+              <option value="6">6명이상 10명 미만</option>
+              <option value="11">11명 이상 15명 미만</option>
+              <option value="15">15명 이상 20명 미만</option>
             </select>
           </div>
         </div>
+
         <div class="modal-group">
           <label for="group-description">상세 정보 입력</label>
-          <textarea id="group-description" name="meet_introduce" placeholder="자세한 모임 설명을 작성해주세요."></textarea>
+          <textarea id="group-description" name="introduction" placeholder="자세한 모임 설명을 작성해주세요."></textarea>
         </div>
+
         <button class="submit-btn" type="submit">입장하기</button>
       </form>
     </div>
   </div>
+  <!-- 모임 참가 팝업  -->
 
+  <div id="joinPopup" class="modal-overlay">
+    <div class="modal-content">
+      <!-- 닫기 버튼 -->
+      <span id="closeJoinPopup" class="close-btn">&times;</span>
+
+      <!-- 제목 및 날짜 -->
+      <div class="popup-header">
+        <h3 id="joinTitle">같이 초밥 시켜실분</h3>
+        <span id="joinDate" class="popup-date">2025-05-08</span>
+      </div>
+
+      <!-- 구분선 -->
+      <hr class="divider" />
+
+      <!-- 설명 -->
+      <p id="joinDescription" class="description">
+        최소 주문 금액 17,000원 부담돼서 함께 주문하려고 해요<br>
+        배송비도, 최소금액도 나눠 부담해요!<br>
+        가능하신 분 채팅방 들어와주세요!
+      </p>
+
+      <!-- 구분선 -->
+      <hr class="divider" />
+
+      <!-- 태그 영역 -->
+      <div class="tag-row">
+        <span class="tag" id="joinCategory">🍱 MEALS</span>
+        <span class="tag" id="joinMembers">모집인원 3/4</span>
+        <span class="tag" id="joinDeadline">마감기한 5/12 21:00</span>
+      </div>
+      <button class="submit-btn">채팅방 입장하기</button>
+    </div>
+  </div>
+
+
+  <!-- 로그인 안내 팝업 -->
+  <div id="loginPrompt" class="modal-overlay">
+    <div class="modal-content" style="align-items: center; text-align: center; position: relative;">
+      <span id="closeLoginPrompt" class="close-btn">&times;</span>
+      <p style="font-size: 1.1rem; font-weight: 500;">
+        로그인하지 않은 상태입니다.<br>
+        로그인 후 서비스를 이용해주세요!
+      </p>
+      <button id="goToLogin" class="submit-btn" style="max-width: 200px; margin-top: 1.2rem;">
+        로그인하러 가기
+      </button>
+    </div>
+  </div>
+
+  <!-- 메인 콘텐츠 -->
   <main class="scroll-grid">
+    <!-- 첫 번째 섹션: 슬로건건 -->
     <section class="intro" tabindex="0">
       <h1>Meet it. Love it. Moit.</h1>
-      <h2>Make your life</h2>
+      <h2>Make your life </h2>
     </section>
 
+    <!-- 두 번째 섹션: 모임생성 및 카테고리 소개 -->
     <section class="section welcome">
       <div class="container">
         <div class="welcome-left">
@@ -86,70 +170,102 @@
         <div class="welcome-right">
           <h3 class="category-title">CATEGORY</h3>
           <div class="categories">
-            {% for cat, icon in categories %}
-            <div class="cat-item" data-category="{{ cat }}">
-              <span class="cat-title">{{ cat|upper }}</span>
-              <img src="{% static 'meet/icons/'|add:icon %}" alt="" class="cat-icon" />
+            <div class="cat-item" data-category="study">
+              <span class="cat-title">STUDY</span>
+              <!--icon 경로 변경 with static-->
+              <img src="{% static 'meet/icons/book.svg' %}" alt="" class="cat-icon" />
             </div>
-            {% endfor %}
-            {% comment %} {% for cat, icon in [
-              ("study", "book.svg"),
-              ("game", "gamepad.svg"),
-              ("exercise", "tennis.svg"),
-              ("meals", "meal.svg")
-            ] %}
-              <div class="cat-item" data-category="{{ cat }}">
-                <span class="cat-title">{{ cat|upper }}</span>
-                <img src="{% static 'meet/icons/'|add:icon %}" alt="" class="cat-icon" />
-              </div>
-            {% endfor %} {% endcomment %}
+            <div class="cat-item" data-category="game">
+              <span class="cat-title">GAME</span>
+              <!--icon 경로 변경 with static-->
+              <img src="{% static 'meet/icons/gamepad.svg' %}" alt="" class="cat-icon" />
+            </div>
+            <div class="cat-item" data-category="exercise">
+              <span class="cat-title">EXERCISE</span>
+              <!--icon 경로 변경 with static-->
+              <img src="{% static 'meet/icons/tennis.svg' %}" alt="" class="cat-icon" />
+            </div>
+            <div class="cat-item" data-category="meals">
+              <span class="cat-title">MEALS</span>
+              <!--icon 경로 변경 with static-->
+              <img src="{% static 'meet/icons/meal.svg' %}" alt="" class="cat-icon" />
+
+            </div>
           </div>
         </div>
       </div>
     </section>
 
     <section class="group-list">
-      <div class="group-wrapper">
-        <h3><span class="highlight">enjoy</span> Moit</h3>
-        <div class="masonry-grid">
-          {% for meet in meets %}
-            <div class="block{% if forloop.first %} tall{% endif %}" style="background-image: url('{% static 'meet/images/'|add:meet.category|lower|add:'.jpg' %}')">
-              <div class="card-overlay">
-                <h3>{{ meet.title }}</h3>
-                <p>{{ meet.deadline|date:"m월 d일 H:i" }}<br>모집인원 {{ meet.participant.count }}/{{ meet.max_member }}</p>
-              </div>
-            </div>
-          {% endfor %}
+    <div class="group-wrapper">
+      <h3><span class="highlight">enjoy</span> Moit</h3>
+      <div class="masonry-grid">
+        <!--이미지 경로 변경 with static-->
+        <div class="block" style="background-image: url('{% static "meet/images/basketball.jpg" %}')">
+          <div class="card-overlay">
+            <h3>농구 같이 하실분</h3>
+            <p>4월 11일 금요일<br>모집인원 4/8</p>
+          </div>
         </div>
-      </div>
-    </section>
-  </main>
+        <!--이미지 경로 변경 with static-->
+        <div class="block" style="background-image: url('{% static "meet/images/study2.jpg" %}')">
+          <div class="card-overlay">
+            <h3>도서관에서 공부해요</h3>
+            <p>4월 11일 금요일<br>모집인원 4/8</p>
+          </div>
+        </div>
+        <!--이미지 경로 변경 with static-->
+        <div class="block" style="background-image: url('{% static "meet/images/game.jpg" %}')">
+          <div class="card-overlay">
+            <h3>도서관에서 공부해요</h3>
+            <p>4월 11일 금요일<br>모집인원 4/8</p>
+          </div>
+        </div>
+        <!--이미지 경로 변경 with static-->
+        <div class="block" style="background-image: url('{% static "meet/images/dinner.jpg" %}')">
+          <div class="card-overlay">
+            <h3>도서관에서 공부해요</h3>
+            <p>4월 11일 금요일<br>모집인원 4/8</p>
+          </div>
+        </div>
+        <!--이미지 경로 변경 with static-->
+        <div class="block" style="background-image: url('{% static "meet/images/tennis.jpg" %}')">
+          <div class="card-overlay">
+            <h3>도서관에서 공부해요</h3>
+            <p>4월 11일 금요일<br>모집인원 4/8</p>
+          </div>
+        </div>
 
+      </div>
+    </div> 
+    </section>
+
+  </main>
   <footer class="footer">
     <div class="container footer-content">
       <div class="footer-left">
         <h2>enjoy your life</h2>
       </div>
       <div class="footer-right">
-        <p>
-          12, gaesin-dong, seooone-gu<br>
-          chungju, Republic of Korea<br>
-          T 043.261.2114<br>
-          moit@cbnu.com
+        <p>12, gaesin-dong, seooone-gu<br>
+         chungju, Republic of Korea<br>
+         T 043.261.2114<br>
+         moit@cbnu.com
         </p>
       </div>
     </div>
   </footer>
-
+  <!--js 파일 경로 변경-->
   <script src="{% static 'meet/js/popup_create.js' %}"></script>
   <script src="{% static 'meet/js/popup_join.js' %}"></script>
   <script src="{% static 'main/js/mainpage.js' %}"></script>
 
-  <div class="scroll-indicator">
-    <div class="dot active"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
-  </div>
+  <!-- 스크롤 인디케이터 -->
+<div class="scroll-indicator">
+  <div class="dot active"></div>
+  <div class="dot"></div>
+  <div class="dot"></div>
+</div>
+
 </body>
 </html>
-

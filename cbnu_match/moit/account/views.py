@@ -16,7 +16,7 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request,user)
-            return redirect('main')
+            return redirect('mainpage')
         else:
             return render(request, 'account/login.html', {'error': '아이디 또는 비밀번호가 잘못되었습니다.'})
     else:
@@ -37,14 +37,15 @@ def find_login(request):
         
         if user.exists():
             
-            return render(request, 'account/config_login.html', {
+            return render(request, 'account/id_find_result.html', {
                     'username': user[0].username,
-                    'login_date': user[0].date_joined,
+                    'first_name': user[0].first_name,
+                    'last_name': user[0].last_name,
                     })
         else:
-            return render(request, "account/find_login.html", {'error': 'No account was found matching the information you entered'})
+            return render(request, "account/id_find.html", {'error': '입력하신 정보와 일치하는 아이디가 없습니다'})
     else:
-        return render(request, "account/find_login.html")
+        return render(request, "account/id_find.html")
 
 def password_check(request):
     if request.method == 'POST':
@@ -58,7 +59,7 @@ def password_check(request):
         if user.exists():
             return render(request, 'account/pw_new.html', {'username': username})
         else:
-            return render(request, "account/pw_set.html", {'error': "We couldn't find a password that matches the information you provided"})
+            return render(request, "account/pw_set.html", {'error': "입력하신 정보와 일치하는 비밀번호가 없습니다"})
         
     else:
         return render(request, "account/pw_set.html")
@@ -69,15 +70,11 @@ def password_reset(request):
         new_password = request.POST['new_password']
         new_password_check = request.POST['new_password_check']
                 
-        if new_password == new_password_check:
-            user = User.objects.get(username = username)
-            user.set_password(new_password)
-            user.save()
+        user = User.objects.get(username = username)
+        user.set_password(new_password)
+        user.save()
             
-            return redirect('login')
-        else:
-            return render(request, "account/pw_new.html", {'error': "비밀번호가 일치하지 않습니다"})
-        
+        return redirect('login')
     else:
         return render(request, "account/pw_new.html")
 

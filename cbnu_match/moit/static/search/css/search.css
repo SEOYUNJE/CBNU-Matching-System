@@ -1,0 +1,100 @@
+@import url('/static/share/css/layout_page.css');
+
+/* ─────────────── 검색 섹션 ─────────────── */
+.search-section {
+
+  /* transition: transform 0.4s ease, padding-top 0.4s ease;
+
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;   
+  align-items: center;
+  transform: translateY(-5vh);   */
+ 
+}
+
+/* .search-section.shrink {
+  transform: translateY(-220px);
+  padding-top: 20px;
+} */
+/* .search-section.shrink {
+  min-height: 300px;
+  transform: translateY(-120px);
+  padding-top: 20px;
+  margin-bottom: 1rem;
+} */
+
+.search-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.4s ease;
+  min-height: 100vh;
+}
+
+.search-section.shrink {
+  transform: translateY(-120px); 
+  min-height: 400px;             
+  padding-top: 0;
+  margin-bottom: 2rem;
+}
+
+.result-section {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.search-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  letter-spacing: 1px;
+}
+
+.result-section.hidden {
+  opacity: 0;
+  transform: translateY(40px);
+  pointer-events: none;
+}
+
+/* ─────────────── 검색 입력창 ─────────────── */
+.search-box {
+  display: flex;
+  align-items: center;
+  width: 40%;
+  min-width: 300px;
+  padding: 0.6rem 1.2rem;
+  border: 1px solid #ccc;
+  border-radius: 2rem;
+  background-color: white;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.05); /* 강조용 */
+}
+
+.search-box input {
+  flex: 1;
+  font-size: 1rem;
+  padding: 0.4rem 0.5rem;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #444;
+}
+
+.search-box input::placeholder {
+  color: #ccc;
+}
+
+.search-box button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 1.3rem;
+  color: #e74c3c;
+}
+
+.search-box button:hover {
+  color: #ff6a4c;
+}

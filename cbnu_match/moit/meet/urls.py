@@ -9,6 +9,7 @@ urlpatterns = [
 
     path('create_meet/', create_meet, name='create_meet'),
     # path('join_meet/<int:meet_id>', join_meet, name='join_meet'),
+    path('subpage/', subpage, name='subpage'),
 ]
 
 # 수정

@@ -16,9 +16,9 @@ urlpatterns = [
     # 이후, profile 이동(이때 username을 전달한다)
     path("signup/", signup, name = "signup"),
     
-    # 이메일, 성, 이름 입력 성공 시 username이랑 login_date 전달
+    # 이메일, 성, 이름 입력 성공 시 username 전달
     path("find_login/", find_login, name = "find_login"),
-    
+
     # 아이디, 성, 이름 입력 성공 시 새 비밀번호 설정으로 이동(이때 username값 전달)
     path('password_check/', password_check, name = 'password_check'),
     

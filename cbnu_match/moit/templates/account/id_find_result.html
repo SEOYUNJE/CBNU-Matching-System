@@ -1,9 +1,10 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="id_find_result.css" />
+    <link rel="stylesheet" href="{% static 'account/css/id_find_result.css' %}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     
 </head>
@@ -23,15 +24,14 @@
     <div class="id_find-container">
       <h1 class="title">아이디 찾기</h1>
       <div class="message">
-        홍길동님의 아이디는 <span class="highlight">dusf1234</span>입니다
+        {{last_name }}{{ first_name }}님의 아이디는 <span class="highlight">{{ username }}</span>입니다
       </div>
       <form id="input-form" novalidate>
         <button type="submit" class="btn-id_find" disabled>로그인 하러 가기</button>
       </form>
       <div class="links">
-        <a href="#">아이디 찾기</a> | 
-        <a href="#">비밀번호 재설정</a> | 
-        <a href="#">회원가입</a>
+         <!--비밀번호 재설정 url 추가-->
+        <a href="{% url 'password_check'%}">비밀번호 재설정</a>
       </div>
     </div>
   </main>
