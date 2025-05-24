@@ -1,6 +1,10 @@
-
-
 @import url('../layout_page.css'); 
+
+/* 현재 카테고리 활성화 표시 */
+.nav a.active {
+  color: #e74c3c;
+  font-weight: bold;
+}
 
 /* Section Top */
 .section-top {

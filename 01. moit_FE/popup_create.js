@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     console.log("[DEBUG] 모임 생성 정보:", data);
 
-    // 추후 fetch 연결 예정
+    // 추후 장고 연결 예정
     // fetch('/moit/create/', {
     //   method: 'POST',
     //   headers: {
@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // [로그인 하러 가기] 클릭 → 로그인 페이지로 이동 (리디렉션 포함)
   loginBtn.addEventListener('click', () => {
     const currentUrl = window.location.pathname;
-    const redirectUrl = `/Login/login.html?next=${encodeURIComponent(currentUrl)}`;
+    const redirectUrl = `../Login/login.html?next=${encodeURIComponent(currentUrl)}`;
     window.location.href = redirectUrl;
   });
 });
