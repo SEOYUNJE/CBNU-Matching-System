@@ -1,0 +1,278 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>mypage</title>
+  <link rel="stylesheet" href="{% static 'chat/css/chat.css' %}">
+  <link rel="stylesheet" href="{% static 'chat/css/chat_popup.css' %}">
+  <script src="{% static 'share/js/layout_profile_menu.js' %}" defer></script>
+
+  <script src="{% static 'chat/js/chat.js' %}"></script>
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" />
+</head>
+<body>
+  <!-- layout_page.css 기반 고정 헤더 -->
+
+  <header class="header">
+    <div class="container">
+      <div class="logo">moit</div>
+      <nav class="nav">
+        <a href="#">meals</a>
+        <a href="#">study</a>
+        <a href="#">game</a>
+        <a href="#">exercise</a>
+      </nav>
+      <div class="util">
+          <i class="bi bi-search" id="search"></i> 
+          <div class="profile-wrapper">
+            <i class="bi bi-person-circle" id="profileBtn"></i>
+          
+            <div class="profile-menu" id="profileMenu">
+              <div class="profile-info">
+                <span id="name"><p>토마토님</p></span>
+                <span id="manner"><p>매너온도 40도</p></span>
+              </div>
+              <hr>
+              <a href="#" class="menu-item">
+                <i class="bi bi-person-fill"></i> profile
+              </a>
+              <a href="#" class="menu-item">
+                <i class="bi bi-chat-dots"></i> moit chat
+              </a>
+              <a href="#" class="menu-item">
+                <i class="bi bi-box-arrow-right"></i> log out
+              </a>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+  </header>
+   <!-- 아직 완성은 아님--------------------------------------------------------- -->
+  <!-- 헤더 아래 "--- My page ---" 영역 -->
+  <section class="title">
+    <h1>Moit Chat</h1>
+  </section>
+  <main class="chat-container">
+    <!-- 왼쪽: 나의 모임 -->
+    <aside class="chat-list">
+      <h2>나의 모임</h2>
+      <ul>
+        <li class="active">롤 같이 할 사람 모집해요</li>
+        <li>점심에 퀴즈노스 ㅋㅋ</li>
+        <li>제목을 길게 쓰면 어떻게 될려나?
+          제목을 길게 쓰면 어떻게 될려나?
+          제목을 길게 쓰면 어떻게 될려나?
+          제목을 길게 쓰면 어떻게 될려나?
+        </li>
+        <li>위와 같은 사태를 막기 위해 제목 글자수 제한?</li>
+        <li>표시하는건 2줄 최대로 수정해볼려고 했으나</li>
+        <li>이상하게 잘려서</li>
+        <li>포기</li>
+        <li>스터디 해요</li>
+        <li>운영체제 과제 같이해용</li>
+        <li>스터디 해요</li>
+        <li>운영체제 과제 같이해용</li>
+        <li>스터디 해요</li>
+        <li>운영체제 과제 같이해용</li>
+        <li>스터디 해요</li>
+        <li>운영체제 과제 같이해용</li>
+        <li>스터디 해요</li>
+      </ul>
+    </aside>
+
+    <!-- 가운데: 채팅방 -->
+    <section class="chat-room">
+      <header class="room-header">
+        <h2>롤 같이 할 사람 모집해요</h2>
+        <span class="members-count">3/4 모집인원</span>
+      </header>
+      
+      <div class="messages">
+        <div class="chat-date-container">
+          <div class="chat-date">
+            <i class="bi bi-calendar-event"></i>
+            <span>2025년 5월 23일 금요일</span>
+          </div>
+        </div>
+        <!-- system message -->
+        <div class="sys-msg">토마토님이 입장했습니다</div>
+        <div class="sys-msg_mem">토마토, 나나난, 헬창임님이 참여중입니다.</div>
+        <div class="sys-msg_num">현재인원 3/4</div>
+        
+
+        <div class="msg received">
+          <!-- 1행: 아바타+이름 -->
+          <div class="msg-header">
+            <div class="avatar"><img src="{% static 'meet/images/profile1.png' %}" alt="토마토" /></div>
+            <p class="sender-name">토마토</p>
+          </div>
+          <!-- 2행: 말풍선+시간 -->
+          <div class="msg-body">
+            <div class="bubble"><p>안녕하세요!! 길어도 다음줄로 넘어갑니다.</p></div>
+            <time>17:30</time>
+          </div>
+        </div>
+
+
+        <!-- me -->
+        <div class="msg sent">
+          <div class="bubble">
+            <p>항상 채팅방의 끝대화로 스크롤이 내려가있어야함</p>
+          </div>
+          <time>17:35</time>
+        </div>
+
+        <div class="msg received">
+          <div class="msg-header">
+            <div class="avatar"><img src="{% static 'meet/images/profile1.png' %}" alt="토마토" /></div>
+            <p class="sender-name">토마토</p>
+          </div>
+          <div class="msg-body">
+            <div class="bubble"><p>안녕하세요!! 길어도 다음줄로 넘어갑니다.</p></div>
+            <time>17:30</time>
+          </div>
+        </div>
+
+        <div class="chat-date-container">
+          <div class="chat-date">
+            <i class="bi bi-calendar-event"></i>
+            <span>2025년 5월 24일 토요일</span>
+          </div>
+        </div>
+
+        <div class="msg received">
+          <div class="msg-header">
+            <div class="avatar"><img src="{% static 'meet/images/profile.png' %}" alt="토마토" /></div>
+            <p class="sender-name">방장임</p>
+            <i class="bi bi-patch-check-fill text-warning" title="방장"></i>
+          </div>
+          <div class="msg-body">
+            <div class="bubble"><p>방장은 방장표시 아이콘이 옆에 뜬다. 
+              왕관모양은 부트스트랩에 없어서 인증마크로 대체</p></div>
+            <time>17:30</time>
+          </div>
+        </div>
+
+        <div class="msg sent">
+          <div class="bubble">
+            <p>안녕하세요 토마토님!!</p>
+          </div>
+          <time>17:35</time>
+        </div>
+
+        <div class="msg sent">
+          <div class="bubble">
+            <p>프론트에서 채팅적고 전송누르면 화면상으로 채팅이 보내짐</p>
+          </div>
+          <time>17:35</time>
+        </div>
+        <div class="msg received">
+          <div class="msg-header">
+            <div class="avatar"><img src="{% static 'meet/images/profile.png' %}" alt="토마토" /></div>
+            <p class="sender-name">방장임</p>
+            <i class="bi bi-patch-check-fill text-warning" title="방장"></i>
+          </div>
+          <div class="msg-body">
+            <div class="bubble"><p>방장은 방장표시 아이콘이 옆에 뜬다. 
+              왕관모양은 부트스트랩에 없어서 인증마크로 대체</p></div>
+            <time>17:30</time>
+          </div>
+        </div>
+        <div class="msg sent">
+          <div class="bubble">
+            <p>긴글 테스트--------------------------
+              ---------------------------------------------------------------
+              ---------------------------------------------
+              ----------------------------
+              ---------------------------------------------------------------
+            </p>
+            </p>
+          </div>
+          <time>17:35</time>
+        </div>
+
+         <div class="msg received">
+          <div class="msg-header">
+            <div class="avatar"><img src="{% static 'meet/images/profile1.png' %}" alt="토마토" /></div>
+            <p class="sender-name">토마토</p>
+          </div>
+          <div class="msg-body">
+            <div class="bubble"><p>안녕하세요!!dddddddddddddddddddddddddddd
+              dddddddddddddddddddddddddddddddddddddddddddddddddddd
+              ddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+              dddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+            </p></div>
+            <time>17:30</time>
+          </div>
+        </div>
+
+         
+
+        <!-- more messages… -->
+      </div>
+
+      <!-- 채팅 입력 -->
+      <div class="chat-input">
+        <input type="text" placeholder="메시지 입력..." />
+        <button>전송</button>
+      </div>
+    </section>
+
+    <!-- 오른쪽: 멤버 리스트 -->
+    <aside class="member-list">
+      <h2>멤버</h2>
+      <ul>
+        <li><div class="avatar">
+          <img src="{% static 'meet/images/profile.png' %}" alt="" /></div> 
+          <p>방장임</p>
+          <i class="bi bi-patch-check-fill text-warning" title="방장"></i>
+        </li>
+        <li><div class="avatar">
+          <img src="{% static 'meet/images/profile1.png' %}" alt="토마토" /></div> 
+          <p>토마토 </p>
+        </li>
+        <li><div class="avatar">
+          <img src="{% static 'meet/images/profile1.png' %}" alt="토마토" /></div> 
+          <p>헬창임 </p>
+        </li>
+        
+      </ul>
+      <button class="leave">채팅방 나가기</button>
+    </aside>
+  </main>
+
+
+<!---------  상대방 프로필 열람 팝업창 --------->
+  <div id="profileModal" class="profile-modal hidden">
+    <div class="modal-content">
+      <span class="close-btn">&times;</span>
+      <h3><span class="nickname">토마토</span> 님의 프로필</h3>
+      <img class="avatar" src="../Images/profile1.png" alt="프로필 사진" />
+      <div class="manner-bar">
+        <span>매너온도 <span class="manner-value">40</span></span>
+        <div class="bar"><div class="fill" style="width: 60%;"></div></div>
+      </div>
+      <p class="intro">롤/오버워치/배그 등등 웬만한 게임은 다 잘합니다 ㅎㅎ 초보자랑 같이 하는 것도 좋아해요!</p>
+      <hr/>
+      <p class="info"><span class="gender">남자</span></p>
+      <p class="info"><span class="mbti">ENFJ</span></p>
+      <p class="info"><span class="college">상경대학</span></p>
+    </div>
+  </div>
+  <!---------  채팅방 나가기 --------->
+  <!---------  방장이랑 멤버랑 메세지 다르게 구현할 예정 --------->
+  <!---------  Django 연동 후 수정 필요 --------->
+  <div id="leaveModal" class="modal hidden">
+    <div class="modal-box">
+      <p class="modal-msg">채팅방을 나가면 모임이 삭제됩니다.<br>정말 나가시겠습니까?</p>
+      <div class="modal-actions">
+        <button class="confirm-leave">나가기</button>
+        <button class="cancel-leave">취소</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
