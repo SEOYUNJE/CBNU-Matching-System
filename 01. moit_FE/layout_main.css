@@ -27,6 +27,9 @@ body {
     font-weight: bold;
     color: #e74c3c;
 }
+a{
+    text-decoration: none; 
+}
 .nav {
     justify-self: center; /* 가운데 정렬 */
     display: flex;

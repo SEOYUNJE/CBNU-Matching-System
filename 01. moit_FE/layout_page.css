@@ -93,6 +93,10 @@ main > section {
   color: #e74c3c;
 }
 
+a{
+    text-decoration: none; 
+}
+
 .nav {
   display: flex;
   justify-content: center;
