@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <title>mypage</title>
   <link rel="stylesheet" href="chat.css" />
+  <link rel="stylesheet" href="chat_popup.css" />
   <script src="../layout_profile_menu.js" defer></script>
   <script src="chat.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" />
@@ -59,9 +60,9 @@
         <li class="active">롤 같이 할 사람 모집해요</li>
         <li>점심에 퀴즈노스 ㅋㅋ</li>
         <li>제목을 길게 쓰면 어떻게 될려나?
-          akfjdklajflkdsjfkldsjfakladjsf;kldjafㄹㄹㄹㄹㄹ
-          adsjklsdjsakjkdlfjklsdj;ldskjksj
-          asjdlskjkslajkldjaskdksja
+          제목을 길게 쓰면 어떻게 될려나?
+          제목을 길게 쓰면 어떻게 될려나?
+          제목을 길게 쓰면 어떻게 될려나?
         </li>
         <li>위와 같은 사태를 막기 위해 제목 글자수 제한?</li>
         <li>표시하는건 2줄 최대로 수정해볼려고 했으나</li>
@@ -222,12 +223,12 @@
       <h2>멤버</h2>
       <ul>
         <li><div class="avatar">
-          <img src="../Images/profile1.png" alt="토마토" /></div> 
+          <img src="../Images/profile.png" alt="" /></div> 
           <p>방장임</p>
           <i class="bi bi-patch-check-fill text-warning" title="방장"></i>
         </li>
         <li><div class="avatar">
-          <img src="../Images/profile.png" alt="토마토" /></div> 
+          <img src="../Images/profile1.png" alt="토마토" /></div> 
           <p>토마토 </p>
         </li>
         <li><div class="avatar">
@@ -240,5 +241,35 @@
     </aside>
   </main>
 
+
+<!---------  상대방 프로필 열람 팝업창 --------->
+  <div id="profileModal" class="profile-modal hidden">
+    <div class="modal-content">
+      <span class="close-btn">&times;</span>
+      <h3><span class="nickname">토마토</span> 님의 프로필</h3>
+      <img class="avatar" src="../Images/profile1.png" alt="프로필 사진" />
+      <div class="manner-bar">
+        <span>매너온도 <span class="manner-value">40</span></span>
+        <div class="bar"><div class="fill" style="width: 60%;"></div></div>
+      </div>
+      <p class="intro">롤/오버워치/배그 등등 웬만한 게임은 다 잘합니다 ㅎㅎ 초보자랑 같이 하는 것도 좋아해요!</p>
+      <hr/>
+      <p class="info"><span class="gender">남자</span></p>
+      <p class="info"><span class="mbti">ENFJ</span></p>
+      <p class="info"><span class="college">상경대학</span></p>
+    </div>
+  </div>
+  <!---------  채팅방 나가기 --------->
+  <!---------  방장이랑 멤버랑 메세지 다르게 구현할 예정 --------->
+  <!---------  Django 연동 후 수정 필요 --------->
+  <div id="leaveModal" class="modal hidden">
+    <div class="modal-box">
+      <p class="modal-msg">채팅방을 나가면 모임이 삭제됩니다.<br>정말 나가시겠습니까?</p>
+      <div class="modal-actions">
+        <button class="confirm-leave">나가기</button>
+        <button class="cancel-leave">취소</button>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

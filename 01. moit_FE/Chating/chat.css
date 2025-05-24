@@ -297,7 +297,9 @@ main.chat-container {
   color: rgb(224, 42, 72);
 }
 .member-list .leave {
-  margin: 0.5rem 0rem;
+  /* margin: 0.5rem 0rem; */
+  /* 버튼 위치 조금 올림 */
+  margin: 0.8rem 0rem;
   padding: 0.75rem;
   background: #ddd;
   border: none;
