@@ -15,18 +15,20 @@
 
 </head>
 
+</head>
+
 <body>
   <header class="header">
     <div class="container">
-      <div class="logo">moit</div>
+      <a href="{% url 'mainpage'%}"><div class="logo">moit</div></a>
       <nav class="nav">
-        <a href="#">meals</a>
-        <a href="#">study</a>
-        <a href="#">game</a>
-        <a href="#">exercise</a>
-      </nav>
+        <a href="{% url 'search'%}">meals</a>
+        <a href="{% url 'search'%}">study</a>
+        <a href="{% url 'search'%}">game</a>
+        <a href="{% url 'search'%}">exercise</a>
+      </nav> 
         <div class="util">
-          <i class="bi bi-search" id="search"></i> 
+          <a href="{% url 'search'%}"><i class="bi bi-search" id="search"></i></a>
           <div class="profile-wrapper">
             <i class="bi bi-person-circle" id="profileBtn"></i>
           
@@ -36,21 +38,20 @@
                 <span id="manner"><p>매너온도 40도</p></span>
               </div>
               <hr>
-              <a href="#" class="menu-item">
+              <a href="{% url 'profilepage'%}" class="menu-item">
                 <i class="bi bi-person-fill"></i> profile
               </a>
-              <a href="#" class="menu-item">
+              <a href="{% url 'search'%}" class="menu-item">
                 <i class="bi bi-chat-dots"></i> moit chat
               </a>
-              <a href="#" class="menu-item">
-                <i class="bi bi-box-arrow-right"></i> log out
+              <a href="{% url 'logout'%}" class="menu-item">
+               <i class="bi bi-box-arrow-right"></i> log out
               </a>
-            </div>
+          </div>
         </div>
-        </div>
+      </div>
     </div>
   </header>
-
   <!-- 2025-05-17 -->
   <!-- 모임 생성 팝업 추가-->
   <!-- 작성자: 최은재 -->

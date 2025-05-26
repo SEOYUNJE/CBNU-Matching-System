@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'chat',
     'search',
     'profilepage',
+    'subpage',
 ]
 
 ASGI_APPLICATION = 'moit.asgi.application'

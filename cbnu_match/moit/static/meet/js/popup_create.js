@@ -10,125 +10,75 @@ document.addEventListener('DOMContentLoaded', () => {
   const closeLoginBtn = document.getElementById('closeLoginPrompt');
   const loginBtn = document.getElementById('goToLogin');
 
-  // Django 템플릿에서 렌더링한 로그인 여부
-  const isLoggedIn = window.isLoggedIn || false;
+  const isLoggedIn = false; // Django 템플릿에서 동적으로 대체 예정
 
-
-  // [1] 모임 생성 버튼은 무조건 팝업 열림
+  // [모임 생성] 버튼 클릭 → 팝업 열기
   openBtn.addEventListener('click', () => {
     modal.classList.add('show');
   });
 
-  // [2] 팝업 닫기
+  // [X] 생성 팝업 닫기
   closeBtn.addEventListener('click', () => {
     modal.classList.remove('show');
   });
 
-  // [3] 로그인 안내 팝업 닫기
+  // [X] 로그인 안내 팝업 닫기
   closeLoginBtn.addEventListener('click', () => {
     loginPrompt.classList.remove('show');
   });
 
-  // [4] 바깥 클릭 시 닫기
+  // 바깥 영역 클릭 시 닫기
   window.addEventListener('click', (e) => {
     if (e.target === modal) modal.classList.remove('show');
     if (e.target === loginPrompt) loginPrompt.classList.remove('show');
   });
 
-  // [5] 모임 생성 폼 제출
-  document.getElementById("groupForm").addEventListener("submit", function (e) {
+  // [입장하기] 버튼 클릭 시: 유효성 검사 + 로그인 여부 확인
+  document.getElementById('groupForm').addEventListener('submit', function (e) {
     e.preventDefault();
 
-    // 로그인 안 했으면 안내 팝업 띄우고 리턴
-    if (!isLoggedIn) {
-      modal.classList.remove('show');
-      loginPrompt.classList.add('show');
+    const title = document.querySelector('[name="title"]').value.trim();
+    const category = document.querySelector('[name="category"]').value;
+    const date = document.querySelector('[name="end_time"]').value;
+    const maxMember = document.querySelector('[name="max_member"]').value;
+    const intro = document.querySelector('[name="introduction"]').value.trim();
+
+    if (!title || !category || !date || !maxMember || !intro) {
+      alert("모든 필드를 빠짐없이 입력해주세요.");
       return;
     }
 
-    // 로그인 되어 있을 경우에만 fetch 진행
-    const formData = new FormData(this);
+    if (!isLoggedIn) {
+      modal.classList.remove('show');        // 생성 팝업 닫고
+      loginPrompt.classList.add('show');     // 로그인 팝업 띄우기
+      return;
+    }
 
-    fetch("/meet/create_meet/", {
-      method: "POST",
-      headers: {
-        "X-CSRFToken": document.querySelector('[name=csrf-token]').content,
-      },
-      body: formData,
-    })
-    .then(res => res.json())
-    .then(data => {
-      if (data.status === "success") {
-        const meetId = data.meet_id;
-        window.location.href = `/chat/room/${meetId}/`;
-      } else {
-        alert("모임 생성 실패: " + data.message);
-      }
-    })
-    .catch(err => {
-      console.error(err);
-      alert("서버 오류 발생");
-    });
+    const data = {
+      title,
+      category,
+      end_time: date,
+      max_member: maxMember,
+      introduction: intro
+    };
+
+    console.log("[DEBUG] 모임 생성 정보:", data);
+
+    // 추후 장고 연결 예정
+    // fetch('/moit/create/', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     'X-CSRFToken': csrf_token
+    //   },
+    //   body: JSON.stringify(data)
+    // }).then(...);
   });
 
-  // [6] 로그인 버튼 클릭 시 로그인 페이지 이동
+  // [로그인 하러 가기] 클릭 → 로그인 페이지로 이동 (리디렉션 포함)
   loginBtn.addEventListener('click', () => {
     const currentUrl = window.location.pathname;
-    const redirectUrl = `/account/login/?next=${encodeURIComponent(currentUrl)}`;
+    const redirectUrl = `../Login/login.html?next=${encodeURIComponent(currentUrl)}`;
     window.location.href = redirectUrl;
   });
 });
-
-
-
-
-
-  // document.getElementById('groupForm').addEventListener('submit', function (e) {
-  //   e.preventDefault();
-
-  //   const title = document.querySelector('[name="title"]').value.trim();
-  //   const category = document.querySelector('[name="category"]').value;
-  //   const date = document.querySelector('[name="deadline"]').value;
-  //   const maxMember = document.querySelector('[name="max_member"]').value;
-  //   const intro = document.querySelector('[name="meet_introduce"]').value.trim();
-
-  //   if (!title || !category || !date || !maxMember || !intro) {
-  //     alert("모든 필드를 빠짐없이 입력해주세요.");
-  //     return;
-  //   }
-
-  //   if (!isLoggedIn) {
-  //     modal.classList.remove('show');
-  //     loginPrompt.classList.add('show');
-  //     return;
-  //   }
-
-  //   const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-
-  //   fetch('/create_meet/', {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/x-www-form-urlencoded',
-  //       'X-CSRFToken': csrfToken
-  //     },
-  //     body: new URLSearchParams({
-  //       title,
-  //       category,
-  //       deadline: date,
-  //       max_member: maxMember,
-  //       meet_introduce: intro
-  //     })
-  //   })
-  //   .then(response => {
-  //     if (response.ok) return response.text();
-  //     else throw new Error("모임 생성 실패");
-  //   })
-  //   .then(data => {
-  //     alert(`${data}님이 모임을 생성했습니다.`);
-  //     modal.classList.remove('show');
-  //   })
-  //   .catch(err => {
-  //     console.error(err);
-  //     alert("에러가 발생했습니다.");
-  //   });
-  // });

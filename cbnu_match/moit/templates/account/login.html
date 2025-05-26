@@ -4,24 +4,44 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-  <style>
-    @import url('/static/account/css/login.css');
-  </style>
+  <link rel="stylesheet" href="{% static 'account/css/login.css' %}">
+  <script src="{% static 'share/js/layout_profile_menu.js' %}"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
 </head>
 <body>
   <header class="header">
-  <div class="logo">moit</div>
-  <nav class="nav">
-    <a href="#">meals</a>
-    <a href="#">study</a>
-    <a href="#">game</a>
-    <a href="#">exercise</a>
-  </nav>
-<!--  참고용 아이콘 추가-->
-<!--  나중에 이미지로 추가-->
-<!--  버튼형식으로 기능 추가할 거임-->
-  <div class="util">🔍 👤</div>
-</header>
+    <a href="{% url 'mainpage' %}"><div class="logo">moit</div></a>
+    <nav class="nav">
+      <a href="{% url 'subpage_meals' %}">meals</a>
+      <a href="{% url 'subpage_study' %}">study</a>
+      <a href="{% url 'subpage_game' %}">game</a>
+      <a href="{% url 'subpage_exercise' %}">exercise</a>
+    </nav>
+     <div class="util">
+        <a href="{% url 'search' %}"><i class="bi bi-search" id="search"></i></a>
+        <div class="profile-wrapper">
+            <i class="bi bi-person-circle" id="profileBtn"></i>
+          
+            <div class="profile-menu" id="profileMenu">
+              <div class="profile-info">
+                <span id="name"><p>토마토님</p></span>
+                <span id="manner"><p>매너온도 40도</p></span>
+              </div>
+              <hr>
+              <a href="{% url 'profilepage' %}" class="menu-item">
+                <i class="bi bi-person-fill"></i> profile
+              </a>
+              <a href="{% url 'search' %}" class="menu-item">
+                <i class="bi bi-chat-dots"></i> moit chat
+              </a>
+              <a href="{% url 'logout' %}" class="menu-item">
+                <i class="bi bi-box-arrow-right"></i> log out
+              </a>
+            </div>
+        </div>
+     </div>
+  </header>
 
 
 

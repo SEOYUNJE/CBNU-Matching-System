@@ -1,5 +1,4 @@
-/*static 경로 추가*/
-@import url('/static/share/css/layout_my.css');  /* 헤더/푸터 공통 스타일 */
+@import url('/static/share/layout_my.css');  /* 헤더/푸터 공통 스타일 */
 
 
 .main {

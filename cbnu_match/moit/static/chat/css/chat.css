@@ -1,7 +1,6 @@
 /* chat.css */
 /* 1) 공통 헤더/푸터 스타일 */
-/*static 경로 추가*/
-@import url('/static/share/css/layout_chat.css');
+@import url('/static/share/layout_chat.css');
 
 
 /* 3) 그리드 자식이 부모 높이에 맞춰 줄어들 수 있게 */

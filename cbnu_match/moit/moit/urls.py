@@ -16,6 +16,7 @@ urlpatterns = [
     path('meet/', include('meet.urls')),
     path('chat/', include('chat.urls')),
     path('profilepage/', include('profilepage.urls')),
+    path('subpage/', include('subpage.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
