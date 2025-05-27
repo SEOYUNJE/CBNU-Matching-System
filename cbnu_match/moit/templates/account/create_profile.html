@@ -3,12 +3,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+<<<<<<< HEAD:cbnu_match/moit/templates/account/profile.html
     <title>프로필 설정하기</title>
     <link rel="stylesheet" href="{% static 'account/css/profile.css' %}" />
     <script src="{% static 'share/js/layout_profile_menu.js' %}"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
+=======
+    <title>Title</title>
+    <link rel="stylesheet" href="{% static 'account/css/profile.css' %}">
+    <script src="{% static 'account/js/create_profile.js' %}"></script>
+    
+>>>>>>> b8a1c51 (Text):cbnu_match/moit/templates/account/create_profile.html
 </head>
 <body>
   <header class="header">
@@ -47,8 +54,8 @@
   <main>
     <div class="profile-container">
       <h1 class="title">프로필 설정</h1>
-      <form id="profile-form">
-~~`~`~
+      <form id='createProfile_Form' novalidate>
+        {% csrf_token %}
           <!-- (1) 프로필 이미지 -->
         <div class="profile-image-field">
           <img id="profile-img" src="../Images/profile.png" alt="프로필 이미지">
@@ -61,118 +68,79 @@
         </div>
 
         <!-- 닉네임 -->
-        <div class="field">
+        <div class="field" id='nickname_Input'>
           <label for="nickname">닉네임(선택)</label>
-          <input id="nickname" type="text" placeholder="닉네임을 입력해주세요." required />
+          <input id="nickname" type="text" placeholder="닉네임을 입력해주세요."/>
         </div>
 
         <!-- 성별 -->
         <div class="field">
           <label for="gender">성별(선택)</label>
-          <select id="gender">
-            <option value="" disabled selected>성별을 선택해주세요</option>
-            <option value="female">여성</option>
-            <option value="male">남성</option>
+          <select id='gender_Select'>
+            <option value="공개 안 함" selected>공개 안 함</option>
+            <option value="남자">남성</option>
+            <option value="여자">여성</option>
+            <option value='기타'>기타</option>
           </select>
         </div>
 
         <!-- MBTI -->
         <div class="field">
           <label for="mbti">MBTI(선택)</label>
-          <select id="mbti">
-              <option value="" disabled selected>MBTI를 선택해주세요</option>
-              <option value="ISTJ">ISTJ</option>
-              <option value="ISFJ">ISFJ</option>
-              <option value="INFJ">INFJ</option>
-              <option value="INTJ">INTJ</option>
-              <option value="ISTP">ISTP</option>
-              <option value="ISFP">ISFP</option>
-              <option value="INFP">INFP</option>
-              <option value="INTP">INTP</option>
-              <option value="ESTP">ESTP</option>
-              <option value="ESFP">ESFP</option>
-              <option value="ENFP">ENFP</option>
-              <option value="ENTP">ENTP</option>
-              <option value="ESTJ">ESTJ</option>
-              <option value="ESFJ">ESFJ</option>
+          <select id='mbti_Select'>
+              <option value="공개 안 함" selected>공개 안 함</option>
               <option value="ENFJ">ENFJ</option>
+              <option value="ENFP">ENFP</option>
               <option value="ENTJ">ENTJ</option>
+              <option value="ENTP">ENTP</option>
+              <option value="ESFJ">ESFJ</option>
+              <option value="ESFP">ESFP</option>
+              <option value="ESTJ">ESTJ</option>
+              <option value="ESTP">ESTP</option>
+              <option value="INFJ">INFJ</option>
+              <option value="INFP">INFP</option>
+              <option value="INTJ">INTJ</option>
+              <option value="INTP">INTP</option>
+              <option value="ISFJ">ISFJ</option>
+              <option value="ISFP">ISFP</option>
+              <option value="ISTJ">ISTJ</option>
+              <option value="ISTP">ISTP</option>
           </select>
         </div>
 
         <!-- 단과대학 -->
         <div class="field">
           <label for="faculty">단과대학(선택)</label>
-          <select id="faculty">
-            <option value="" disabled selected>단과대학을 선택해주세요</option>
-            <option value="engineering">공과대학</option>
-            <option value="science">자연과학대학</option>
-            <option value="humanities">인문대학</option>
-            <option value="social">사회과학대학</option>
+          <select id="college_Select">
+              <option value="none" selected>공개 안 함</option>
+              <option value="nursing">간호대학</option>
+              <option value="business">경영대학</option>
+              <option value="engineering">공과대학</option>
+              <option value="agriculture">농업생명환경대학</option>
+              <option value="social-science">사회과학대학</option>
+              <option value="education">사범대학</option>
+              <option value="human-ecology">생활과학대학</option>
+              <option value="veterinary">수의과대학</option>
+              <option value="pharmacy">약학대학</option>
+              <option value="arts">예술학과군</option>
+              <option value="medicine">의과대학</option>
+              <option value="humanities">인문대학</option>
+              <option value="science">자연과학대학</option>
+              <option value="it">전자정보대학</option>
+              <option value="fusion">창의융합대학</option>
+              <option value="pride">충북PRIDE공유대학</option>
           </select>
         </div>
+
 
         <!-- 한줄 자기소개 -->
         <div class="field">
           <label for="intro">한줄 자기소개(선택)</label>
-          <textarea id="intro" type="text" maxlength="50" placeholder="자기소개를 입력해주세요. (50자 이내)"></textarea>
+          <textarea id="selfIntroduce_Input" type="text" maxlength="50" placeholder="자기소개를 입력해주세요. (50자 이내)"></textarea>
         </div>
-
-        <button type="submit" class="btn-submit">확인하기</button>
+        <button type="submit" id='createProfile_Button' class="btn-submit">확인하기</button>
       </form>
     </div>
   </main>
-
-  <script>
-$(function(){
-  //defaultImg는 django서버에서 디폴트 사진중에서 랜덤으로 선택된다.
-  const defaultSrc  = '../Images/profile.png';
-  const $img        = $('#profile-img');
-  const $input      = $('#photo-input');
-  const $btnDefault = $('#use-default');
-  const $btnChoose  = $('#choose-photo');
-
-  function setDefault() {
-    $img.attr('src', defaultSrc);
-  }
-
-  // (1) 디폴트 버튼 클릭
-  $btnDefault.on('click', () => {
-    setDefault();
-    $btnDefault.addClass('active');
-    $btnChoose.removeClass('active');
-    $input.val('');
-  });
-
-  // (2) 사진 선택 버튼 클릭
-  $btnChoose.on('click', () => {
-    $btnChoose.addClass('active');
-    $btnDefault.removeClass('active');
-    $input.trigger('click');
-  });
-
-  // (3) 파일 입력 시 미리보기 + default 토글 해제
-  $input.on('change', function(){
-    const file = this.files[0];
-    if (!file) {
-      // 파일 선택 취소 시, 기본 상태 유지
-      setDefault();
-      $btnDefault.addClass('active');
-      $btnChoose.removeClass('active');
-      return;
-    }
-    const reader = new FileReader();
-    reader.onload = e => {
-      $img.attr('src', e.target.result);
-    };
-    reader.readAsDataURL(file);
-  });
-
-  // 페이지 로드 시 디폴트 이미지 & 버튼 상태 보장
-  setDefault();
-  $btnDefault.addClass('active');
-});
-</script>
-
 </body>
 </html>
