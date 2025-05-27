@@ -152,7 +152,7 @@ def edit_profile(request):
         return JsonResponse({'code': 'successed'})
     return render(request, 'account/create_profile.html')
 
-def password_check(request):
+def check_userinfo(request):
     if request.method == 'POST':
         username = request.POST['username']
         first_name = request.POST['first_name']
@@ -169,7 +169,7 @@ def password_check(request):
     else:
         return render(request, "account/pw_set.html")
 
-def password_reset(request):
+def reset_password(request):
     if request.method == 'POST':
         username = request.POST['username']
         new_password = request.POST['new_password']

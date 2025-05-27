@@ -22,7 +22,7 @@
         <a href="{% url 'subpage_game' %}">game</a>
         <a href="{% url 'subpage_exercise' %}">exercise</a>
       </nav> 
-      <div class="util">
+      <div class="util" style="display: flex; align-items: center; gap: 12px;">
         <a href="{% url 'search' %}"><i class="bi bi-search" id="search"></i></a>
         
         {% if user.is_authenticated %}
@@ -48,7 +48,7 @@
           </div>
           {% else %}
           <!-- 로그인되지 않은 상태 -->
-          <a href="{% url 'login' %}" 
+          <a href="{% url 'signin' %}" 
             style="
               background-color: #ff6600; 
               color: white; 
