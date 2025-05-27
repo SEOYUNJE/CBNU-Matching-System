@@ -8,16 +8,20 @@ function getCSRFToken() {
     return null;
 }
 document.addEventListener('DOMContentLoaded', function(e) {
+    e.preventDefault();
     let nickname = 'null';
-    if(document.getElementById('nickname_Input').value != null) {
-        nickname = document.getElementById('nickname_Input').value.trim();
-    }
 
     document.getElementById('createProfile_Form').addEventListener('submit', function(e) {
         e.preventDefault();
+        if(document.getElementById('nickname_Input').value !== '') {
+            console.log("실행됨 요깅괴");
+            console.log(document.getElementById('nickname_Input').value);
+            nickname = document.getElementById('nickname_Input').value;
+            console.log(nickname);
+        } 
 
         document.getElementById('createProfile_Button').disabled = false;
-        console.log("실행됨");
+        console.log(document.getElementById('college_Select').value);
         fetch('/account/create_profile/',{
             method: 'POST',
             headers: {

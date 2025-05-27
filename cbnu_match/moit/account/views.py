@@ -140,7 +140,10 @@ def edit_profile(request):
             return JsonResponse({'code': 'failed', 'error': '유효한 사용자가 아닙니다.'})
         
         try:
-            target_profile.nickname=data.get('nickname')
+            print(data)
+            if(data.get('nickname') != 'null'):
+                print(data.get('nickname'))
+                target_profile.nickname=data.get('nickname')
             target_profile.gender=data.get('gender')
             target_profile.mbti=data.get('mbti')
             target_profile.college=data.get('college')

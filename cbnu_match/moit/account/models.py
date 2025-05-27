@@ -23,7 +23,7 @@ class Profile(models.Model):
 ]
     GENDER_CHOICES=[
         ('공개 안 함', '공개 안 함'),
-        ('남성','남성'), 
+        ('남성', '남성'), 
         ('여성', '여성'),
     ]
     
