@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 
 class Profile(models.Model):
     MBTI_CHOICES = [
+    ('공개 안 함', '공개 안 함'),
     ('ENFJ', 'ENFJ'),
     ('ENFP', 'ENFP'),
     ('ENTJ', 'ENTJ'),
@@ -19,12 +20,11 @@ class Profile(models.Model):
     ('ISFP', 'ISFP'),
     ('ISTJ', 'ISTJ'),
     ('ISTP', 'ISTP'),
-    ('공개 안 함', '공개 안 함'),
 ]
     GENDER_CHOICES=[
+        ('공개 안 함', '공개 안 함'),
         ('남성','남성'), 
         ('여성', '여성'),
-        ('공개 안 함', '공개 안 함')
     ]
     
     COLLEGE_CHOICES = [
@@ -48,28 +48,29 @@ class Profile(models.Model):
     ]
     
     GRADE_CHOICES=[
+        ('공개 안 함', '공개 안 함'),
         ('1학년','1학년'), 
         ('2학년', '2학년'),
         ('3학년', '3학년'),
         ('4학년', '4학년'),
-        ('공개 안 함', '공개 안 함'),
     ]
-    
-<<<<<<< HEAD
-    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
-    profile_img = models.ImageField(upload_to='',blank=True,null=True)
-    nickname = models.CharField(max_length=100) 
-    mbti = models.CharField(max_length=4,
-                            choices=MBTI_CHOICES,
-                            )
-=======
+
+    default_images = [
+        'default1.jpg',
+        'default2.jpg',
+        'default3.jpg',
+        'default4.jpg',
+        'default5.jpg',
+        'default6.jpg',
+    ]
+
     user = models.OneToOneField(
         User, 
         on_delete=models.CASCADE, 
     )
 
     profile_img = models.ImageField(
-        upload_to='user_img/',
+        upload_to='',
         null=True
     )
 
@@ -84,7 +85,6 @@ class Profile(models.Model):
         default='공개 안 함',
     )
 
->>>>>>> b8a1c51 (Text)
     gender = models.CharField(
         max_length=10,
         choices=GENDER_CHOICES,
