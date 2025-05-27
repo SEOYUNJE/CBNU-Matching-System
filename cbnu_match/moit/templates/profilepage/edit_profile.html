@@ -25,17 +25,17 @@
       </nav> 
       <div class="util">
         <a href="{% url 'search' %}"><i class="bi bi-search" id="search"></i></a>
+        
+        {% if user.is_authenticated %}
+        <!-- 로그인된 상태 -->
         <div class="profile-wrapper">
           <i class="bi bi-person-circle" id="profileBtn"></i>
           <div class="profile-menu" id="profileMenu">
             <div class="profile-info">
-              <span id="name"><p>토마토님</p></span>
+              <span id="name"><p>{{ user.username }}님</p></span>
               <span id="manner"><p>매너온도 40도</p></span>
             </div>
             <hr>
-            <a href="{% url 'profilepage' %}" class="menu-item">
-              <i class="bi bi-person-fill"></i> profile
-            </a>
             <a href="{% url 'search' %}" class="menu-item">
               <i class="bi bi-chat-dots"></i> moit chat
             </a>
@@ -44,6 +44,13 @@
             </a>
           </div>
         </div>
+        {% else %}
+        <!-- 로그인되지 않은 상태 -->
+        <div class="auth-buttons">
+          <a href="{% url 'signup' %}" class="btn-signup">회원가입</a>
+          <a href="{% url 'login' %}" class="btn-login">로그인</a>
+        </div>
+        {% endif %}
       </div>
     </div>
   </header>
@@ -59,12 +66,12 @@
       <!-- 왼쪽: 프로필 이미지 -->
       <div class="left-section">
         <div class="profile-image">
-          <img src="../Images/profile.png" alt="profile" id="profilePreview" />
-        </div>
-        <div class="image-buttons">
-          <button type="button" onclick="useDefaultImage()">기본 이미지 사용</button>
-          <label for="profileImage">사진 선택하기</label>
-          <input type="file" id="profileImage" accept="image/*" onchange="previewImage(event)" />
+        <img src="{{ profile.profile_img.url }}" alt="profile" id="profilePreview" />
+      </div>
+  
+      <div class="image-buttons">
+        <label for="profileImage" class="custom-file-button">사진 선택하기</label>
+        <input type="file" id="profileImage" name="profile_img" accept="image/*" onchange="previewImage(event)" style="display: none;" />
         </div>
       </div>
 
@@ -76,7 +83,7 @@
         <form class="info">
           <div class="info-row">
             <label>닉네임</label>
-            <input type="text" value="토마토" />
+            <input type="text" value="{{profile.nickname}}" />
           </div>
           <div class="info-row">
             <label>성별</label>

@@ -111,11 +111,21 @@ def profile(request, username):
             profile.college = form.cleaned_data['college']
             profile.self_introduce = form.cleaned_data['self_introduce']
             
+            profile.profile_img = form.cleaned_data['profile_img']
+
+            default_images = [
+            'default1.jpg',
+            'default2.jpg',
+            'default3.jpg',
+            'default4.jpg',
+            'default5.jpg',
+            'default6.jpg',
+            ]
+
             if form.cleaned_data.get('profile_img'):
                 profile.profile_img = form.cleaned_data['profile_img']
             else:
-                random_default = f"default{random.randint(1, 6)}.jpg"
-                profile.profile_img = random_default
+                profile.profile_img = random.choice(default_images)
         
             profile.save()
             return redirect('login')

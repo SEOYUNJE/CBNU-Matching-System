@@ -48,7 +48,7 @@ class Profile(models.Model):
         ('4학년', '4학년')]
     
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
-    profile_img = models.ImageField(upload_to='user_img/',blank=True,null=True)
+    profile_img = models.ImageField(upload_to='',blank=True,null=True)
     nickname = models.CharField(max_length=100) 
     mbti = models.CharField(max_length=4,
                             choices=MBTI_CHOICES,

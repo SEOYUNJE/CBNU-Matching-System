@@ -22,33 +22,52 @@
     <div class="container">
       <a href="{% url 'mainpage'%}"><div class="logo">moit</div></a>
       <nav class="nav">
-        <a href="{% url 'search'%}">meals</a>
-        <a href="{% url 'search'%}">study</a>
-        <a href="{% url 'search'%}">game</a>
-        <a href="{% url 'search'%}">exercise</a>
+        <a href="{% url 'subpage_meals'%}">meals</a>
+        <a href="{% url 'subpage_study'%}">study</a>
+        <a href="{% url 'subpage_game'%}">game</a>
+        <a href="{% url 'subpage_exercise'%}">exercise</a>
       </nav> 
-        <div class="util">
+        <div class="util" style="display: flex; align-items: center; gap: 12px;">
           <a href="{% url 'search'%}"><i class="bi bi-search" id="search"></i></a>
+          {% if user.is_authenticated %}
+          <!-- 로그인된 상태 -->
           <div class="profile-wrapper">
             <i class="bi bi-person-circle" id="profileBtn"></i>
-          
             <div class="profile-menu" id="profileMenu">
               <div class="profile-info">
-                <span id="name"><p>토마토님</p></span>
+                <span id="name"><p>{{ user.username }}님</p></span>
                 <span id="manner"><p>매너온도 40도</p></span>
               </div>
               <hr>
-              <a href="{% url 'profilepage'%}" class="menu-item">
-                <i class="bi bi-person-fill"></i> profile
+              <a href="{% url 'profilepage' %}" class="menu-item">
+                  <i class="bi bi-person-fill"></i> profile
               </a>
-              <a href="{% url 'search'%}" class="menu-item">
+              <a href="{% url 'search' %}" class="menu-item">
                 <i class="bi bi-chat-dots"></i> moit chat
               </a>
-              <a href="{% url 'logout'%}" class="menu-item">
-               <i class="bi bi-box-arrow-right"></i> log out
+              <a href="{% url 'logout' %}" class="menu-item">
+                <i class="bi bi-box-arrow-right"></i> log out
               </a>
+            </div>
           </div>
-        </div>
+          {% else %}
+          <!-- 로그인되지 않은 상태 -->
+          <a href="{% url 'login' %}" 
+            style="
+              background-color: #ff6600; 
+              color: white; 
+              padding: 6px 16px; 
+              border-radius: 25px; 
+              font-weight: 600; 
+              text-decoration: none;
+              display: flex;
+              align-items: center;
+              gap: 6px;
+              font-size: 0.9rem;
+           ">
+            로그인
+          </a>
+          {% endif %}
       </div>
     </div>
   </header>
