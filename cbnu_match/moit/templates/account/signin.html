@@ -11,6 +11,7 @@
 </head>
 <body>
   <header class="header">
+    <div class="container">
     <a href="{% url 'mainpage' %}"><div class="logo">moit</div></a>
     <nav class="nav">
       <a href="{% url 'subpage_meals' %}">meals</a>
@@ -18,30 +19,7 @@
       <a href="{% url 'subpage_game' %}">game</a>
       <a href="{% url 'subpage_exercise' %}">exercise</a>
     </nav>
-     <div class="util">
-        <a href="{% url 'search' %}"><i class="bi bi-search" id="search"></i></a>
-        <div class="profile-wrapper">
-            <i class="bi bi-person-circle" id="profileBtn"></i>
-          
-            <div class="profile-menu" id="profileMenu">
-              <div class="profile-info">
-                <span id="name"><p>토마토님</p></span>
-                <span id="manner"><p>매너온도 40도</p></span>
-              </div>
-              <hr>
-              <a href="{% url 'profilepage' %}" class="menu-item">
-                <i class="bi bi-person-fill"></i> profile
-              </a>
-              <a href="{% url 'search' %}" class="menu-item">
-                <i class="bi bi-chat-dots"></i> moit chat
-              </a>
-              <a href="{% url 'logout' %}" class="menu-item">
-                <i class="bi bi-box-arrow-right"></i> log out
-              </a>
-            </div>
-        </div>
-     </div>
-  </header>
+</header>
 
 
 
@@ -74,8 +52,8 @@
       </form>
       <div class="links">
         <!-- 링크 주소 수정하기 -->
-        <a href="#">아이디 찾기</a> | 
-        <a href="#">비밀번호 재설정</a> | 
+        <a href="{% url 'find_id' %}">아이디 찾기</a> | 
+        <a href="{% url 'check_userinfo' %}#">비밀번호 재설정</a> | 
         <a href="{% url 'signup' %}">회원가입</a>
       </div>
     </div>
