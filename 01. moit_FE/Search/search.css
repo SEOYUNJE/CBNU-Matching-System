@@ -34,11 +34,32 @@
   min-height: 100vh;
 }
 
-.search-section.shrink {
+/* .search-section.shrink {
   transform: translateY(-120px); 
   min-height: 400px;             
   padding-top: 0;
   margin-bottom: 2rem;
+
+} */
+
+/* shrink 상태 시 title과 box도 작게 */
+.search-section.shrink {
+  transform: translateY(-150px);  /* 더 위로 올려줌 */
+  min-height: auto;               /* 줄이기 */
+  padding-top: 1rem;
+  margin-bottom: 2rem;
+}
+
+/* 제목 작게 */
+.search-title.small {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+/* 검색박스 작게 */
+.search-box.small {
+  transform: scale(0.85);
+  transition: transform 0.3s ease;
 }
 
 .result-section {

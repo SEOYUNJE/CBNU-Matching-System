@@ -10,12 +10,27 @@ document.addEventListener('DOMContentLoaded', () => {
   const closeLoginBtn = document.getElementById('closeLoginPrompt');
   const loginBtn = document.getElementById('goToLogin');
 
-  const isLoggedIn = false; // Django 템플릿에서 동적으로 대체 예정
+  // Django 템플릿에서 동적으로 대체 예정
+  const isLoggedIn = false; 
+  //const isLoggedIn = {{ user.is_authenticated|yesno:"true,false" }};
 
   // [모임 생성] 버튼 클릭 → 팝업 열기
+  // openBtn.addEventListener('click', () => {
+  //   modal.classList.add('show');
+  // });
+  // 2025-05-28
+  // 방식 변경함
+  // [모임 생성] 버튼 클릭 → 로그인 여부 확인 후 팝업 결정
   openBtn.addEventListener('click', () => {
-    modal.classList.add('show');
+    if (!isLoggedIn) {
+      // 로그인 안되어 있으면 로그인 안내 팝업만 띄움
+      loginPrompt.classList.add('show');
+    } else {
+      // 로그인 되어 있으면 모임 생성 팝업 띄움
+      modal.classList.add('show');
+    }
   });
+
 
   // [X] 생성 팝업 닫기
   closeBtn.addEventListener('click', () => {
