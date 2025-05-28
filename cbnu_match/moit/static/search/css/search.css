@@ -1,7 +1,7 @@
 @import url('/static/share/css/layout_page.css');
 
 /* ─────────────── 검색 섹션 ─────────────── */
-.search-section {
+/*.search-section {
 
   /* transition: transform 0.4s ease, padding-top 0.4s ease;
 
@@ -12,8 +12,7 @@
   align-items: center;
   transform: translateY(-5vh);   */
  
-}
-
+/*}*/
 /* .search-section.shrink {
   transform: translateY(-220px);
   padding-top: 20px;
