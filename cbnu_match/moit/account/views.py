@@ -12,6 +12,7 @@ from .models import Profile
 import random
 import json
 
+# 로그인
 def signin(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -25,10 +26,12 @@ def signin(request):
     else:
         return render(request, 'account/signin.html')
     
-def logout_view(request):
+# 로그아웃
+def signout(request):
     logout(request)
     return redirect('mainpage')
-    
+
+# 아이디 찾기
 def find_login(request):
     if request.method == "POST":
         first_name = request.POST['first_name']
@@ -50,47 +53,7 @@ def find_login(request):
     else:
         return render(request, "account/id_find.html")
 
-def check_id(request):
-    id = request.GET.get('id')
-    validator = UnicodeUsernameValidator()
-    try:
-        if User.objects.filter(username = id).exists():
-            raise ValidationError ('이미 존재하는 아이디입니다.', code='username_already_exists')
-        print(id)
-        validator(id)
-        return JsonResponse({'valid': True})
-    except ValidationError as e:
-        return JsonResponse({'valid': False, 'error': e.messages, 'code': e.code}, status=400)
-
-def check_password(request):
-    if request.method == 'POST':
-        try:
-            data = json.loads(request.body)
-
-            id = data.get('username')
-            password = data.get('password')
-        except json.JSONDecodeError:
-            return JsonResponse({'error': '요청 본문이 올바른 JSON이 아닙니다.'}, status = 400)
-        temp = User(username=id, password=password)
-        try:
-            validate_password(password, user=temp)
-        except ValidationError as e:
-            return JsonResponse({'error': e.messages}, status=400)
-        return JsonResponse({'password': password})
-
-def check_email(request):
-    if request.method == 'POST':
-        try:
-            data = json.loads(request.body)
-            email = data.get('email')
-        except json.JSONDecodeError:
-            return JsonResponse({'valid': False, 'error': '요청 본문이 올바른 JSON이 아닙니다.'})
-        try:
-            validate_email(email)
-        except ValidationError as e:
-            return JsonResponse({'valid': False, 'error': e.messages}, status=400)
-        return JsonResponse({'valid': True})
-
+# 회원가입
 def signup(request):
     if request.method == 'POST':
         try:
@@ -122,9 +85,52 @@ def signup(request):
         return JsonResponse({'code': 'successed'})
     return render(request, 'account/signup.html')
 
+# 아이디 유효성 검사
+def check_id(request):
+    id = request.GET.get('id')
+    validator = UnicodeUsernameValidator()
+    try:
+        if User.objects.filter(username = id).exists():
+            raise ValidationError ('이미 존재하는 아이디입니다.', code='username_already_exists')
+        print(id)
+        validator(id)
+        return JsonResponse({'valid': True})
+    except ValidationError as e:
+        return JsonResponse({'valid': False, 'error': e.messages, 'code': e.code}, status=400)
 
+# 비밀번호 유효성 검사
+def check_password(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
 
-def edit_profile(request):
+            id = data.get('username')
+            password = data.get('password')
+        except json.JSONDecodeError:
+            return JsonResponse({'error': '요청 본문이 올바른 JSON이 아닙니다.'}, status = 400)
+        temp = User(username=id, password=password)
+        try:
+            validate_password(password, user=temp)
+        except ValidationError as e:
+            return JsonResponse({'error': e.messages}, status=400)
+        return JsonResponse({'password': password})
+
+# 이메일 유효성 검사
+def check_email(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            email = data.get('email')
+        except json.JSONDecodeError:
+            return JsonResponse({'valid': False, 'error': '요청 본문이 올바른 JSON이 아닙니다.'})
+        try:
+            validate_email(email)
+        except ValidationError as e:
+            return JsonResponse({'valid': False, 'error': e.messages}, status=400)
+        return JsonResponse({'valid': True})
+
+# 프로필 수정
+def profile(request):
     if request.method == 'POST':
         try:
             # 로그인 검증
@@ -156,6 +162,7 @@ def edit_profile(request):
         return JsonResponse({'code': 'successed'})
     return render(request, 'account/create_profile.html')
 
+# 사용자 정보 확인
 def check_userinfo(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -173,6 +180,7 @@ def check_userinfo(request):
     else:
         return render(request, "account/pw_set.html")
 
+# 비밀번호 초기화
 def reset_password(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -192,16 +200,12 @@ def profilepage(request):
     
     profile = Profile.objects.get(user = request.user)
     
-    return render(request, 'profilepage/profile.html', {'profile': profile})
+    return render(request, 'account/profile.html', {'profile': profile})
 
 @login_required
 def profilepage_edit(request):
-    
     if request.method == 'POST':
-        
         return redirect('mainpage')
-        
     else:
         profile = Profile.objects.get(user = request.user)
-    
-        return render(request, 'profilepage/edit_profile.html', {'profile': profile})
+        return render(request, 'account/edit_profile.html', {'profile': profile})
