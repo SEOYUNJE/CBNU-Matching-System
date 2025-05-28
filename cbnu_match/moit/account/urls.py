@@ -11,14 +11,14 @@ urlpatterns = [
     path('check_userinfo/', check_userinfo, name = 'check_userinfo'),
     path('reset_password/', reset_password, name = 'reset_password'),
 
-    path('logout/', logout_view, name='logout'),
+    path('logout/', signout, name='signout'),
 
     # 회원가입 밑에 있는 path는 회원가입할 때 사용
     path('signup/', signup, name='signup'),
     path('check_id/', check_id, name='check_id'),
     path('check_password/', check_password, name='check_password'),
     path('check_email/', check_email, name='check_email'),
-    path('create_profile/', edit_profile, name='create_profile'),
+    path('create_profile/', profile, name='create_profile'),
     
     # Profile Page
     path('profile/', profilepage, name='profilepage'),

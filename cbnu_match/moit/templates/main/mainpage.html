@@ -45,7 +45,7 @@
               <a href="{% url 'search' %}" class="menu-item">
                 <i class="bi bi-chat-dots"></i> moit chat
               </a>
-              <a href="{% url 'logout' %}" class="menu-item">
+              <a href="{% url 'signout' %}" class="menu-item">
                 <i class="bi bi-box-arrow-right"></i> log out
               </a>
             </div>
@@ -54,7 +54,7 @@
           <!-- 로그인되지 않은 상태 -->
           <a href="{% url 'signin' %}" 
             style="
-              background-color: #ff6600; 
+              background-color: #e74c3c; 
               color: white; 
               padding: 6px 16px; 
               border-radius: 25px; 
@@ -221,7 +221,7 @@
       <h3><span class="highlight">enjoy</span> Moit</h3>
       <div class="masonry-grid">
         <!--이미지 경로 변경 with static-->
-        <div class="block" style="background-image: url('{% static "meet/images/basketball.jpg" %}')">
+        <div class="block tall" style="background-image: url('{% static "meet/images/basketball.jpg" %}')">
           <div class="card-overlay">
             <h3>농구 같이 하실분</h3>
             <p>4월 11일 금요일<br>모집인원 4/8</p>
