@@ -35,7 +35,10 @@ main {
   display: grid;
   grid-template-columns: 100px 1fr;
   gap: 1rem;
-  margin-bottom: 1.5rem;  /* 다른 .field와 동일 */
+  /* 다른 .field와 동일 */
+  /* margin-bottom: 1.5rem;   */
+  margin-bottom: 0rem !important;  
+
 }
 .name-fields .field-group label {
   display: block;
@@ -62,6 +65,10 @@ main {
 /* 각 입력 필드 묶음 */
 .signup-container .field {
   margin-bottom: 1.5rem;
+}
+
+#m-email{
+  margin-top: 1.5rem !important;
 }
 
 /* 레이블 */
@@ -103,7 +110,9 @@ main {
 /* 에러 메시지: 기본 숨김 */
 .error-message {
   display: none;
-  margin-top: 0.5rem;
+  /* margin-top: 0.5rem; */
+  margin-top: 0.5rem !important;
+
   font-size: 0.8rem;
   color: #e74c3c;
 }
