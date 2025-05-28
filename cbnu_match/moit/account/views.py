@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.contrib.auth.password_validation import validate_password
+from django.contrib.auth.decorators import login_required
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from .models import Profile
@@ -185,3 +186,22 @@ def reset_password(request):
         return redirect('signin')
     else:
         return render(request, "account/pw_new.html")
+    
+@login_required
+def profilepage(request):
+    
+    profile = Profile.objects.get(user = request.user)
+    
+    return render(request, 'profilepage/profile.html', {'profile': profile})
+
+@login_required
+def profilepage_edit(request):
+    
+    if request.method == 'POST':
+        
+        return redirect('mainpage')
+        
+    else:
+        profile = Profile.objects.get(user = request.user)
+    
+        return render(request, 'profilepage/edit_profile.html', {'profile': profile})

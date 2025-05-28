@@ -19,4 +19,8 @@ urlpatterns = [
     path('check_password/', check_password, name='check_password'),
     path('check_email/', check_email, name='check_email'),
     path('create_profile/', edit_profile, name='create_profile'),
+    
+    # Profile Page
+    path('profile/', profilepage, name='profilepage'),
+    path('profile/edit', profilepage_edit, name='edit_profile'),
 ]
