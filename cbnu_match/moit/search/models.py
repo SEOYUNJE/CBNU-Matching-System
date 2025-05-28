@@ -16,7 +16,6 @@ class Meet(models.Model):
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
     meet_introduce = models.TextField()
     max_member = models.PositiveIntegerField()
-    deadline = models.DateField()
     created_at = models.DateTimeField(auto_now_add=True)
 
     participants = models.ManyToManyField(User, related_name='joined_meets_search', blank=True)
