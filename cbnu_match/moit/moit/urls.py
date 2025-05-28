@@ -15,7 +15,6 @@ urlpatterns = [
     path('account/', include('account.urls')),
     path('meet/', include('meet.urls')),
     path('chat/', include('chat.urls')),
-    path('profilepage/', include('profilepage.urls')),
     path('subpage/', include('subpage.urls')),
 ]
 

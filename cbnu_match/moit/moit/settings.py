@@ -49,7 +49,6 @@ INSTALLED_APPS = [
     'meet',
     'chat',
     'search',
-    'profilepage',
     'subpage',
 ]
 
