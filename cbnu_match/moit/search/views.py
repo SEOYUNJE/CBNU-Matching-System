@@ -1,8 +1,8 @@
 from django.shortcuts import render
-from .models import Meet
+from .models import Meet, CATEGORY_CHOICES
+from .forms import forms
 from django.core.paginator import Paginator
 from django.db.models import Q, Count
-from meet.models import CATEGORY_CHOICES
 
 def search_before(request):
     return render(request, 'search/search_before.html')
@@ -57,9 +57,11 @@ def search(request):
     page_obj = paginator.get_page(page_number)
 
     context = {
-        'results': page_obj,
+        'form': forms,  
+        'results': page_obj,  
         'query': query,
-        'category_list': CATEGORY_CHOICES,
+        'main_type': main_type,
+        'sub_type': sub_type,
     }
 
     return render(request, 'search/search.html', context)
