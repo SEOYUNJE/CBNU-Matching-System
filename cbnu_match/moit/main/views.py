@@ -10,7 +10,11 @@ def mainpage(request):
         ("exercise", "tennis.svg"),
         ("meals", "meal.svg"),
     ]
+    
+    authentic = request.user.is_authenticated
+    
     return render(request, 'main/mainpage.html', {
         'meets': meets,
-        'categories': categories
+        'categories': categories,
+        'authentic': authentic,
     })

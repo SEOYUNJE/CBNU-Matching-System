@@ -95,7 +95,7 @@
   margin-bottom: 0;
 }
 
-/* 제출 버튼 */
+/* 활성화 시 제출 버튼 */
 .submit-btn {
   width: 100%;              /* 너비 전체로 설정 */
   background-color: #e74c3c;
@@ -108,6 +108,19 @@
   cursor: pointer;
   transition: background-color 0.2s ease;
   margin-top: 1rem;         /* 보기 좋게 여백도 추가 */
+}
+/* 제출 버튼 비활성화 시  */
+.submit-btn:disabled {
+  background-color: rgba(231, 76, 60, 0.5); /* 0.5는 50% 불투명도 */
+  color: #fff;
+  cursor: not-allowed;
+}
+
+/* 자기소개글 Error */
+.introduce-error {
+  color: red;
+  font-size: 0.9rem;
+  margin-top: 4px;
 }
 
 .submit-btn:hover {

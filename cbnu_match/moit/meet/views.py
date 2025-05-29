@@ -1,47 +1,41 @@
 # meet/views.py
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
-from .forms import * 
 from .models import *
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+
 from django.http import JsonResponse
+import json
 
-def subpage(request):
-    return render(request, 'subpage/subpage_ver2.html')
+# def subpage(request):
+#     return render(request, 'subpage/subpage_ver2.html')
     
-@login_required
 def create_meet(request):
-    if request.method == 'POST':
-        form = CreateMeetForm(request.POST)
-        if form.is_valid():
-            meet = Meet(
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+            title = data.get('title')
+            category = data.get('category')
+            deadline = data.get('deadline')
+            max_member = data.get('max_member')
+            meet_introduce = data.get('meet_introduce')
+
+            # 새로운 Meet Data 생성
+            meet = Meet.objects.create(
                 user=request.user,
-                title=form.cleaned_data['title'],
-                category=form.cleaned_data['category'],
-                deadline=form.cleaned_data['deadline'],
-                max_member=form.cleaned_data['max_member'],
-                meet_introduce=form.cleaned_data['meet_introduce']
+                title=title,
+                category=category,
+                deadline=deadline,
+                max_member=max_member,
+                meet_introduce=meet_introduce,
             )
-            meet.save()
+            # 방장도 참여자에 포함시킨다
             meet.participant.add(request.user)
-
-            # JSON 형태로 meet_id 응답
-            return JsonResponse({
-                'status': 'success',
-                'meet_id': meet.meet_id
-            })
-        else:
-            return JsonResponse({
-                'status': 'error',
-                'message': '입력값이 유효하지 않습니다.'
-            }, status=400)
-
-    return JsonResponse({
-        'status': 'error',
-        'message': 'POST 요청만 지원됩니다.'
-    }, status=405)
-
+            return JsonResponse({'message': '모임 생성 성공'})
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=400)
+    return JsonResponse({'error': '잘못된 요청'}, status=400)
 
 ###############################
 

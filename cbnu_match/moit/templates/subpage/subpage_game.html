@@ -38,7 +38,7 @@
               <a href="{% url 'search' %}" class="menu-item">
                 <i class="bi bi-chat-dots"></i> moit chat
               </a>
-              <a href="{% url 'logout' %}" class="menu-item">
+              <a href="{% url 'signout' %}" class="menu-item">
                 <i class="bi bi-box-arrow-right"></i> log out
               </a>
             </div>
@@ -72,6 +72,7 @@
     <div class="modal-content">
       <span id="closeModal" class="close-btn">&times;</span>
       <form id="groupForm">
+        {% csrf_token %}
         <div class="modal-group">
           <label for="group-title">모임 제목</label>
           <input id="group-title" name="title" type="text" placeholder="모임 제목을 작성해주세요.">
@@ -81,36 +82,38 @@
           <div class="modal-group">
             <label for="group-type">모임 종류</label>
             <select id="group-type" name="category">
-              <option>스터디</option>
-              <option>운동</option>
-              <option>식사</option>
-              <option>게임</option>
+              <option value="STUDY">스터디</option>
+              <option value="GAME">게임</option>
+              <option value="EXERCISE">운동</option>
+              <option value="MEALS">식사</option>
             </select>
           </div>
           <div class="modal-group">
             <label for="group-date">모임 날짜</label>
-            <input id="group-date" name="end_time" type="datetime-local">
+            <input id="group-date" name="deadline" type="datetime-local">
           </div>
           <div class="modal-group">
             <label for="group-people">모임 인원</label>
             <select id="group-people" name="max_member">
-              <option value="2">2명</option>
-              <option value="3">3명</option>
-              <option value="4">4명</option>
-              <option value="5">5명</option>
-              <option value="6">6명이상 10명 미만</option>
-              <option value="11">11명 이상 15명 미만</option>
-              <option value="15">15명 이상 20명 미만</option>
+              <option value="2명">2명</option>
+              <option value="3명">3명</option>
+              <option value="4명">4명</option>
+              <option value="5명">5명</option>
+              <option value="6명">6명</option>
+              <option value="7명">7명</option>
+              <option value="8명">8명</option>
+              
             </select>
           </div>
         </div>
 
         <div class="modal-group">
           <label for="group-description">상세 정보 입력</label>
-          <textarea id="group-description" name="introduction" placeholder="자세한 모임 설명을 작성해주세요."></textarea>
+          <textarea id="group-description" name="meet_introduce" placeholder="자세한 모임 설명을 작성해주세요."></textarea>
+          <div id="description-error" class="introduce-error"></div>
         </div>
 
-        <button class="submit-btn" type="submit">모임 생성</button>
+        <button class="submit-btn" type="submit" id="create_meet_btn" disabled>입장하기</button>
       </form>
     </div>
   </div>
@@ -159,9 +162,9 @@
         로그인하지 않은 상태입니다.<br>
         로그인 후 서비스를 이용해주세요!
       </p>
-      <button id="goToLogin" class="submit-btn" style="max-width: 200px; margin-top: 1.2rem;">
+      <a href="{% url 'signin' %}" class="submit-btn" style="max-width: 200px; margin-top: 1.2rem;">
         로그인하러 가기
-      </button>
+      </a>
     </div>
   </div>
   <!-- ------------------------------------------------------------------------------------------>
@@ -225,7 +228,10 @@
         <div class="category-header">
           <h2>CATEGORY <span class="highlight">GAME</span></h2>
           <!-- 모임 생성 팝업을 위해 클래스 추가 -->
-          <button class="sort-btn create-btn">모임생성</button>
+          <button class="sort-btn create-btn"
+                  data-authentic="{{ authentic|yesno:'true,false'}}"> 
+                  모임생성</button>
+          </button>
         </div>
 
         <div class="list-layout">

@@ -195,6 +195,26 @@ h3{
   background-color: white;
   cursor: pointer;
   position: relative;
+
+  width: 100%;    /* 추가 */
+  height: 100%;   /* 추가 */
+  box-sizing: border-box; /* 추가 */
+}
+
+/* 추가 */
+.cat-link {
+  display: block;            /* 가장 중요! */
+  width: 100%;               /* 필요에 따라 조절 */
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+}
+
+/* 추가 */
+.cat-wrapper {
+  display: flex; /* 또는 grid */
+  gap: 0; /* 간격 없애기 */
+  padding: 0; /* 여백 없애기 */
 }
 
 /* 오른쪽 열 마지막 border-right 제거 */
