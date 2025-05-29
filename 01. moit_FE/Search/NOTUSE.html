@@ -32,19 +32,23 @@
   <!-- 메인 콘텐츠 -->
 
  <main>
-  <!-- 🔍 검색 입력 영역 -->
-  <section class="search-section">
-    <h1 class="search-title">SEARCH</h1>
-    <form class="search-box" method="GET" action="{% url 'search' %}">
-      <input
-        type="text"
-        name="query"
-        placeholder="검색어를 입력하세요..."
-        value="{{ request.GET.query|default:'' }}"
-      />
-      <button type="submit"><i class="bi bi-search"></i></button>
-    </form>
-  </section>
+  <div class="search-container">
+    <section class="search-section">
+      <h1 class="search-title">SEARCH</h1>
+      <form class="search-box" method="GET" action="{% url 'search' %}">
+        <input
+          type="text"
+          name="query"
+          placeholder="검색어를 입력하세요..."
+          value="{{ request.GET.query|default:'' }}"
+        />
+        <button type="submit"><i class="bi bi-search"></i></button>
+      </form>
+    </section>
+    <section class="result-section hidden">
+      <!-- 결과 섹션 내용 -->
+    </section>
+  </div>
 
   <!-- 검색 결과 영역 (검색어 있을 때만 표시) -->
   {% if request.GET.query %}

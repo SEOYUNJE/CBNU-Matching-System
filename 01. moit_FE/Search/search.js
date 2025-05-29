@@ -79,32 +79,44 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
-  // 검색 폼 제출 이벤트
+  // 검색 폼 제출 이벤트 - 개선된 애니메이션
   searchForm.addEventListener('submit', function(e) {
     e.preventDefault();
     
-    // 스크롤을 맨 위로 이동
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
+    // 부드러운 스크롤을 위해 약간의 딜레이 추가
+    setTimeout(() => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }, 100);
 
-    // UI 변경
-    searchSection.classList.add('shrink');
-    document.querySelector('.search-title').classList.add('small');
-    document.querySelector('.search-box').classList.add('small');
+    // UI 변경을 단계적으로 적용
+    // 1단계: 카테고리 태그 페이드아웃 (가장 먼저)
+    categoryTags.classList.add('fade-out');
     
-    // 카테고리 UI 전환
-    categoryTags.style.display = 'none';
-    categoryDropdown.classList.remove('hidden');
-    categoryBtn.innerHTML = `${selectedCategory} <i class="bi bi-chevron-down"></i>`;
+    // 2단계: 검색 섹션 크기 변경 (카테고리가 사라진 후)
+    setTimeout(() => {
+      searchSection.classList.add('shrink');
+      document.querySelector('.search-title').classList.add('small');
+      document.querySelector('.search-box').classList.add('small');
+    }, 100);
 
-    // 검색 결과 표시
+    // 3단계: 드롭다운 표시 및 결과 영역 준비
+    setTimeout(() => {
+      categoryDropdown.classList.remove('hidden');
+      categoryBtn.innerHTML = `${selectedCategory} <i class="bi bi-chevron-down"></i>`;
+    }, 200);
+
+    // 4단계: 검색 결과 표시 (모든 애니메이션 완료 후)
     setTimeout(() => {
       resultSection.classList.remove('hidden');
       resultSection.style.display = 'block';
-      filterResults(selectedCategory);
-    }, 300);
+      // 결과 표시 후 필터링 적용
+      setTimeout(() => {
+        filterResults(selectedCategory);
+      }, 100);
+    }, 350);
   });
 
   // 검색 결과 필터링 함수
@@ -118,5 +130,34 @@ document.addEventListener('DOMContentLoaded', function() {
         item.style.display = 'none';
       }
     });
+  }
+
+  // 검색 취소 기능 (선택사항 - ESC 키로 초기 상태로 돌아가기)
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && !resultSection.classList.contains('hidden')) {
+      resetSearchState();
+    }
+  });
+
+  function resetSearchState() {
+    // 검색 결과 숨기기
+    resultSection.classList.add('hidden');
+    setTimeout(() => {
+      resultSection.style.display = 'none';
+    }, 300);
+
+    // 검색 섹션 원래 상태로
+    setTimeout(() => {
+      searchSection.classList.remove('shrink');
+      document.querySelector('.search-title').classList.remove('small');
+      document.querySelector('.search-box').classList.remove('small');
+      
+      // 카테고리 UI 원래 상태로
+      categoryDropdown.classList.add('hidden');
+      categoryTags.classList.remove('fade-out');
+      
+      // 검색어 초기화
+      document.querySelector('input[type="text"]').value = '';
+    }, 100);
   }
 });
