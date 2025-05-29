@@ -74,85 +74,92 @@
       <input type="text" placeholder="검색어를 입력하세요..." />
       <button type="submit"><i class="bi bi-search"></i></button>
     </form>
+    <!-- 검색 전 카테고리 태그 -->
+    <div id="categoryTags" class="category-tags">
+      <div class="category-tag" data-category="all">전체</div>
+      <div class="category-tag" data-category="meals">MEALS</div>
+      <div class="category-tag" data-category="study">STUDY</div>
+      <div class="category-tag" data-category="game">GAME</div>
+      <div class="category-tag" data-category="exercise">EXERCISE</div>
+    </div>
+    <!-- 검색 후 카테고리 드롭다운 -->
+    <div id="categoryDropdown" class="category-dropdown hidden">
+      <button class="category-btn">카테고리 <i class="bi bi-chevron-down"></i></button>
+      <div class="category-menu">
+        <div class="category-option" data-category="all">전체</div>
+        <div class="category-option" data-category="meals">MEALS</div>
+        <div class="category-option" data-category="study">STUDY</div>
+        <div class="category-option" data-category="game">GAME</div>
+        <div class="category-option" data-category="exercise">EXERCISE</div>
+      </div>
+    </div>
   </section>
 
 
-  <!-- 검색 결과 영역 (검색어 있을 때만 표시) -->
-<section id="resultSection" class="result-section hidden">
-  <div class="container">
-    <h2 class="result-title">검색결과</h2>
-    <div class="list-layout">
-      <!-- 반복 가상 데이터 -->
-      {% comment %} 아래는 백엔드 연결 전용 가상 콘텐츠 {% endcomment %}
-      <div class="list-item">
-        <h4 class="item-title">같이 초밥 시키실분</h4>
-        <div class="item-meta">
-          <span class="tag">MEALS</span>
-          <span class="info">마감 5/12 21:00</span>
+  <!-- 검색 결과 영역 -->
+  <section id="resultSection" class="result-section hidden">
+    <div class="container">
+      <h2 class="result-title">검색결과</h2>
+      <div class="list-layout">
+        <!-- 검색 결과 아이템 -->
+        <div class="list-item">
+          <h4 class="item-title">같이 초밥 시키실분</h4>
+          <div class="item-meta">
+            <span class="tag">MEALS</span>
+            <span class="info"><i class="bi bi-person-fill"></i>3/4</span>
+            <span class="info"><i class="bi bi-calendar-event"></i>마감 5/12 21:00</span>
+          </div>
+        </div>
+        <div class="list-item">
+          <h4 class="item-title">알고리즘 스터디원 구합니다</h4>
+          <div class="item-meta">
+            <span class="tag">STUDY</span>
+            <span class="info"><i class="bi bi-person-fill"></i>2/4</span>
+            <span class="info"><i class="bi bi-calendar-event"></i>마감 5/15 18:00</span>
+          </div>
+        </div>
+        <div class="list-item">
+          <h4 class="item-title">배드민턴 치실 분</h4>
+          <div class="item-meta">
+            <span class="tag">EXERCISE</span>
+            <span class="info"><i class="bi bi-person-fill"></i>3/6</span>
+            <span class="info"><i class="bi bi-calendar-event"></i>마감 5/13 15:00</span>
+          </div>
+        </div>
+        <div class="list-item">
+          <h4 class="item-title">롤 같이 하실 분</h4>
+          <div class="item-meta">
+            <span class="tag">GAME</span>
+            <span class="info"><i class="bi bi-person-fill"></i>4/5</span>
+            <span class="info"><i class="bi bi-calendar-event"></i>마감 5/14 20:00</span>
+          </div>
+        </div>
+        <div class="list-item">
+          <h4 class="item-title">치킨 시켜먹을 사람</h4>
+          <div class="item-meta">
+            <span class="tag">MEALS</span>
+            <span class="info"><i class="bi bi-person-fill"></i>2/3</span>
+            <span class="info"><i class="bi bi-calendar-event"></i>마감 5/12 19:00</span>
+          </div>
+        </div>
+        <div class="list-item">
+          <h4 class="item-title">프로젝트 팀원 모집</h4>
+          <div class="item-meta">
+            <span class="tag">STUDY</span>
+            <span class="info"><i class="bi bi-person-fill"></i>3/5</span>
+            <span class="info"><i class="bi bi-calendar-event"></i>마감 5/16 17:00</span>
+          </div>
         </div>
       </div>
-      <!-- (7개 더 반복) -->
-            <div class="list-item">
-        <h4 class="item-title">같이 초밥 시키실분</h4>
-        <div class="item-meta">
-          <span class="tag">MEALS</span>
-          <span class="info">마감 5/12 21:00</span>
-        </div>
-      </div>
-            <div class="list-item">
-        <h4 class="item-title">같이 초밥 시키실분</h4>
-        <div class="item-meta">
-          <span class="tag">MEALS</span>
-          <span class="info">마감 5/12 21:00</span>
-        </div>
-      </div>
-            <div class="list-item">
-        <h4 class="item-title">같이 초밥 시키실분</h4>
-        <div class="item-meta">
-          <span class="tag">MEALS</span>
-          <span class="info">마감 5/12 21:00</span>
-        </div>
-      </div>
-            <div class="list-item">
-        <h4 class="item-title">같이 초밥 시키실분</h4>
-        <div class="item-meta">
-          <span class="tag">MEALS</span>
-          <span class="info">마감 5/12 21:00</span>
-        </div>
-      </div>
-            <div class="list-item">
-        <h4 class="item-title">같이 초밥 시키실분</h4>
-        <div class="item-meta">
-          <span class="tag">MEALS</span>
-          <span class="info">마감 5/12 21:00</span>
-        </div>
-      </div>
-
-            <div class="list-item">
-        <h4 class="item-title">같이 초밥 시키실분</h4>
-        <div class="item-meta">
-          <span class="tag">MEALS</span>
-          <span class="info">마감 5/12 21:00</span>
-        </div>
-      </div>
-            <div class="list-item">
-        <h4 class="item-title">같이 초밥 시키실분</h4>
-        <div class="item-meta">
-          <span class="tag">MEALS</span>
-          <span class="info">마감 5/12 21:00</span>
-        </div>
+      <div class="pagination">
+        <button>&laquo;</button>
+        <button class="active">1</button>
+        <button>2</button>
+        <button>3</button>
+        <button>&raquo;</button>
       </div>
     </div>
-
-    <div class="pagination">
-      <button>&laquo;</button>
-      <button class="active">1</button>
-      <button>2</button>
-      <button>3</button>
-      <button>&raquo;</button>
-    </div>
-  </div>
-</section>
+  </section>
 
   <!-- --------------------------------------------------------------->
   <footer class="footer">
@@ -169,17 +176,8 @@
       </div>
     </div>
   </footer>
-  <script src="popup_create.js"></script>
-  <script src="popup_join.js"></script>
-  <script src="mainpage2.js"></script>
 
-  <!-- 스크롤 인디케이터 -->
-<div class="scroll-indicator">
-  <div class="dot active"></div>
-  <div class="dot"></div>
-  <div class="dot"></div>
-  </div>
 
-<script src="../popup_create.js"></script>
+<script src="search.js"></script>
 </body>
 </html>

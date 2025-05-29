@@ -1,121 +1,453 @@
+/* 2025-05-29 */
+/* refactor: search.css */
 @import url('../layout_page.css');
 
-/* ─────────────── 검색 섹션 ─────────────── */
-.search-section {
-
-  /* transition: transform 0.4s ease, padding-top 0.4s ease;
-
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;   
-  align-items: center;
-  transform: translateY(-5vh);   */
- 
-}
-
-/* .search-section.shrink {
-  transform: translateY(-220px);
-  padding-top: 20px;
-} */
-/* .search-section.shrink {
-  min-height: 300px;
-  transform: translateY(-120px);
-  padding-top: 20px;
-  margin-bottom: 1rem;
-} */
-
+/* 초기: 검색 섹션만 화면 가운데 정렬 */
 .search-section {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  transition: transform 0.4s ease;
-  min-height: 100vh;
+  min-height: calc(100vh - 120px);
+  margin-top: 65px;
+  transition: all 0.75s cubic-bezier(0.4, 0.0, 0.2, 1);
+  position: relative;
+  background-color: white;
+  padding: 2rem 0;
+  will-change: transform, min-height, padding;
+  transform: translateZ(0);
+  -webkit-font-smoothing: antialiased;
 }
 
-/* .search-section.shrink {
-  transform: translateY(-120px); 
-  min-height: 400px;             
-  padding-top: 0;
-  margin-bottom: 2rem;
-
-} */
-
-/* shrink 상태 시 title과 box도 작게 */
+/* 검색 후 - 헤더 아래 고정 + 작아짐 */
 .search-section.shrink {
-  transform: translateY(-150px);  /* 더 위로 올려줌 */
-  min-height: auto;               /* 줄이기 */
-  padding-top: 1rem;
-  margin-bottom: 2rem;
-}
-
-/* 제목 작게 */
-.search-title.small {
-  font-size: 1.2rem;
-  margin-bottom: 1rem;
-}
-
-/* 검색박스 작게 */
-.search-box.small {
-  transform: scale(0.85);
-  transition: transform 0.3s ease;
-}
-
-.result-section {
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity 0.4s ease, transform 0.4s ease;
+  position: sticky;
+  top: 85px;
+  min-height: auto;
+  padding: 1rem 2rem;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  z-index: 100;
+  margin: 0;
+  flex-direction: row;
+  justify-content: center;
+  gap: 2rem;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
 }
 
 .search-title {
-  font-size: 2rem;
+  font-size: 2.5rem;
   font-weight: bold;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   letter-spacing: 1px;
+  transition: all 0.75s cubic-bezier(0.4, 0.0, 0.2, 1);
+  will-change: transform, font-size;
+  transform: translateY(-4rem) translateZ(0);
+  backface-visibility: hidden;
 }
 
-.result-section.hidden {
-  opacity: 0;
-  transform: translateY(40px);
-  pointer-events: none;
+.search-title.small {
+  font-size: 1.3rem;
+  margin: 0;
+  color: #666;
+  min-width: max-content;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  transform: translateY(0) translateZ(0);
 }
 
-/* ─────────────── 검색 입력창 ─────────────── */
 .search-box {
   display: flex;
   align-items: center;
-  width: 40%;
+  width: 50%;
   min-width: 300px;
-  padding: 0.6rem 1.2rem;
-  border: 1px solid #ccc;
+  padding: 0.8rem 1.5rem;
+  border: 1.5px solid #ddd;
   border-radius: 2rem;
   background-color: white;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.05); /* 강조용 */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.03);
+  transition: all 0.75s cubic-bezier(0.4, 0.0, 0.2, 1);
+  will-change: transform, width, padding;
+  transform: translateY(-4rem) translateZ(0);
+  backface-visibility: hidden;
+}
+
+.search-box:focus-within {
+  border-color: #888;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+}
+
+.search-box.small {
+  width: 300px;
+  padding: 0.35rem 0;
+  border: none;
+  border-bottom: 1.5px solid #ddd;
+  border-radius: 0;
+  box-shadow: none;
+  margin: 0;
+  transform: translateY(0) translateZ(0);
+}
+
+.search-box.small:focus-within {
+  border-bottom-color: #888;
+  box-shadow: none;
 }
 
 .search-box input {
   flex: 1;
-  font-size: 1rem;
+  font-size: 0.95rem;
   padding: 0.4rem 0.5rem;
   border: none;
   outline: none;
   background: transparent;
-  color: #444;
+  color: #333;
 }
 
 .search-box input::placeholder {
-  color: #ccc;
+  color: #999;
 }
 
 .search-box button {
   border: none;
   background: none;
   cursor: pointer;
-  font-size: 1.3rem;
-  color: #e74c3c;
+  font-size: 1.2rem;
+  color: #666;
+  transition: color 0.2s ease;
 }
 
 .search-box button:hover {
-  color: #ff6a4c;
+  color: #333;
+}
+
+/* 검색 전 카테고리 태그 스타일 */
+.category-tags {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  transition: all 0.75s cubic-bezier(0.4, 0.0, 0.2, 1);
+  transform: translateY(-4rem) translateZ(0);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  opacity: 1;
+  visibility: visible;
+}
+
+.category-tags.small {
+  transform: translateY(0) translateZ(0);
+}
+
+.category-tags.hidden {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(0) translateZ(0);
+  transition: all 0.75s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.category-tag {
+  padding: 0.5rem 1rem;
+  border-radius: 1.5rem;
+  background-color: #f0f0f0;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+}
+
+.category-tag:hover {
+  background-color: #e0e0e0;
+}
+
+.category-tag.active {
+  background-color: #666;
+  color: white;
+}
+
+/* 검색 후 카테고리 드롭다운 스타일 */
+.category-dropdown {
+  padding: 1rem 0;
+  margin-left: 1rem;
+  position: relative;
+  display: flex;
+  align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px) translateZ(0);
+  transition: all 0.75s cubic-bezier(0.4, 0.0, 0.2, 1);
+  will-change: transform, opacity, visibility;
+}
+
+.category-dropdown.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) translateZ(0);
+}
+
+.category-btn {
+  padding: 0.35rem 1.2rem;
+  border: none;
+  border-radius: 20px;
+  background: #ff6b6b;
+  color: white;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  height: 32px;
+  box-sizing: border-box;
+  transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.category-btn:hover {
+  background: #ff5252;
+}
+
+.category-btn i {
+  font-size: 0.8rem;
+  transition: transform 0.2s ease;
+  color: white;
+}
+
+.category-dropdown.active .category-btn i {
+  transform: rotate(180deg);
+}
+
+.category-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-top: 0.5rem;
+  min-width: 120px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  z-index: 100;
+}
+
+.category-dropdown.active .category-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.category-option {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  transition: background 0.3s ease, transform 0.3s ease;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.category-option:hover {
+  background: #f8f8f8;
+}
+
+.category-option.active {
+  background: #f0f0f0;
+  color: #333;
+}
+
+/* 검색 결과 섹션 */
+.result-section {
+  padding: 2rem 0;
+  margin-top: 85px;
+  opacity: 0;
+  transform: translateY(20px) translateZ(0);
+  transition: all 0.75s cubic-bezier(0.4, 0.0, 0.2, 1);
+  background-color: #f8f9fa;
+  will-change: transform, opacity;
+  position: relative;
+  z-index: 1;
+  backface-visibility: hidden;
+  perspective: 1000px;
+  visibility: hidden;
+}
+
+.result-section:not(.hidden) {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) translateZ(0);
+}
+
+.result-section.hidden {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px) translateZ(0);
+  pointer-events: none;
+  display: none;
+}
+
+.result-section .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.result-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+/* 검색 결과 리스트 레이아웃 */
+.list-layout {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  margin-bottom: 2rem;
+}
+
+.list-item {
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 1rem 1.2rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.list-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+  border-color: #d0d0d0;
+}
+
+.item-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.8rem;
+}
+
+.item-meta {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.tag {
+  background: #f5f5f5;
+  color: #666;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.info {
+  color: #888;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.info i {
+  font-size: 0.95rem;
+}
+
+/* 페이지네이션 */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 2rem 0;
+  width: 100%;
+  border-top: 1px solid #eee;
+}
+
+.pagination button {
+  min-width: 40px;
+  height: 40px;
+  border: 1px solid #ddd;
+  background: white;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pagination button:hover {
+  background: #f0f0f0;
+}
+
+.pagination button.active {
+  background: #666;
+  color: white;
+  border-color: #666;
+}
+
+@media (max-width: 768px) {
+  .search-section.shrink {
+    padding: 0.5rem 1rem;
+  }
+
+  .search-box.small {
+    width: 100%;
+    max-width: 280px;
+  }
+
+  .category-tags.small {
+    position: static;
+    margin-top: 0.5rem;
+    padding: 0;
+    border: none;
+  }
+
+  .result-section .container {
+    padding: 0 1rem;
+  }
+
+  .result-title {
+    font-size: 1.3rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .list-layout {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .item-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .item-meta {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .search-title.small {
+    margin-bottom: 0.5rem;
+    margin-right: 0;
+  }
 }
