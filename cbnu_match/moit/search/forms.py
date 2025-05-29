@@ -1,5 +1,7 @@
 from django import forms
-from meet.models import CATEGORY_CHOICES
+from meet.models import Meet
+
+CATEGORY_CHOICES = Meet.CATEGORY_CHOICES 
 
 MAIN_TYPE_CHOICES = [
     ('', '-- 필터터 --'),
@@ -27,7 +29,7 @@ class SearchForm(forms.Form):
 
     sub_type = forms.ChoiceField(
         required=False,
-        choices=[],
+        choices=[('', '-- 선택 --')] + Meet.CATEGORY_CHOICES,
         widget=forms.Select(attrs={'class': 'sub-type-select'})
     )
 
@@ -37,17 +39,15 @@ class SearchForm(forms.Form):
 
         if main_type == 'created':
             self.fields['sub_type'].choices = [
-                ('', '-- 정렬 방식 선택 --'),
                 ('Newest', '최신순'),
                 ('oldest', '오래된순'),
             ]
         elif main_type == 'participant':
             self.fields['sub_type'].choices = [
-                ('', '-- 정렬 방식 선택 --'),
                 ('desc', '많은순'),
                 ('asc', '적은순'),
             ]
         elif main_type == 'category':
-            self.fields['sub_type'].choices = [('', '-- 카테고리 선택 --')] + CATEGORY_CHOICES
+            self.fields['sub_type'].choices = CATEGORY_CHOICES
         else:
             self.fields['sub_type'].choices = []
