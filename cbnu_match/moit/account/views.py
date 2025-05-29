@@ -5,12 +5,14 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.contrib.auth.password_validation import validate_password
+from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from .models import Profile
 import random
 import json
+
 
 # 로그인
 def signin(request):
@@ -129,39 +131,6 @@ def check_email(request):
             return JsonResponse({'valid': False, 'error': e.messages}, status=400)
         return JsonResponse({'valid': True})
 
-# 프로필 수정
-def profile(request):
-    if request.method == 'POST':
-        try:
-            # 로그인 검증
-            if request.user is None:
-                return JsonResponse({'code': 'failed', 'error': '로그인이 필요합니다.'})
-            print('로그인 검증 통과')
-            # JSON 역질렬화
-            data = json.loads(request.body)
-        except json.JSONDecodeError:
-            return JsonResponse({'code': 'failed', 'error': '잘못된 요청 형식입니다.'}, status=400)
-        target_profile = Profile.objects.get(user=request.user)
-
-        if target_profile is None:
-            return JsonResponse({'code': 'failed', 'error': '유효한 사용자가 아닙니다.'})
-        
-        try:
-            print(data)
-            if(data.get('nickname') != 'null'):
-                print(data.get('nickname'))
-                target_profile.nickname=data.get('nickname')
-            target_profile.gender=data.get('gender')
-            target_profile.mbti=data.get('mbti')
-            target_profile.college=data.get('college')
-            target_profile.self_introduce=data.get('self_introduce')
-            target_profile.profile_img=random.choice(Profile.default_images)
-            target_profile.save()
-        except Exception as e:
-            return JsonResponse({'code': 'failed', 'error': str(e)})
-        return JsonResponse({'code': 'successed'})
-    return render(request, 'account/create_profile.html')
-
 # 사용자 정보 확인
 def check_userinfo(request):
     if request.method == 'POST':
@@ -209,3 +178,97 @@ def profilepage_edit(request):
     else:
         profile = Profile.objects.get(user = request.user)
         return render(request, 'account/edit_profile.html', {'profile': profile})
+
+@login_required
+def create_profile_view(request):
+    return render(request, 'account/create_profile.html')
+
+@login_required
+def profile_view(request):
+    return render(request, 'account/profile.html')
+
+@login_required
+def get_profile_info(request):
+    try:
+        target_profile = Profile.objects.get(user=request.user)
+        return JsonResponse({
+            'status': True,
+            'nickname': target_profile.nickname,
+            'gender': target_profile.gender,
+            'mbti': target_profile.mbti,
+            'grade': target_profile.grade,
+            'college': target_profile.college,
+            'self_introduce': target_profile.self_introduce,
+        })
+    except Exception as e:
+        print(e)
+        return JsonResponse({'status': False, 'error': str(e)})
+    
+
+
+
+
+# 조인흠 ================================================================
+def signup_view(request):
+    return render(request, 'account/signup.html')
+
+@require_POST
+def signup_api(request):
+    return JsonResponse({})
+
+@require_POST
+def check_id_api(request):
+    try:
+        # 데이터 받아오기
+        data = json.loads(request.body)
+        id = data['username']
+        
+        # id Validation 가져오기
+        username_validator = UnicodeUsernameValidator()
+        username_validator(id)
+
+        # id 중복 체크
+        if User.objects.filter(username=id).exists():
+            raise ValidationError('이미 사용 중인 아이디입니다.')
+        
+        # 검사 값 반환
+        return JsonResponse({'code': 'Successed'})
+    except ValidationError as e:
+        return JsonResponse({'code': 'Failed', 'message': e.messages})
+    except Exception as e:
+        print(f'서버 오류: {e}')
+        return JsonResponse({'code': 'error', 'message': '서버 오류!'})
+    
+@require_POST
+def check_password_api(request):
+    try:
+        # 데이터 받아오기
+        data = json.loads(request.body)
+        id = data['username']
+        password = data['password']
+
+        # 임시 User 객체 생성
+        user = User(username=id)
+
+        # 비밀번호 유효성 검사
+        validate_password(password, user=user)
+        return JsonResponse({'code': 'Successed'})
+    except ValidationError as e:
+        print(e.messages)
+        return JsonResponse({'code': 'Failed', 'message': e.messages})
+    except Exception as e:
+        print(f'서버 오류: {e}')
+        return JsonResponse({'code': 'Error', 'message': '서버 오류'})
+    
+@require_POST
+def check_email_api(request):
+    try:
+        data = json.loads(request.body)
+        email = data['email']
+        validate_email(email)
+        return JsonResponse({'code': 'Successed'})
+    except ValidationError as e:
+        return JsonResponse({'code': 'Failed', 'message': e.messages})
+    except Exception as e:
+        print(f'서버 오류: {e}')
+        return JsonResponse({'code': 'Error', 'message': '서버 오류'})
