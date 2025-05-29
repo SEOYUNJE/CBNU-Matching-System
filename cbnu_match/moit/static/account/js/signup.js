@@ -35,16 +35,19 @@ document.addEventListener('DOMContentLoaded', function (e) {
     let isIdValid = false;
     let isEmailValid = false;
     let isPasswordValid = false;
+    let isCheckPasswordValid = false;
     let isNameValid = false;
 
     id_Input.focus();  // 첫 포커스는 아이디
 
     // ======= 모든 입력이 유효할 때 버튼 활성화 =======
     function checkAllValid() {
-        if (isIdValid && isEmailValid && isPasswordValid && isNameValid) {
+        if (isIdValid && isEmailValid && isPasswordValid && isCheckPasswordValid && isNameValid) {
+            console.log(isIdValid + isEmailValid + isCheckPasswordValid + isPasswordValid + isNameValid);
             signup_Button.disabled = false;
             console.log('✅ 모든 입력 유효');
         } else {
+            console.log(isIdValid + isEmailValid + isCheckPasswordValid + isPasswordValid + isNameValid);
             signup_Button.disabled = true;
         }
     }
@@ -82,27 +85,28 @@ document.addEventListener('DOMContentLoaded', function (e) {
     });
 
     // ======= 아이디 중복 확인 요청 =======
-    checkId_Button.addEventListener('click', () => {
+    checkId_Button.addEventListener('click', async () => {
         const id = id_Input.value.trim();
 
-        fetch('/account/check_id_api/', {
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json',
-                'X-CSRFToken': getCSRFToken(),
-            },
-            body: JSON.stringify({username: id})
-        })
-        .then(async res => {
+        try {
+            const res = await fetch('/account/check_id_api/', {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json',
+                    'X-CSRFToken': getCSRFToken(),
+                },
+                body: JSON.stringify({ username: id })
+            });
+
             const data = await res.json();
 
-            if(data.code === 'Successed') {
+            if (data.code === 'Successed') {
                 isIdValid = true;
                 id_Input.readOnly = true;
                 checkId_Button.disabled = true;
                 password_Input.focus();
                 InfoMessage_On(id_Message, '사용 가능한 아이디입니다.', false);
-            } else if(data.code === 'Failed') {
+            } else if (data.code === 'Failed') {
                 isIdValid = false;
                 const message = Array.isArray(data.message)
                     ? data.message.join('\n')
@@ -112,51 +116,60 @@ document.addEventListener('DOMContentLoaded', function (e) {
             } else {
                 throw new Error(data.message || '서버 오류!');
             }
-        })
-        .catch(error => {
-            isIdValid=false;
-            InfoMessage_Off(id_Message, error.message || '에러가 발생했습니다.');
+
+        } catch (error) {
+            isIdValid = false;
+            const message = typeof error === 'string'
+                ? error
+                : error?.message || '에러가 발생했습니다.';
+            InfoMessage_Off(id_Message, message);
             console.error('에러:', error);
-        });
+        }
     });
 
     // ======= 비밀번호 입력 후 서버 유효성 검사 =======
-    password_Input.addEventListener('blur', () => {
+    password_Input.addEventListener('blur', async () => {
         const id = id_Input.value.trim();
         const password = password_Input.value.trim();
 
-        fetch('/account/check_password_api/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': getCSRFToken()
-            },
-            body: JSON.stringify({username: id, password: password })
-        })
-        .then(async res => {
-            data = await res.json();
+        try {
+            const res = await fetch('/account/check_password_api/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCSRFToken()
+                },
+                body: JSON.stringify({ username: id, password: password })
+            });
 
-            if(data.code === 'Successed') {
+            const data = await res.json();
+
+            if (data.code === 'Successed') {
                 isPasswordValid = true;
-            } 
-            else if(data.code === 'Failed') {
+                InfoMessage_Off(password_Message);
+            } else if (data.code === 'Failed') {
                 isPasswordValid = false;
                 const message = Array.isArray(data.message)
                     ? data.message.join('\n')
                     : data.message || '유효하지 않은 비밀번호입니다.';
                 InfoMessage_On(password_Message, message);
-            } 
-            else {
+            } else {
                 isPasswordValid = false;
-                throw new Error(data.message);
+                throw new Error(data.message || '서버 오류!');
             }
-        })
-        .catch(error => {
-            InfoMessage_Off(password_Message, error.message || '에러가 발생했습니다.');
+
+        } catch (error) {
+            isPasswordValid = false;
+            const message = typeof error === 'string'
+                ? error
+                : error?.message || '에러가 발생했습니다.';
+            InfoMessage_Off(password_Message, message);
             console.error('에러:', error);
-            checkAllValid();
-        });
+        }
+
+        checkAllValid(); // 항상 실행 (성공/실패/에러 여부와 관계없이)
     });
+
 
     // ======= 비밀번호 실시간 유효성 검사 =======
     password_Input.addEventListener('input', () => {
@@ -174,10 +187,10 @@ document.addEventListener('DOMContentLoaded', function (e) {
         const password = password_Input.value.trim();
         if (checkPassword_Input.value.trim() === password) {
             InfoMessage_Off(checkPassword_Message);
-            isPasswordValid = true;
+            isCheckPasswordValid = true;
         } else {
             InfoMessage_On(checkPassword_Message, '비밀번호가 일치하지 않습니다.');
-            isPasswordValid = false;
+            isCheckPasswordValid = false;
         }
         checkAllValid();
     });
@@ -200,84 +213,85 @@ document.addEventListener('DOMContentLoaded', function (e) {
     lastName_Input.addEventListener('input', validateNameFields);
 
     // ======= 이메일 유효성 검사 (서버 요청) =======
-    email_Input.addEventListener('input', () => {
+    email_Input.addEventListener('input', async () => {
         const email = email_Input.value.trim();
-        fetch('/account/check_email_api/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': getCSRFToken()
-            },
-            body: JSON.stringify({ email: email })
-        })
-        .then(async res => {
+
+        try {
+            const res = await fetch('/account/check_email_api/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCSRFToken()
+                },
+                body: JSON.stringify({ email: email })
+            });
+
             const data = await res.json();
 
-            if(data.code === 'Successed') {
+            if (data.code === 'Successed') {
                 isEmailValid = true;
-                checkAllValid();
-                InfoMessage_Off(email_Message)
-            } else if(data.code === 'Failed') {
+                InfoMessage_Off(email_Message);
+            } else if (data.code === 'Failed') {
                 isEmailValid = false;
-                checkAllValid();
-                InfoMessage_On(email_Message, data.message);
+                const message = Array.isArray(data.message)
+                    ? data.message.join('\n')
+                    : data.message || '유효하지 않은 이메일입니다.';
+                InfoMessage_On(email_Message, message);
             } else {
-                throw new Error(data.message);
+                throw new Error(data.message || '알 수 없는 응답입니다.');
             }
-        })
-        .catch(error => {
-            InfoMessage_On(email_Message, data.message);
+
+        } catch (error) {
             isEmailValid = false;
-            checkAllValid();
-        });
+            const message = typeof error === 'string'
+                ? error
+                : error?.message || '서버 오류가 발생했습니다.';
+            InfoMessage_On(email_Message, message);
+            console.error('이메일 검사 중 오류:', error);
+        }
+        checkAllValid();
     });
 
-
-    signup_Form.addEventListener('submit', function(e) {
+    signup_Form.addEventListener('submit', async function (e) {
         e.preventDefault();
 
         signup_Button.disabled = true;
 
-        console.log('실행됨');
+        try {
+            const response = await fetch('/account/signup_api/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCSRFToken(),
+                },
+                body: JSON.stringify({
+                    username: id_Input.value.trim(),
+                    password: password_Input.value.trim(),
+                    first_name: firstName_Input.value.trim(),
+                    last_name: lastName_Input.value.trim(),
+                    email: email_Input.value.trim(),
+                })
+            });
 
-        fetch('/account/signup/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': getCSRFToken(),
-            },
+            const data = await response.json();
 
-            body: JSON.stringify({
-                username: id_Input.value.trim(),
-                password: password_Input.value.trim(),
-                first_name: firstName_Input.value.trim(),
-                last_name: lastName_Input.value.trim(),
-                email: email_Input.value.trim(),
-            })
-        })
-        .then(res => res.json().then(data => {
-            if(!res.ok) {
-                console.log(data.error);
-                throw data.error;
+            if (data.code === 'Successed') {
+                alert('회원가입 및 로그인 성공!');
+                window.location.href = '/main/'; // 성공 시 리디렉션
+            } else {
+                const messages = Array.isArray(data.message)
+                    ? data.message.join('\n')
+                    : data.message || '알 수 없는 오류가 발생했습니다.';
+                alert(messages);
+                signup_Button.disabled = false;
             }
-            if(data.code === 'failed') {
-                throw data.error;
-            }
-        return;
-        }))
-        .then(() => {
-            alert('회원가입 성공! 프로필 설정 페이지로 이동합니다.');
-            window.location.replace('/account/create_profile/');
-        })
-        .catch(error => {
-            const messages = Array.isArray(error)
-                ? error.join('\n')
-                : typeof error === 'string'
+        } catch (error) {
+            const message = typeof error === 'string'
                 ? error
                 : error?.message || '서버 오류가 발생했습니다.';
-            alert(messages);
+            alert(message);
             signup_Button.disabled = false;
-        });
-
-    });  
+            console.error('회원가입 중 에러:', error);
+        }
+    });
 });

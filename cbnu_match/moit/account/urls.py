@@ -14,10 +14,6 @@ urlpatterns = [
     path('logout/', signout, name='signout'),
 
     # 회원가입 밑에 있는 path는 회원가입할 때 사용
-    path('signup/', signup, name='signup'),
-    path('check_id/', check_id, name='check_id'),
-    path('check_password/', check_password, name='check_password'),
-    path('check_email/', check_email, name='check_email'),
     path('create_profile/', create_profile_view, name='create_profile_view'),
     
     # Profile Page
