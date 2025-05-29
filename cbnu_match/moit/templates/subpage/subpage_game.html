@@ -32,7 +32,7 @@
                 <span id="manner"><p>매너온도 40도</p></span>
               </div>
               <hr>
-              <a href="{% url 'profilepage' %}" class="menu-item">
+              <a href="{% url 'profile_view' %}" class="menu-item">
                   <i class="bi bi-person-fill"></i> profile
               </a>
               <a href="{% url 'search' %}" class="menu-item">
@@ -82,8 +82,8 @@
           <div class="modal-group">
             <label for="group-type">모임 종류</label>
             <select id="group-type" name="category">
-              <option value="STUDY">스터디</option>
               <option value="GAME">게임</option>
+              <option value="STUDY">스터디</option>
               <option value="EXERCISE">운동</option>
               <option value="MEALS">식사</option>
             </select>
