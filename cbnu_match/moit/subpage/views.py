@@ -2,13 +2,25 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 
 def exercise(request):
-    return render(request, 'subpage/subpage_exercise.html')
+    
+    authentic = request.user.is_authenticated
+    
+    return render(request, 'subpage/subpage_exercise.html', {'authentic': authentic})
 
 def study(request):
-    return render(request, 'subpage/subpage_study.html')
+    
+    authentic = request.user.is_authenticated
+    
+    return render(request, 'subpage/subpage_study.html', {'authentic': authentic})
 
 def game(request):
-    return render(request, 'subpage/subpage_game.html')
+    
+    authentic = request.user.is_authenticated
+    
+    return render(request, 'subpage/subpage_game.html', {'authentic': authentic})
 
 def meals(request):
-    return render(request, 'subpage/subpage_meals.html')
+    
+    authentic = request.user.is_authenticated
+    
+    return render(request, 'subpage/subpage_meals.html', {'authentic': authentic})
