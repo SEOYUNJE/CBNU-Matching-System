@@ -1,71 +1,139 @@
+<!-- 2025-05-11  -->
+<!-- 메인페이지 -->
+<!-- 작성자: 최은재 -->
 
-<!-- cbnu_match/moit/templates/search/search.html -->
+{% load static %}
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>모임 검색</title>
-  <style>
-    .filter-box { margin-bottom: 20px; }
-    .search-input { width: 300px; padding: 5px; }
-    .select-box { padding: 5px; margin-right: 10px; }
-    .meet-card { border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; }
-  </style>
+  <title>Moit Full Page Scroll</title>
+  <link rel="stylesheet" href="{% static 'search/css/search.css'%}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
 </head>
+
 <body>
-  <h1>🔍 모임 검색 테스트</h1>
-
-  <form method="get">
-    <div class="filter-box">
-      <input type="text" name="query" class="search-input" placeholder="검색어를 입력하세요" value="{{ query }}">
-
-      <select name="main_type" class="select-box" onchange="this.form.submit()">
-        <option value="">-- 대주제 선택 --</option>
-        <option value="created" {% if main_type == 'created' %}selected{% endif %}>만든 날짜</option>
-        <option value="participant" {% if main_type == 'participant' %}selected{% endif %}>인원수</option>
-        <option value="category" {% if main_type == 'category' %}selected{% endif %}>카테고리</option>
-        <option value="all" {% if main_type == 'all' %}selected{% endif %}>전체</option>
-      </select>
-
-      <select name="sub_type" class="select-box">
-        {% for value, label in form.fields.sub_type.choices %}
-          <option value="{{ value }}" {% if value == sub_type %}selected{% endif %}>{{ label }}</option>
-        {% endfor %}
-      </select>
-
-      <button type="submit">🔍 검색</button>
-    </div>
-  </form>
-
-  <hr>
-
-  <div>
-    {% if results %}
-      <h3>검색 결과 (총 {{ results.paginator.count }}개):</h3>
-      {% for meet in results %}
-        <div class="meet-card">
-          <strong>{{ meet.title }}</strong><br>
-          카테고리: {{ meet.category }}<br>
-          참가자 수: {{ meet.num_participants }}명<br>
-          생성일: {{ meet.created_at|date:"Y-m-d H:i" }}<br>
+ <header class="header">
+    <div class="container">
+      <div class="logo">moit</div>
+      <nav class="nav">
+        <a href="#">meals</a>
+        <a href="#">study</a>
+        <a href="#">game</a>
+        <a href="#">exercise</a>
+      </nav>
+        <div class="util">
+          <i class="bi bi-search" id="search"></i> 
+          <i class="bi bi-person-circle" id="person"></i>
         </div>
-      {% endfor %}
-    {% else %}
-      <p>검색 결과가 없습니다.</p>
-    {% endif %}
-  </div>
+    </div>
+  </header>
 
-  <!-- 페이지네이션 -->
-  <div>
-    {% if results.has_previous %}
-      <a href="?page={{ results.previous_page_number }}&query={{ query }}&main_type={{ main_type }}&sub_type={{ sub_type }}">이전</a>
-    {% endif %}
+  <!-- 메인 콘텐츠 -->
 
-    <span>페이지 {{ results.number }} / {{ results.paginator.num_pages }}</span>
+ <main>
+  <!-- 🔍 검색 입력 영역 -->
+  <section class="search-section">
+    <h1 class="search-title">SEARCH</h1>
+    <form class="search-box" method="GET" action="{% url 'search' %}">
+      <input
+        type="text"
+        name="query"
+        placeholder="검색어를 입력하세요..."
+        value="{{ request.GET.query|default:'' }}"
+      />
+      <button type="submit"><i class="bi bi-search"></i></button>
+    </form>
+  </section>
 
-    {% if results.has_next %}
-      <a href="?page={{ results.next_page_number }}&query={{ query }}&main_type={{ main_type }}&sub_type={{ sub_type }}">다음</a>
-    {% endif %}
-  </div>
+  <!-- 검색 결과 영역 (검색어 있을 때만 표시) -->
+  {% if request.GET.query %}
+  <section class="section-bottom">
+    <div class="container">
+      <div class="category-header">
+        <h2>검색결과</h2>
+      </div>
+
+      {% if results %}
+      <div class="list-layout">
+        {% for item in results %}tem.title }}</h4>
+          <div class="item-meta">
+            <span class="tag">{{ item.category }}</span>
+            <span class="info">모집인원 {{ item.members }}</span>
+            <span class="info">마감기한 {{ item.deadline }}</span>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+      <!-- 페이지네이션 -->
+      <div class="pagination">
+        <div class="list-item">
+          <h4 class="item-title">{{ i
+        {% if results.has_previous %}
+          <a href="?query={{ request.GET.query }}&page={{ results.previous_page_number }}">«</a>
+        {% endif %}
+        {% for page_num in results.paginator.page_range %}
+          <a href="?query={{ request.GET.query }}&page={{ page_num }}"
+             class="{% if results.number == page_num %}active{% endif %}">
+             {{ page_num }}
+          </a>
+        {% endfor %}
+        {% if results.has_next %}
+          <a href="?query={{ request.GET.query }}&page={{ results.next_page_number }}">»</a>
+        {% endif %}
+      </div>
+
+      {% else %}
+        <p style="margin: 2rem 0;">검색 결과가 없습니다.</p>
+      {% endif %}
+    </div>
+  </section>
+  {% endif %}
+</main>
+
+
+
+
+<!-- -----------------------------------------------------  -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <div class="footer-left">
+        <h2>enjoy your life</h2>
+      </div>
+      <div class="footer-right">
+        <p>12, gaesin-dong, seooone-gu<br>
+         chungju, Republic of Korea<br>
+         T 043.261.2114<br>
+         moit@cbnu.com
+        </p>
+      </div>
+    </div>
+  </footer>
+  <script src="{% static 'meet/js/popup_create.js' %}"></script>
+  <script src="{% static 'meet/js/popup_join.js' %}"></script>
+  <script src="{% static 'main/js/mainpage.js' %}"></script>
+
+
+  <!-- 스크롤 인디케이터 -->
+<div class="scroll-indicator">
+  <div class="dot active"></div>
+  <div class="dot"></div>
+  <div class="dot"></div>
+</div>
+
+<script>
+  document.getElementById("searchForm").addEventListener("submit", function (e) {
+    e.preventDefault(); // 새로고침 방지
+    const searchSection = document.getElementById("searchSection");
+    const resultSection = document.getElementById("resultSection");
+
+    // 검색창을 위로, 결과는 보여지게
+    searchSection.classList.add("shrink");
+    resultSection.classList.remove("hidden");
+  });
+</script>
+
 </body>
 </html>
