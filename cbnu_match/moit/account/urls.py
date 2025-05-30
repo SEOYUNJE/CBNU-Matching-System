@@ -18,9 +18,20 @@ urlpatterns = [
     path('check_id/', check_id, name='check_id'),
     path('check_password/', check_password, name='check_password'),
     path('check_email/', check_email, name='check_email'),
-    path('create_profile/', profile, name='create_profile'),
+    path('create_profile/', create_profile_view, name='create_profile_view'),
     
     # Profile Page
-    path('profile/', profilepage, name='profilepage'),
+    path('profile/', profile_view, name='profile_view'),
+    path('get_profile_info/', get_profile_info, name='get_profile_info'),
     path('profile/edit', profilepage_edit, name='edit_profile'),
+
+    # 조인흠 수정 =========================================================
+    # VIEW
+    path('signup_view/', signup_view, name='signup_view'),
+
+    # API
+    path('signup_api/', signup_api, name='signup_api'),
+    path('check_id_api/', check_id_api, name='check_id_api'),
+    path('check_password_api/', check_password_api, name='check_password_api'),
+    path('check_email_api/', check_email_api, name='check_email_api'),
 ]

@@ -21,6 +21,7 @@ class Profile(models.Model):
     ('ISTJ', 'ISTJ'),
     ('ISTP', 'ISTP'),
 ]
+    
     GENDER_CHOICES=[
         ('공개 안 함', '공개 안 함'),
         ('남성', '남성'), 

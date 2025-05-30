@@ -10,7 +10,6 @@ function getCSRFToken() {
 }
 
 document.addEventListener('DOMContentLoaded', function (e) {
-    e.preventDefault();
     // ======= 요소 선택 =======
     const id_Input = document.getElementById('id_Input');
     const checkId_Button = document.getElementById('checkId_Button');
@@ -53,17 +52,8 @@ document.addEventListener('DOMContentLoaded', function (e) {
     // 필드의 오류나 추가 정보 표시
     function InfoMessage_On(element, error, isError=true) {
         element.style.color = isError ? 'red' : 'green';
-
-        // error가 여러 개인 경우일 때 처리
-        if(Array.isArray(error)) {
-            console.log('실행됨');
-            element.textContent = error.join('\n');
-            element.style.whiteSpace = 'pre-line';
-        }
-        else {
-            console.log('실행됨');
-            element.textContent = error;
-        }
+        element.style.whiteSpace = 'pre-line';
+        element.textContent = error;
         element.style.display = 'block';
     }
 
@@ -94,61 +84,76 @@ document.addEventListener('DOMContentLoaded', function (e) {
     // ======= 아이디 중복 확인 요청 =======
     checkId_Button.addEventListener('click', () => {
         const id = id_Input.value.trim();
-        fetch(`/account/check_id/?id=${encodeURIComponent(id)}`)
-            .then(res => res.json().then(data => {
-                if(!res.ok) {
-                    throw new Error(data.error || '서버 오류가 발생했습니다.');
-                }
-                return;
-            }))
-            .then(() => {
-                InfoMessage_On(id_Message, '사용 가능한 아이디입니다.', false);
-                id_Input.readOnly = true;
+
+        fetch('/account/check_id_api/', {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json',
+                'X-CSRFToken': getCSRFToken(),
+            },
+            body: JSON.stringify({username: id})
+        })
+        .then(async res => {
+            const data = await res.json();
+
+            if(data.code === 'Successed') {
                 isIdValid = true;
-                checkAllValid();
+                id_Input.readOnly = true;
+                checkId_Button.disabled = true;
                 password_Input.focus();
-                alert('사용 가능한 아이디입니다.');
-            })
-            .catch(error => {
-                InfoMessage_On(id_Message, error.message);
+                InfoMessage_On(id_Message, '사용 가능한 아이디입니다.', false);
+            } else if(data.code === 'Failed') {
                 isIdValid = false;
+                const message = Array.isArray(data.message)
+                    ? data.message.join('\n')
+                    : data.message || '유효하지 않은 아이디입니다.';
+                InfoMessage_On(id_Message, message);
                 id_Input.focus();
-            })
+            } else {
+                throw new Error(data.message || '서버 오류!');
+            }
+        })
+        .catch(error => {
+            isIdValid=false;
+            InfoMessage_Off(id_Message, error.message || '에러가 발생했습니다.');
+            console.error('에러:', error);
+        });
     });
 
     // ======= 비밀번호 입력 후 서버 유효성 검사 =======
     password_Input.addEventListener('blur', () => {
         const id = id_Input.value.trim();
         const password = password_Input.value.trim();
-        const checkPassword = checkPassword_Input.value.trim();
 
-        fetch('/account/check_password/', {
+        fetch('/account/check_password_api/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'X-CSRFToken': getCSRFToken()
             },
-            body: JSON.stringify({ username: id, password: password })
+            body: JSON.stringify({username: id, password: password })
         })
-        .then(response => response.json().then(data => {
-            if (!response.ok) {
-                throw data.error;
-            }
-            return;
-        }))
-        .then(() => {
-            if(password === checkPassword) {
+        .then(async res => {
+            data = await res.json();
+
+            if(data.code === 'Successed') {
                 isPasswordValid = true;
-            }
+            } 
+            else if(data.code === 'Failed') {
+                isPasswordValid = false;
+                const message = Array.isArray(data.message)
+                    ? data.message.join('\n')
+                    : data.message || '유효하지 않은 비밀번호입니다.';
+                InfoMessage_On(password_Message, message);
+            } 
             else {
                 isPasswordValid = false;
+                throw new Error(data.message);
             }
-            checkAllValid();
-            checkPassword_Input.focus();
         })
         .catch(error => {
-            InfoMessage_On(password_Message, error);
-            isPasswordValid = false;
+            InfoMessage_Off(password_Message, error.message || '에러가 발생했습니다.');
+            console.error('에러:', error);
             checkAllValid();
         });
     });
@@ -197,7 +202,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
     // ======= 이메일 유효성 검사 (서버 요청) =======
     email_Input.addEventListener('input', () => {
         const email = email_Input.value.trim();
-        fetch('/account/check_email/', {
+        fetch('/account/check_email_api/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -205,18 +210,23 @@ document.addEventListener('DOMContentLoaded', function (e) {
             },
             body: JSON.stringify({ email: email })
         })
-        .then(response => response.json().then(data => {
-            if (!response.ok || !data.valid) {
-                throw data.error
+        .then(async res => {
+            const data = await res.json();
+
+            if(data.code === 'Successed') {
+                isEmailValid = true;
+                checkAllValid();
+                InfoMessage_Off(email_Message)
+            } else if(data.code === 'Failed') {
+                isEmailValid = false;
+                checkAllValid();
+                InfoMessage_On(email_Message, data.message);
+            } else {
+                throw new Error(data.message);
             }
-        }))
-        .then(() => {
-            InfoMessage_Off(email_Message);
-            isEmailValid = true;
-            checkAllValid();
         })
         .catch(error => {
-            InfoMessage_On(email_Message, error);
+            InfoMessage_On(email_Message, data.message);
             isEmailValid = false;
             checkAllValid();
         });
