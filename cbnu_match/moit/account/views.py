@@ -137,6 +137,9 @@ def get_profile_info(request):
 def signup_view(request):
     return render(request, 'account/signup.html')
 
+def create_profile_view(request):
+    return render(request, 'account/create_profile.html')
+
 # API 함수 ==============================================================
 @require_POST
 def signup_api(request):
@@ -212,6 +215,32 @@ def check_email_api(request):
         data = json.loads(request.body)
         email = data['email']
         validate_email(email)
+        return JsonResponse({'code': 'Successed'})
+    except ValidationError as e:
+        return JsonResponse({'code': 'Failed', 'message': e.messages})
+    except Exception as e:
+        print(f'서버 오류: {e}')
+        return JsonResponse({'code': 'Error', 'message': '서버 오류'})
+    
+@require_POST
+@login_required
+def create_profile_api(request):
+    print('실행됨')
+    try:
+
+        profile = Profile.objects.get(user = request.user)
+        print(request.user.username)
+
+        profile.nickname = (request.user.last_name + request.user.first_name) if not request.POST.get('nickname') else request.POST.get('nickname')
+        profile.gender = request.POST.get('gender')
+        profile.mbti = request.POST.get('mbti')
+        profile.grade = request.POST.get('grade')
+        profile.college = request.POST.get('college')
+        profile.self_introduce = request.POST.get('selfIntroduce')
+        profile.profile_img = request.FILES.get('profileImage')
+
+        profile.save()
+
         return JsonResponse({'code': 'Successed'})
     except ValidationError as e:
         return JsonResponse({'code': 'Failed', 'message': e.messages})

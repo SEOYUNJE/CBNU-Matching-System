@@ -24,10 +24,12 @@ urlpatterns = [
     # 조인흠 수정 =========================================================
     # VIEW
     path('signup_view/', signup_view, name='signup_view'),
+    path('create_profile_view/', create_profile_view, name='create_profile_view'),
 
     # API
     path('signup_api/', signup_api, name='signup_api'),
     path('check_id_api/', check_id_api, name='check_id_api'),
     path('check_password_api/', check_password_api, name='check_password_api'),
     path('check_email_api/', check_email_api, name='check_email_api'),
+    path('create_profile_api/', create_profile_api, name='create_profile_api'),
 ]
