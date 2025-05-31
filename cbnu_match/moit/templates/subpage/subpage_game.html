@@ -113,11 +113,11 @@
           <div id="description-error" class="introduce-error"></div>
         </div>
 
-        <button class="submit-btn" type="submit" id="create_meet_btn" disabled>입장하기</button>
+        <button class="submit-btn" type="submit" id="create_meet_btn" disabled>생성하기</button>
       </form>
     </div>
   </div>
-  <!-- 모임 참가 팝업  -->
+<!-- 모임 참가 팝업  -->
 
   <div id="joinPopup" class="modal-overlay">
     <div class="modal-content">
@@ -126,30 +126,26 @@
 
       <!-- 제목 및 날짜 -->
       <div class="popup-header">
-        <h3 id="joinTitle">같이 초밥 시켜실분</h3>
-        <span id="joinDate" class="popup-date">2025-05-08</span>
+        <h3 id="joinTitle"></h3>
+        <span id="joinDate" class="popup-date"></span>
       </div>
 
       <!-- 구분선 -->
       <hr class="divider" />
 
       <!-- 설명 -->
-      <p id="joinDescription" class="description">
-        최소 주문 금액 17,000원 부담돼서 함께 주문하려고 해요<br>
-        배송비도, 최소금액도 나눠 부담해요!<br>
-        가능하신 분 채팅방 들어와주세요!
-      </p>
+      <p id="joinDescription" class="description"></p>
 
       <!-- 구분선 -->
       <hr class="divider" />
 
       <!-- 태그 영역 -->
       <div class="tag-row">
-        <span class="tag" id="joinCategory">🍱 MEALS</span>
-        <span class="tag" id="joinMembers">모집인원 3/4</span>
-        <span class="tag" id="joinDeadline">마감기한 5/12 21:00</span>
+        <span class="tag" id="joinCategory"></span>
+        <span class="tag" id="joinMembers"></span>
+        <span class="tag" id="joinDeadline"></span>
       </div>
-      <button class="submit-btn">채팅방 입장하기</button>
+      <button id="enterBtn"class="submit-btn" data-auth="{{user.is_authenticated}}">채팅방 입장하기</button>
     </div>
   </div>
 
@@ -172,55 +168,56 @@
   <main class="main">
     <!-- Top: filter + horizontal card list -->
     <section class="section-top">
-      <div class="container">
-        <div class="filter-buttons">
-          <button class="active">날짜마감</button>
-          <button>인원마감</button>
+    <div class="container">
+      <div class="filter-buttons">
+        <button class="active"  id="btnTime">날짜마감</button>
+        <button id="btnMember">인원마감</button>
+      </div>
+
+      <!-- 날짜마감 리스트 -->
+      <div class="card-grid" id="timeList">
+        {% for meet in meet_time %}
+        <div class="card"
+           data-title="{{ meet.title }}"
+           data-created="{{ meet.created_at|date:'n/j H:i' }}"
+           data-introduce="{{ meet.meet_introduce }}"
+           data-category="{{ meet.category }}"
+           data-members="{{ meet.participant.count }}/{{ meet.max_member }}"
+           data-deadline="{{ meet.deadline|date:'n/j H:i' }}">
+          <h3 class="card-title">{{ meet.title }}</h3>
+          <p class="card-desc">{{ meet.meet_introduce }}</p>
+          <div class="card-meta">
+            <span class="info">{{ meet.category }}</span>
+            <span class="info"><i class="bi bi-person-fill"></i>{{ meet.participant.count }}/{{ meet.max_member }}</span>
+            <span class="info"><i class="bi bi-calendar-event"></i>{{ meet.deadline|date:"n/j H:i" }}</span>
+          </div>
         </div>
-        <div class="card-grid">
-          <!-- 카드 형태 -->
-          <div class="card">
-            <!-- 제목 -->
-            <h3 class="card-title">같이 초밥 시키실분</h3>
-            <!-- 설명 -->
-            <p class="card-desc">배달 최소 금액 때문에 각자 사시는 분 중에 같이 드실 분 구해요. 사이드만 시켜도 괜찮으니 편하게 들어오세요~~ 기숙사는 양진제입니다.</p>
-            <!-- 부가 정보 -->
-            <div class="card-meta">
-              <span class="info"><i class="bi-controller"></i>GAME</span>
-              <span class="info"><i class="bi bi-person-fill"></i>3/4</span>
-              <span class="info"><i class="bi bi-calendar-event"></i>5/12 21:00</span>
-            </div>
+        {% endfor %}
+      </div>
+
+      <!-- 인원마감 리스트 -->
+      <div class="card-grid" id="memberList" style="display:none;">
+        {% for meet in meet_member %}
+        <div class="card"
+           data-title="{{ meet.title }}"
+           data-created="{{ meet.created_at|date:'n/j H:i' }}"
+           data-introduce="{{ meet.meet_introduce }}"
+           data-category="{{ meet.category }}"
+           data-members="{{ meet.participant.count }}/{{ meet.max_member }}"
+           data-deadline="{{ meet.deadline|date:'n/j H:i' }}">
+          <h3 class="card-title">{{ meet.title }}</h3>
+          <p class="card-desc">{{ meet.meet_introduce }}</p>
+          <div class="card-meta">
+            <span class="info">{{ meet.category }}</span>
+            <span class="info"><i class="bi bi-person-fill"></i>{{ meet.participant.count }}/{{ meet.max_member }}</span>
+            <span class="info"><i class="bi bi-calendar-event"></i>{{ meet.deadline|date:"n/j H:i" }}</span>
           </div>
-          
-          <div class="card">
-            <h3 class="card-title">같이 초밥 시키실분</h3>
-            <p class="card-desc">배달 최소 금액 때문에 각자 사시는 분 중에 같이 드실 분 구해요. 사이드만 시켜도 괜찮으니 편하게 들어오세요~~ 기숙사는 양진제입니다.</p>
-            <div class="card-meta">
-              <span class="info"><i class="bi-controller"></i>GAME</span>
-              <span class="info"><i class="bi bi-person-fill"></i>3/4</span>
-              <span class="info"><i class="bi bi-calendar-event"></i>5/12 21:00</span>
-            </div>
-          </div>
-          <div class="card">
-            <h3 class="card-title">같이 초밥 시키실분</h3>
-            <p class="card-desc">배달 최소 금액 때문에 각자 사시는 분 중에 같이 드실 분 구해요. 사이드만 시켜도 괜찮으니 편하게 들어오세요~~ 기숙사는 양진제입니다.</p>
-            <div class="card-meta">
-              <span class="info"><i class="bi-controller"></i>GAME</span>
-              <span class="info"><i class="bi bi-person-fill"></i>3/4</span>
-              <span class="info"><i class="bi bi-calendar-event"></i>5/12 21:00</span>
-            </div>
-          </div>
-          <div class="card">
-            <h3 class="card-title">같이 초밥 시키실분</h3>
-            <p class="card-desc">배달 최소 금액 때문에 각자 사시는 분 중에 같이 드실 분 구해요. 사이드만 시켜도 괜찮으니 편하게 들어오세요~~ 기숙사는 양진제입니다.</p>
-            <div class="card-meta">
-              <span class="info"><i class="bi-controller"></i>GAME</span>
-              <span class="info"><i class="bi bi-person-fill"></i>3/4</span>
-              <span class="info"><i class="bi bi-calendar-event"></i>5/12 21:00</span>
-            </div>
-          </div>
-          
-    </section>
+        </div>
+        {% endfor %}
+      </div>
+
+    </div>
+  </section>
 
     <!-- Bottom-------------------------------------------- -->
     <section class="section-bottom">
@@ -229,116 +226,52 @@
           <h2>CATEGORY <span class="highlight">GAME</span></h2>
           <!-- 모임 생성 팝업을 위해 클래스 추가 -->
           <button class="sort-btn create-btn"
-                  data-authentic="{{ authentic|yesno:'true,false'}}"> 
-                  모임생성</button>
+                  data-authentic="{{user.is_authenticated}}"> 
+                  모임생성
           </button>
         </div>
 
         <div class="list-layout">
-          <!-- 리스트 세부 정보 -->
-          <div class="list-item">
-            <!-- 제목 -->
-            <h4 class="item-title">같이 게임 하실분</h4>
-            <!-- 설명 -->
-            <p class="item-p">배달 최소 금액 때문에 각자 사시는 분 중에 같이 드실 분 구해요. 사이드만 시켜도 괜찮으니 편하게 들어오세요~~ 기숙사는 양진제입니다.</p>
-            <!-- 부가 정보 -->
+          {% for meet in page_obj %}
+            <div class="list-item"
+              data-title="{{ meet.title }}"
+              data-created="{{ meet.created_at|date:"n/j H:i" }}"
+              data-introduce="{{ meet.meet_introduce }}"
+              data-category="{{ meet.category }}"
+              data-deadline="{{ meet.deadline|date:"n/j H:i" }}"
+              data-members="{{ meet.participant.count }}/{{ meet.max_member }}">
+            <h4 class="item-title">{{ meet.title }}</h4>
+            <p class="item-p">{{ meet.meet_introduce }}</p>
             <div class="item-meta">
-              <span class="info"><i class="bi-controller"></i>GAME</span>
-              <span class="info"><i class="bi bi-person-fill"></i>3/4</span>
-              <span class="info"><i class="bi bi-calendar-event"></i>마감 5/12 21:00</span>
+              <span class="info"><i class="bi-controller"></i>{{ meet.category }}</span>
+              <span class="info"><i class="bi bi-person-fill"></i>{{ meet.participant.count }}/{{ meet.max_member }}</span>
+              <span class="info"><i class="bi bi-calendar-event"></i>마감 {{ meet.deadline|date:"n/j H:i" }}</span>
             </div>
           </div>
-          <!-- 여기부터는 내용 채울려고 걍 쓴거------------------------------------------------------- -->
-          <div class="list-item">
-            <h4 class="item-title">같이 게임 하실분</h4>
-            <p class="item-p">배달 최소 금액 때문에 각자 사시는 분 중에 같이 드실 분 구해요. 사이드만 시켜도 괜찮으니 편하게 들어오세요~~ 기숙사는 양진제입니다.</p>
-            <div class="item-meta">
-              <span class="info"><i class="bi-controller"></i>GAME</span>
-              <span class="info"><i class="bi bi-person-fill"></i>3/4</span>
-              <span class="info"><i class="bi bi-calendar-event"></i>마감 5/12 21:00</span>
-            </div>
-          </div>
-          <div class="list-item">
-            <h4 class="item-title">같이 게임 하실분</h4>
-            <p class="item-p">배달 최소 금액 때문에 각자 사시는 분 중에 같이 드실 분 구해요. 사이드만 시켜도 괜찮으니 편하게 들어오세요~~ 기숙사는 양진제입니다.</p>
-            <div class="item-meta">
-              <span class="info"><i class="bi-controller"></i>GAME</span>
-              <span class="info"><i class="bi bi-person-fill"></i>3/4</span>
-              <span class="info"><i class="bi bi-calendar-event"></i>마감 5/12 21:00</span>
-            </div>
-          </div>
-          <div class="list-item">
-            <h4 class="item-title">같이 게임 하실분</h4>
-            <p class="item-p">배달 최소 금액 때문에 각자 사시는 분 중에 같이 드실 분 구해요. 사이드만 시켜도 괜찮으니 편하게 들어오세요~~ 기숙사는 양진제입니다.</p>
-            <div class="item-meta">
-              <span class="info"><i class="bi-controller"></i>GAME</span>
-              <span class="info"><i class="bi bi-person-fill"></i>3/4</span>
-              <span class="info"><i class="bi bi-calendar-event"></i>마감 5/12 21:00</span>
-            </div>
-          </div>
-          <div class="list-item">
-            <h4 class="item-title">같이 게임 하실분</h4>
-            <p class="item-p">배달 최소 금액 때문에 각자 사시는 분 중에 같이 드실 분 구해요. 사이드만 시켜도 괜찮으니 편하게 들어오세요~~ 기숙사는 양진제입니다.</p>
-            <div class="item-meta">
-              <span class="info"><i class="bi-controller"></i>GAME</span>
-              <span class="info"><i class="bi bi-person-fill"></i>3/4</span>
-              <span class="info"><i class="bi bi-calendar-event"></i>마감 5/12 21:00</span>
-            </div>
-          </div>
-          <div class="list-item">
-            <h4 class="item-title">같이 게임 하실분</h4>
-            <p class="item-p">배달 최소 금액 때문에 각자 사시는 분 중에 같이 드실 분 구해요. 사이드만 시켜도 괜찮으니 편하게 들어오세요~~ 기숙사는 양진제입니다.</p>
-            <div class="item-meta">
-              <span class="info"><i class="bi-controller"></i>GAME</span>
-              <span class="info"><i class="bi bi-person-fill"></i>3/4</span>
-              <span class="info"><i class="bi bi-calendar-event"></i>마감 5/12 21:00</span>
-            </div>
-          </div>
-          <div class="list-item">
-            <h4 class="item-title">같이 게임 하실분</h4>
-            <p class="item-p">배달 최소 금액 때문에 각자 사시는 분 중에 같이 드실 분 구해요. 사이드만 시켜도 괜찮으니 편하게 들어오세요~~ 기숙사는 양진제입니다.</p>
-            <div class="item-meta">
-              <span class="info"><i class="bi-controller"></i>GAME</span>
-              <span class="info"><i class="bi bi-person-fill"></i>3/4</span>
-              <span class="info"><i class="bi bi-calendar-event"></i>마감 5/12 21:00</span>
-            </div>
-          </div>
-          <div class="list-item">
-            <h4 class="item-title">같이 게임 하실분</h4>
-            <p class="item-p">배달 최소 금액 때문에 각자 사시는 분 중에 같이 드실 분 구해요. 사이드만 시켜도 괜찮으니 편하게 들어오세요~~ 기숙사는 양진제입니다.</p>
-            <div class="item-meta">
-              <span class="info"><i class="bi-controller"></i>GAME</span>
-              <span class="info"><i class="bi bi-person-fill"></i>3/4</span>
-              <span class="info"><i class="bi bi-calendar-event"></i>마감 5/12 21:00</span>
-            </div>
-          </div>
-          <div class="list-item">
-            <h4 class="item-title">같이 게임 하실분</h4>
-            <p class="item-p">배달 최소 금액 때문에 각자 사시는 분 중에 같이 드실 분 구해요. 사이드만 시켜도 괜찮으니 편하게 들어오세요~~ 기숙사는 양진제입니다.</p>
-            <div class="item-meta">
-              <span class="info"><i class="bi-controller"></i>GAME</span>
-              <span class="info"><i class="bi bi-person-fill"></i>3/4</span>
-              <span class="info"><i class="bi bi-calendar-event"></i>마감 5/12 21:00</span>
-            </div>
-          </div>
-          <div class="list-item">
-            <h4 class="item-title">같이 게임 하실분</h4>
-            <p class="item-p">배달 최소 금액 때문에 각자 사시는 분 중에 같이 드실 분 구해요. 사이드만 시켜도 괜찮으니 편하게 들어오세요~~ 기숙사는 양진제입니다.</p>
-            <div class="item-meta">
-              <span class="info"><i class="bi-controller"></i>GAME</span>
-              <span class="info"><i class="bi bi-person-fill"></i>3/4</span>
-              <span class="info"><i class="bi bi-calendar-event"></i>마감 5/12 21:00</span>
-            </div>
-          </div>
-          <!-- ------------------------------------------------------------------------------ -->
-        </div>
+        {% endfor %}
+      </div>
 
         <div class="pagination">
-          <button>&laquo;</button>
-          <button class="active">1</button>
-          <button>2</button>
-          <button>3</button>
-          <button>&raquo;</button>
+          {% if page_obj.has_previous %}
+            <form method="get" style="display:inline;">
+              <input type="hidden" name="page" value="{{ page_obj.previous_page_number }}">
+              <button>&laquo;</button>
+            </form>
+          {% endif %}
+
+          {% for num in page_obj.paginator.page_range %}
+            <form method="get" style="display:inline;">
+              <input type="hidden" name="page" value="{{ num }}">
+              <button class="{% if page_obj.number == num %}active{% endif %}">{{ num }}</button>
+              </form>
+          {% endfor %}
+
+          {% if page_obj.has_next %}
+            <form method="get" style="display:inline;">
+              <input type="hidden" name="page" value="{{ page_obj.next_page_number }}">
+              <button>&raquo;</button>
+            </form>
+          {% endif %}
         </div>
       </div>
     </section>

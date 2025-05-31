@@ -19,14 +19,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const openBtn = document.querySelector('.create-btn');
   const closeBtn = document.getElementById('closeModal');
   const closeLoginBtn = document.getElementById('closeLoginPrompt');
-  const loginBtn = document.getElementById('goToLogin');
   const create_meet_btn = document.getElementById('create_meet_btn');
   const titleInput = document.getElementById('group-title');
   const deadlineInput = document.getElementById('group-date');
   const introduceInput = document.getElementById('group-description');
 
   // Django 템플릿에서 동적으로 대체 예정
-  const isLoggedIn = openBtn.dataset.authentic === 'true';
+  const isLoggedIn = openBtn.dataset.authentic === 'True';
 
   // [모임 생성] 버튼 클릭 → 팝업 열기
   // openBtn.addEventListener('click', () => {
@@ -157,9 +156,11 @@ document.addEventListener('DOMContentLoaded', () => {
       .then(response => response.json())
       .then(data => {
       if (data.message) {
-          alert("모임이 성공적으로 생성되었습니다.");
-          window.location.replace('/main/')
-          } 
+          const confirmed = window.confirm("채팅방으로 이동하시겠습니까?");
+          if (confirmed) {
+                window.location.replace('/main/');
+          }
+      }
       else if (data.error) {
           alert(`에러: ${data.error}`);
         }
@@ -169,10 +170,4 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
 
-  // [로그인 하러 가기] 클릭 → 로그인 페이지로 이동 (리디렉션 포함)
-  loginBtn.addEventListener('click', () => {
-    const currentUrl = window.location.pathname;
-    const redirectUrl = `../account/account.html?next=${encodeURIComponent(currentUrl)}`;
-    window.location.href = redirectUrl;
-  });
 });

@@ -5,27 +5,46 @@
 document.addEventListener('DOMContentLoaded', () => {
   const joinPopup = document.getElementById('joinPopup');
   const closeJoinPopup = document.getElementById('closeJoinPopup');
-  const joinBtn = document.querySelector('#joinPopup .submit-btn');
+  const joinBtn = document.getElementById('enterBtn');
   const loginPrompt = document.getElementById('loginPrompt');
-  const loginBtn = document.getElementById('goToLogin');
 
-  const isLoggedIn = false; // 로그인 여부 (추후 Django 템플릿으로 대체)
+  const btnTime = document.getElementById('btnTime');
+  const btnMember = document.getElementById('btnMember');
+  const timeList = document.getElementById('timeList');
+  const memberList = document.getElementById('memberList');
 
-  // 카드 클릭 → 팝업 열기
+  const isLoggedIn = joinBtn.dataset.auth === 'True';
+
+  btnTime.addEventListener('click', () => {
+    btnTime.classList.add('active');
+    btnMember.classList.remove('active');
+    timeList.style.display = 'flex';  // 보이기 (수평 형태)
+    memberList.style.display = 'none';  // 숨기기
+  });
+
+  btnMember.addEventListener('click', () => {
+    btnMember.classList.add('active');
+    btnTime.classList.remove('active');
+    memberList.style.display = 'flex';   // 보이기 (수평 형태)
+    timeList.style.display = 'none';    // 숨기기
+  });
+
+  // 상단 카드 클릭 → 모임 참가 팝업 창 열기
+  // 하단 모임 리스트 클릭 -> 모임 참가 팝업 창 열기 
   const clickableCards = document.querySelectorAll('.card, .list-item');
   clickableCards.forEach((card) => {
     card.addEventListener('click', () => {
-      // 예시 내용 (동적으로 바꿀 예정이면 fetch로 연결?????)
-      document.getElementById('joinTitle').textContent = '같이 찜닭 시켜볼 분';
-      document.getElementById('joinDate').textContent = '2025-05-12 (일) 21:00';
-      document.getElementById('joinDescription').textContent =
-        '찜닭 2인 세트 함께 주문하실 분 구해요. 최소 주문 금액 맞춰야 해요!';
-      document.getElementById('joinCategory').textContent = 'MEALS';
-      document.getElementById('joinMembers').textContent = '모집인원 2/4';
+      // meet 정보를 카드의 data-* 속성으로 넘긴다
+      document.getElementById('joinTitle').textContent = card.dataset.title;
+      document.getElementById('joinDate').textContent = `생성일자 ${card.dataset.created}`;
+      document.getElementById('joinDescription').textContent = card.dataset.introduce;
+      document.getElementById('joinCategory').textContent = card.dataset.category;
+      document.getElementById('joinMembers').textContent = `모집인원 ${card.dataset.members}`;
+      document.getElementById('joinDeadline').textContent = `마감 ${card.dataset.deadline}`;
 
       joinPopup.classList.add('show');
     });
-  });
+    });
 
   // [X] 닫기
   closeJoinPopup.addEventListener('click', () => {
@@ -46,18 +65,13 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    alert("채팅방으로 이동합니다!");
-    // location.href = `/chat/room/...`;
-    // 연동 후 경로 연결결
+    const confirmed = window.confirm("채팅방으로 이동하시겠습니까?");
+    if (confirmed) {
+      window.location.replace('/main/');
+    }
   });
 
-  // [로그인 하러 가기] → 실제 로그인 페이지로 이동
-  // 여기서 로그인 경로 지정하면 됩니다!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  loginBtn.addEventListener('click', () => {
-    const currentUrl = window.location.pathname;
-    const redirectUrl = `../Login/login.html?next=${encodeURIComponent(currentUrl)}`;
-    window.location.href = redirectUrl;
-  });
+
 });
 
 
