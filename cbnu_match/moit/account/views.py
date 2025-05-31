@@ -55,82 +55,6 @@ def find_login(request):
     else:
         return render(request, "account/id_find.html")
 
-# 회원가입
-def signup(request):
-    if request.method == 'POST':
-        try:
-            data = json.loads(request.body)
-        except json.JSONDecodeError:
-            return JsonResponse({'code': 'failed','error': '잘못된 요청 형식입니다.'}, status=400)
-        try:
-            username = data.get('username', '').strip()
-            password = data.get('password', '').strip()
-            email = data.get('email', '').strip()
-            first_name = data.get('first_name', '').strip()
-            last_name = data.get('last_name', '').strip()
-
-            user = User.objects.create_user(
-                username=username,
-                password=password,
-                email=email,
-                first_name=first_name,
-                last_name=last_name
-            )
-
-            signin_user = authenticate(request, username=username, password=password)
-            if signin_user is not None:
-                login(request, signin_user)
-            else:
-                return JsonResponse({'code': 'failed', 'error': '자동 로그인에 실패했습니다.'})
-        except Exception as e:
-            return JsonResponse({'code': 'failed','error': f'알 수 없는 오류가 발생했습니다.{str(e)}'})
-        return JsonResponse({'code': 'successed'})
-    return render(request, 'account/signup.html')
-
-# 아이디 유효성 검사
-def check_id(request):
-    id = request.GET.get('id')
-    validator = UnicodeUsernameValidator()
-    try:
-        if User.objects.filter(username = id).exists():
-            raise ValidationError ('이미 존재하는 아이디입니다.', code='username_already_exists')
-        print(id)
-        validator(id)
-        return JsonResponse({'valid': True})
-    except ValidationError as e:
-        return JsonResponse({'valid': False, 'error': e.messages, 'code': e.code}, status=400)
-
-# 비밀번호 유효성 검사
-def check_password(request):
-    if request.method == 'POST':
-        try:
-            data = json.loads(request.body)
-
-            id = data.get('username')
-            password = data.get('password')
-        except json.JSONDecodeError:
-            return JsonResponse({'error': '요청 본문이 올바른 JSON이 아닙니다.'}, status = 400)
-        temp = User(username=id, password=password)
-        try:
-            validate_password(password, user=temp)
-        except ValidationError as e:
-            return JsonResponse({'error': e.messages}, status=400)
-        return JsonResponse({'password': password})
-
-# 이메일 유효성 검사
-def check_email(request):
-    if request.method == 'POST':
-        try:
-            data = json.loads(request.body)
-            email = data.get('email')
-        except json.JSONDecodeError:
-            return JsonResponse({'valid': False, 'error': '요청 본문이 올바른 JSON이 아닙니다.'})
-        try:
-            validate_email(email)
-        except ValidationError as e:
-            return JsonResponse({'valid': False, 'error': e.messages}, status=400)
-        return JsonResponse({'valid': True})
-
 # 사용자 정보 확인
 def check_userinfo(request):
     if request.method == 'POST':
@@ -209,12 +133,37 @@ def get_profile_info(request):
 
 
 # 조인흠 ================================================================
+# View 함수 =============================================================
 def signup_view(request):
     return render(request, 'account/signup.html')
 
+def create_profile_view(request):
+    return render(request, 'account/create_profile.html')
+
+# API 함수 ==============================================================
 @require_POST
 def signup_api(request):
-    return JsonResponse({})
+    try:
+        data = json.loads(request.body)
+        
+        User.objects.create_user(
+            username=data['username'],
+            password=data['password'],
+            last_name=data['last_name'],
+            first_name=data['first_name'],
+            email=data['email'],
+        )
+
+        signup_user = authenticate(request, username=data['username'], password=data['password'])
+        if signup_user is None:
+            raise Exception('아이디와 패스워드랑 일치하는 유저가 없습니다.')
+        login(request, signup_user)
+        return JsonResponse({'code': 'Successed'})
+    except ValidationError as e:
+        return JsonResponse({'code': 'Failed', 'message': e.messages})
+    except Exception as e:
+        print(f'서버 오류: {e}')
+        return JsonResponse({'code': 'Error', 'message': '서버 오류'})
 
 @require_POST
 def check_id_api(request):
@@ -266,6 +215,32 @@ def check_email_api(request):
         data = json.loads(request.body)
         email = data['email']
         validate_email(email)
+        return JsonResponse({'code': 'Successed'})
+    except ValidationError as e:
+        return JsonResponse({'code': 'Failed', 'message': e.messages})
+    except Exception as e:
+        print(f'서버 오류: {e}')
+        return JsonResponse({'code': 'Error', 'message': '서버 오류'})
+    
+@require_POST
+@login_required
+def create_profile_api(request):
+    print('실행됨')
+    try:
+
+        profile = Profile.objects.get(user = request.user)
+        print(request.user.username)
+
+        profile.nickname = (request.user.last_name + request.user.first_name) if not request.POST.get('nickname') else request.POST.get('nickname')
+        profile.gender = request.POST.get('gender')
+        profile.mbti = request.POST.get('mbti')
+        profile.grade = request.POST.get('grade')
+        profile.college = request.POST.get('college')
+        profile.self_introduce = request.POST.get('selfIntroduce')
+        profile.profile_img = request.FILES.get('profileImage')
+
+        profile.save()
+
         return JsonResponse({'code': 'Successed'})
     except ValidationError as e:
         return JsonResponse({'code': 'Failed', 'message': e.messages})

@@ -16,5 +16,5 @@ def mainpage(request):
     return render(request, 'main/mainpage.html', {
         'meets': meets,
         'categories': categories,
-        'authentic': authentic,
+        
     })

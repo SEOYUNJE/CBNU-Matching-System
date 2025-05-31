@@ -31,7 +31,7 @@ def search(request):
             meet_list = meet_list.filter(title__icontains=query)
 
    # 최신순
-    if (main_type) == 'created':
+    if (main_type) == 'created_at':
         if (sub_type) == 'Newest':
             meet_list = meet_list.order_by('-created_at')
         if (sub_type) == 'oldest':

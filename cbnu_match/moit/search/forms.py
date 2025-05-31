@@ -4,7 +4,7 @@ from meet.models import Meet
 CATEGORY_CHOICES = Meet.CATEGORY_CHOICES 
 
 MAIN_TYPE_CHOICES = [
-    ('', '-- 필터터 --'),
+
     ('created', '만든 날짜'),
     ('participant', '인원수'),
     ('category', '카테고리'),
