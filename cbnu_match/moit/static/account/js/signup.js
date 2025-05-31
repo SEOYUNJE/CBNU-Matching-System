@@ -277,13 +277,10 @@ document.addEventListener('DOMContentLoaded', function (e) {
 
             if (data.code === 'Successed') {
                 alert('회원가입 및 로그인 성공!');
-                window.location.replace = '/account/create_profile_view/'; // 성공 시 리디렉션
-            } else {
-                const messages = Array.isArray(data.message)
-                    ? data.message.join('\n')
-                    : data.message || '알 수 없는 오류가 발생했습니다.';
-                alert(messages);
-                signup_Button.disabled = false;
+                window.location.replace('/account/create_profile_view/'); // 성공 시 리디렉션
+            } 
+            else {
+                throw new Error(data.error);
             }
         } catch (error) {
             const message = typeof error === 'string'

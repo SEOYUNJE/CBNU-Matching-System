@@ -36,7 +36,7 @@
                 <span id="manner"><p>매너온도 40도</p></span>
               </div>
               <hr>
-              <a href="{% url 'profilepage' %}" class="menu-item">
+              <a href="{% url 'profile_view' %}" class="menu-item">
                   <i class="bi bi-person-fill"></i> profile
               </a>
               <a href="{% url 'search' %}" class="menu-item">
@@ -81,12 +81,12 @@
       <!-- 왼쪽: 프로필 이미지 -->
       <div class="left-section">
         <div class="profile-image">
-        <img src="{{ profile.profile_img.url }}" alt="profile" id="profilePreview" />
+        <img src="/media/default_profile.png" id="profile_Image" />
       </div>
   
       <div class="image-buttons">
         <label for="profileImage" class="custom-file-button">사진 선택하기</label>
-        <input type="file" id="profileImage" name="profile_img" accept="image/*" onchange="previewImage(event)" style="display: none;" />
+        <input type="file" id="photo_FileInput" accept="image/*" style="display: none;" />
         </div>
       </div>
 
@@ -95,43 +95,45 @@
 
       <!-- 오른쪽: 정보 입력 폼 -->
       <div class="right-section">
-        <form class="info">
+        <form class="info" id='editProfile_Form'>
           <div class="info-row">
             <label>닉네임</label>
-            <input type="text" value="{{profile.nickname}}" />
+            <input type="text" id='nickname_Input'/>
           </div>
           <div class="info-row">
             <label>성별</label>
-            <select>
-              <option>여성</option>
-              <option>남성</option>
-              <option selected>비공개</option>
+            <select id='gender_Select'>
+              <option value="남성">남성</option>
+              <option value="여성">여성</option>
+              <option value='기타'>기타</option>
+              <option value="비공개" selected>비공개</option>
             </select>
           </div>
           <div class="info-row">
             <label>MBTI</label>
-            <select>
-              <option>INTJ</option>
-              <option>INTP</option>
-              <option>INFJ</option>
-              <option>INFP</option>
-              <option>ISTP</option>
-              <option>ISTJ</option>
-              <option>ISFP</option>
-              <option>ISFJ</option>
-              <option>ENTJ</option>
-              <option>ENTP</option>
-              <option>ENFP</option>
-              <option>ENFJ</option>
-              <option>ESTJ</option>
-              <option>ESTP</option>
-              <option>ESFJ</option>
-              <option>ESFP</option>
+            <select id='mbti_Select'>
+              <option value="ENFJ">ENFJ</option>
+              <option value="ENFP">ENFP</option>
+              <option value="ENTJ">ENTJ</option>
+              <option value="ENTP">ENTP</option>
+              <option value="ESFJ">ESFJ</option>
+              <option value="ESFP">ESFP</option>
+              <option value="ESTJ">ESTJ</option>
+              <option value="ESTP">ESTP</option>
+              <option value="INFJ">INFJ</option>
+              <option value="INFP">INFP</option>
+              <option value="INTJ">INTJ</option>
+              <option value="INTP">INTP</option>
+              <option value="ISFJ">ISFJ</option>
+              <option value="ISFP">ISFP</option>
+              <option value="ISTJ">ISTJ</option>
+              <option value="ISTP">ISTP</option>
+              <option value="비공개" selected>비공개</option>
             </select>
           </div>
           <div class="info-row">
             <label>단과대학</label>
-            <select>
+            <select id='college_Select'>
               <option>인문대학</option>
               <option>사회과학대학</option>
               <option>자연과학대학</option>
@@ -148,6 +150,7 @@
               <option>창의융합대학</option>
               <option>충북PRIDE공유대학</option>
               <option>예술학과군</option>
+              <option value="비공개" selected>비공개</option>
             </select>
           </div>
           <!-- 디폴트로 나오는 메세지는 유저 DB에 저장된 한 줄 소개임 -->
@@ -162,17 +165,16 @@
           <div class="info-row intro">
             <label>한줄 소개</label>
             <div class="intro-wrapper">
-              <textarea id="intro" maxlength="100" oninput="checkLength(this)">
-              ... {{ user_profile.introduction }}
-              </textarea>
-              <p id="counter">0 / 100</p>
+              <textarea id="selfIntroduce_Textarea" maxlength="100"></textarea>
+              <p id="selfIntroduce_TextCounter"></p>
             </div>
+          </div>
+
+          <div style="text-align: center;">
+            <button type="submit" id='submit_Button' class="save-button">변경내용 저장</button>
           </div>
         </form>
       </div>
-    </div>
-    <div style="text-align: center;">
-      <button type="submit" class="save-button">변경내용 저장</button>
     </div>
   </main>
 

@@ -108,10 +108,6 @@ def create_profile_view(request):
     return render(request, 'account/create_profile.html')
 
 @login_required
-def profile_view(request):
-    return render(request, 'account/profile.html')
-
-@login_required
 def get_profile_info(request):
     try:
         target_profile = Profile.objects.get(user=request.user)
@@ -134,13 +130,23 @@ def get_profile_info(request):
 
 # 조인흠 ================================================================
 # View 함수 =============================================================
+# 회원가입 html Render 함수
 def signup_view(request):
     return render(request, 'account/signup.html')
 
+# 프로필 ================================================================
+# 프로필 생성 html Render 함수
 def create_profile_view(request):
     return render(request, 'account/create_profile.html')
 
+def profile_view(request):
+    return render(request, 'account/profile.html')
+
+def edit_profile_view(request):
+    return render(request, 'account/edit_profile.html')
 # API 함수 ==============================================================
+
+# 회원가입 API ===========================================================
 @require_POST
 def signup_api(request):
     try:
@@ -222,23 +228,23 @@ def check_email_api(request):
         print(f'서버 오류: {e}')
         return JsonResponse({'code': 'Error', 'message': '서버 오류'})
     
+# 회원가입 후 프로필 생성 API ==============================================
 @require_POST
 @login_required
-def create_profile_api(request):
+def Save_profile_api(request):
     print('실행됨')
     try:
 
         profile = Profile.objects.get(user = request.user)
-        print(request.user.username)
 
         profile.nickname = (request.user.last_name + request.user.first_name) if not request.POST.get('nickname') else request.POST.get('nickname')
         profile.gender = request.POST.get('gender')
         profile.mbti = request.POST.get('mbti')
-        profile.grade = request.POST.get('grade')
+        # 추후 변경 예정
+        profile.grade = '비공개' if request.POST.get('grade') is None else request.POST.get('grade')
         profile.college = request.POST.get('college')
         profile.self_introduce = request.POST.get('selfIntroduce')
-        profile.profile_img = request.FILES.get('profileImage')
-
+        profile.profile_img = profile.profile_img if request.FILES.get('profileImage') is None else request.FILES.get('profileImage')
         profile.save()
 
         return JsonResponse({'code': 'Successed'})
@@ -247,3 +253,23 @@ def create_profile_api(request):
     except Exception as e:
         print(f'서버 오류: {e}')
         return JsonResponse({'code': 'Error', 'message': '서버 오류'})
+    
+
+# 프로필 관련 API =========================================================
+@login_required
+def get_profileInfo_api(request):
+    try:
+        target_profile = Profile.objects.get(user=request.user)
+        return JsonResponse({
+            'code': 'Successed',
+            'nickname': target_profile.nickname,
+            'gender': target_profile.gender,
+            'mbti': target_profile.mbti,
+            'grade': target_profile.grade,
+            'college': target_profile.college,
+            'self_introduce': target_profile.self_introduce,
+            'profileImageURL': target_profile.profile_img.url,
+        })
+    except Exception as e:
+        print(e)
+        return JsonResponse({'code': 'Error', 'error': str(e)})
