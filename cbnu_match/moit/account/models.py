@@ -3,7 +3,6 @@ from django.contrib.auth.models import User
 
 class Profile(models.Model):
     MBTI_CHOICES = [
-    ('공개 안 함', '공개 안 함'),
     ('ENFJ', 'ENFJ'),
     ('ENFP', 'ENFP'),
     ('ENTJ', 'ENTJ'),
@@ -20,16 +19,16 @@ class Profile(models.Model):
     ('ISFP', 'ISFP'),
     ('ISTJ', 'ISTJ'),
     ('ISTP', 'ISTP'),
+    ('비공개', '비공개'),
 ]
     
     GENDER_CHOICES=[
-        ('공개 안 함', '공개 안 함'),
         ('남성', '남성'), 
         ('여성', '여성'),
+        ('비공개', '비공개'),
     ]
     
     COLLEGE_CHOICES = [
-        ('공개 안 함', '공개 안 함'),
         ('간호대학', '간호대학'),
         ('경영대학', '경영대학'),
         ('공과대학', '공과대학'),
@@ -46,23 +45,15 @@ class Profile(models.Model):
         ('전자정보대학', '전자정보대학'),
         ('창의융합대학', '창의융합대학'),
         ('충북PRIDE공유대학', '충북PRIDE공유대학'),
+        ('비공개', '비공개')
     ]
     
     GRADE_CHOICES=[
-        ('공개 안 함', '공개 안 함'),
         ('1학년','1학년'), 
         ('2학년', '2학년'),
         ('3학년', '3학년'),
         ('4학년', '4학년'),
-    ]
-
-    default_images = [
-        'default1.jpg',
-        'default2.jpg',
-        'default3.jpg',
-        'default4.jpg',
-        'default5.jpg',
-        'default6.jpg',
+        ('비공개', '비공개'),
     ]
 
     user = models.OneToOneField(
@@ -72,7 +63,7 @@ class Profile(models.Model):
 
     profile_img = models.ImageField(
         upload_to='',
-        null=True
+        default='default_profile.png'
     )
 
     nickname = models.CharField(
@@ -83,25 +74,25 @@ class Profile(models.Model):
     mbti = models.CharField(
         max_length=6, 
         choices=MBTI_CHOICES,
-        default='공개 안 함',
+        default='비공개',
     )
 
     gender = models.CharField(
         max_length=10,
         choices=GENDER_CHOICES,
-        default='공개 안 함',
+        default='비공개',
     )
 
     grade =  models.CharField(
         max_length=10,
         choices=GRADE_CHOICES,
-        default='공개 안 함',
+        default='비공개',
     )
 
     college = models.CharField(
         max_length=50,
         choices=COLLEGE_CHOICES,
-        default='공개 안 함',
+        default='비공개',
     )
 
     self_introduce = models.TextField(

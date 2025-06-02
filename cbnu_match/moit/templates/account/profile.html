@@ -81,7 +81,7 @@
       <!-- 왼쪽: 프로필 이미지 -->
       <div class="left-section">
         <div class="profile-image">
-          <img src="{{ profile.profile_img.url }}" alt="프로필 이미지" />
+          <img src="" id='profileImage_Display'/>
         </div>
       </div>
 
@@ -120,7 +120,7 @@
 
     </div>
           <p class="edit-link">
-          <a href="{% url 'edit_profile' %}">정보를 변경하려면 클릭해주세요.</a>
+          <a href="{% url 'edit_profile_view' %}">정보를 변경하려면 클릭해주세요.</a>
       </p>
   </main>
 
