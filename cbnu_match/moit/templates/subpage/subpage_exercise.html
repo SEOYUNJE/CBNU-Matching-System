@@ -155,7 +155,29 @@
       </a>
     </div>
   </div>
-  <!-- ------------------------------------------------------------------------------------------>
+
+  <!-- 채팅방 이동 팝업 -->
+  <div id="ChatBPrompt" class="modal-overlay">
+    <div class="modal-content" style="align-items: center; text-align: center; position: relative;">
+      <span id="closeChatBPrompt" class="close-btn">&times;</span>
+      <p style="font-size: 1.1rem; font-weight: 500;">
+        🎉 참여 완료!<br>
+        모임에 성공적으로 참여하셨어요.<br>
+        이제 다른 참여자들과 함께 활동을 시작해보세요!
+      </p>
+      <div style="display: flex; justify-content: center; gap: 1rem; margin-top: 1.5rem;">
+        <a href="{% url 'mainpage' %}" class="submit-btn"
+            style="white-space: nowrap; padding: 0.6rem 1.2rem;">
+            채팅방 입장하기
+        </a>
+        <a href="{% url 'subpage_exercise' %}" class="submit-btn"
+            style="white-space: nowrap; padding: 0.6rem 1.2rem;">
+            더 둘러보기
+        </a>
+      </div>
+    </div>
+  </div>
+
 
   <main class="main">
     <!-- Top: filter + horizontal card list -->

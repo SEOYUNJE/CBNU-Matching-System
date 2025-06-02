@@ -18,7 +18,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const closeJoinPopup = document.getElementById('closeJoinPopup');
   const joinBtn = document.getElementById('enterBtn');
   const loginPrompt = document.getElementById('loginPrompt');
-
+  const ChatBPrompt = document.getElementById('ChatBPrompt');
+  const closeChatBPrompt = document.getElementById('closeChatBPrompt');
   const btnTime = document.getElementById('btnTime');
   const btnMember = document.getElementById('btnMember');
   const timeList = document.getElementById('timeList');
@@ -64,11 +65,19 @@ document.addEventListener('DOMContentLoaded', () => {
   closeJoinPopup.addEventListener('click', () => {
     joinPopup.classList.remove('show');
   });
-
+  // [X] 채팅방 이동 팝업 닫기
+  closeChatBPrompt.addEventListener('click', () => {
+    ChatBPrompt.classList.remove('show');
+    window.location.reload(); // 새로고침
+  });
   // 바깥 클릭 시 닫기
   window.addEventListener('click', (e) => {
     if (e.target === joinPopup) joinPopup.classList.remove('show');
     if (e.target === loginPrompt) loginPrompt.classList.remove('show');
+    if (e.target === ChatBPrompt) {
+      ChatBPrompt.classList.remove('show');
+      window.location.reload(); // 새로고침
+    }
   });
 
   // [참여하기] → 로그인 안된 경우 로그인 팝업 띄우기
@@ -90,16 +99,8 @@ document.addEventListener('DOMContentLoaded', () => {
       .then(response => response.json())
       .then(data => {
       if (data.message) {
-
-          alert(data.message);
-
-          const confirmed = window.confirm("채팅방으로 이동하시겠습니까?");
-          if (confirmed) {
-              window.location.replace('/main/');
-          }
-          else {
-              window.location.reload();
-          }
+        joinPopup.classList.remove('show');
+        ChatBPrompt.classList.add('show');
       }
       else if (data.error) {
           alert(`${data.error}`);

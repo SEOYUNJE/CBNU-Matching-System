@@ -23,6 +23,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const titleInput = document.getElementById('group-title');
   const deadlineInput = document.getElementById('group-date');
   const introduceInput = document.getElementById('group-description');
+  const MeetAPrompt = document.getElementById('MeetAPrompt');
+  const closeMeetAPrompt = document.getElementById('closeMeetAPrompt');
 
   // Django 템플릿에서 동적으로 대체 예정
   const isLoggedIn = openBtn.dataset.authentic === 'True';
@@ -54,11 +56,19 @@ document.addEventListener('DOMContentLoaded', () => {
   closeLoginBtn.addEventListener('click', () => {
     loginPrompt.classList.remove('show');
   });
-
+   // [X] 모임 생성 이후 팝업 닫기
+  closeMeetAPrompt.addEventListener('click', () => {
+    MeetAPrompt.classList.remove('show');
+    window.location.reload(); // 새로고침
+  });
   // 바깥 영역 클릭 시 닫기
   window.addEventListener('click', (e) => {
     if (e.target === modal) modal.classList.remove('show');
     if (e.target === loginPrompt) loginPrompt.classList.remove('show');
+    if (e.target === MeetAPrompt) {
+      MeetAPrompt.classList.remove('show');
+      window.location.reload(); // 새로고침
+    }
   });
 
   // ======= 입력 상태 플래그 =======
@@ -156,16 +166,8 @@ document.addEventListener('DOMContentLoaded', () => {
       .then(response => response.json())
       .then(data => {
       if (data.message) {
-
-          alert("모임 생성이 성공적으로 이루어졌습니다.");
-
-          const confirmed = window.confirm("채팅방으로 이동하시겠습니까?");
-          if (confirmed) {
-                window.location.replace('/main/');
-          }
-          else{
-            window.location.reload();
-          }
+          modal.classList.remove('show');
+          MeetAPrompt.classList.add('show');
       }
       else if (data.error) {
           alert(`${data.error}`);
