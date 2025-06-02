@@ -7,6 +7,7 @@
   <title>moit - Subpage</title>
   <link rel="stylesheet" href="{% static 'meet/css/popup_create.css' %}">
   <link rel="stylesheet" href="{% static 'subpage/css/subpage.css' %}">
+  <link rel="stylesheet" href="{% static 'share/css/layout_profile_menu.css' %}">
   <script src="{% static 'share/js/layout_profile_menu.js' %}"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 </head>
@@ -21,11 +22,13 @@
         <a href="{% url 'subpage_exercise' %}" class="active">exercise</a>
       </nav> 
         <div class="util" style="display: flex; align-items: center; gap: 12px;">
-          <a href="{% url 'search' %}"><i class="bi bi-search" id="search"></i></a>
+          <a href="{% url 'search' %}" class="search-icon">
+            <i class="bi bi-search"></i>
+          </a>
           {% if user.is_authenticated %}
           <!-- 로그인된 상태 -->
           <div class="profile-wrapper">
-            <i class="bi bi-person-circle" id="profileBtn"></i>
+            <i class="bi bi-person-circle profile-icon" id="profileBtn"></i>
             <div class="profile-menu" id="profileMenu">
               <div class="profile-info">
                 <span id="name"><p>{{ user.username }}님</p></span>
@@ -45,21 +48,7 @@
           </div>
           {% else %}
           <!-- 로그인되지 않은 상태 -->
-          <a href="{% url 'signin' %}" 
-            style="
-              background-color: #e74c3c;  
-              color: white; 
-              padding: 6px 16px; 
-              border-radius: 25px; 
-              font-weight: 600; 
-              text-decoration: none;
-              display: flex;
-              align-items: center;
-              gap: 6px;
-              font-size: 0.9rem;
-           ">
-            로그인
-          </a>
+          <a href="{% url 'signin' %}" class="login-menu">로그인</a>
           {% endif %}
       </div>
     </div>
@@ -146,7 +135,10 @@
         <span class="tag" id="joinMembers"></span>
         <span class="tag" id="joinDeadline"></span>
       </div>
-      <button id="enterBtn"class="submit-btn" data-auth="{{user.is_authenticated}}">채팅방 입장하기</button>
+
+      <!-- 숨겨진 meet id 추가 -->
+      <input type="hidden" id="joinMeetId" />
+      <button id="enterBtn"class="submit-btn" data-auth="{{user.is_authenticated}}">참여하기</button>
     </div>
   </div>
 
@@ -183,7 +175,8 @@
            data-introduce="{{ meet.meet_introduce }}"
            data-category="{{ meet.category }}"
            data-members="{{ meet.participant.count }}/{{ meet.max_member }}"
-           data-deadline="{{ meet.deadline|date:'n/j H:i' }}">
+           data-deadline="{{ meet.deadline|date:'n/j H:i' }}"
+           data-meetid="{{meet.id}}">
           <h3 class="card-title">{{ meet.title }}</h3>
           <p class="card-desc">{{ meet.meet_introduce }}</p>
           <div class="card-meta">
@@ -204,7 +197,8 @@
            data-introduce="{{ meet.meet_introduce }}"
            data-category="{{ meet.category }}"
            data-members="{{ meet.participant.count }}/{{ meet.max_member }}"
-           data-deadline="{{ meet.deadline|date:'n/j H:i' }}">
+           data-deadline="{{ meet.deadline|date:'n/j H:i' }}"
+           data-meetid="{{meet.id}}">
           <h3 class="card-title">{{ meet.title }}</h3>
           <p class="card-desc">{{ meet.meet_introduce }}</p>
           <div class="card-meta">
@@ -239,7 +233,10 @@
               data-introduce="{{ meet.meet_introduce }}"
               data-category="{{ meet.category }}"
               data-deadline="{{ meet.deadline|date:"n/j H:i" }}"
-              data-members="{{ meet.participant.count }}/{{ meet.max_member }}">
+              data-members="{{ meet.participant.count }}/{{ meet.max_member }}"
+              data-meetid="{{ meet.id }}"
+              >
+  
             <h4 class="item-title">{{ meet.title }}</h4>
             <p class="item-p">{{ meet.meet_introduce }}</p>
             <div class="item-meta">

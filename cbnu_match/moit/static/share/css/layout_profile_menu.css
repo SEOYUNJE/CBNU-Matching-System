@@ -1,0 +1,47 @@
+
+/* Search hover */
+.search-icon i {
+  font-size: 1.4rem;
+  color: #555;
+  transition: color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.search-icon:hover i {
+  color: #e74c3c;
+  transform: translateY(-1.5px) scale(1.1);
+  cursor: pointer;
+}
+
+/* login button hover */
+.login-menu {
+  background-color: #e74c3c;
+  color: white;
+  padding: 6px 16px;
+  border-radius: 25px;
+  font-weight: 600;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.login-menu:hover {
+  background-color: #c0392b; /* 더 진한 레드 */
+  box-shadow: 0 4px 12px rgba(231, 76, 60, 0.4);
+  transform: translateY(-1px);
+  text-decoration: none;
+}
+
+.profile-icon {
+  font-size: 1.8rem;
+  color: #555;
+  transition: color 0.3s ease, transform 0.3s ease;
+  cursor: pointer;
+}
+
+.profile-icon:hover {
+  color: #e74c3c; /* 더 진한 색상으로 */
+  transform: scale(1.15); /* 미묘한 확대 */
+}

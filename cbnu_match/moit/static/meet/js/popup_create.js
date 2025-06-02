@@ -156,13 +156,19 @@ document.addEventListener('DOMContentLoaded', () => {
       .then(response => response.json())
       .then(data => {
       if (data.message) {
+
+          alert("모임 생성이 성공적으로 이루어졌습니다.");
+
           const confirmed = window.confirm("채팅방으로 이동하시겠습니까?");
           if (confirmed) {
                 window.location.replace('/main/');
           }
+          else{
+            window.location.reload();
+          }
       }
       else if (data.error) {
-          alert(`에러: ${data.error}`);
+          alert(`${data.error}`);
         }
       })
       .catch(() => {

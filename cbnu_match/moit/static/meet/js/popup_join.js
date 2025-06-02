@@ -2,6 +2,17 @@
 /* 모임 참가 팝업창 */
 /* 작성자: 최은재 */
 
+// CSRF 토큰을 쿠키에서 가져오는 함수
+function getCSRFToken() {
+    const name = 'csrftoken';
+    const cookies = document.cookie.split(';');
+    for (let cookie of cookies) {
+        const [key, value] = cookie.trim().split('=');
+        if (key === name) return value;
+    }
+    return null;
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   const joinPopup = document.getElementById('joinPopup');
   const closeJoinPopup = document.getElementById('closeJoinPopup');
@@ -14,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const memberList = document.getElementById('memberList');
 
   const isLoggedIn = joinBtn.dataset.auth === 'True';
+  let joinMeetId = null;
 
   btnTime.addEventListener('click', () => {
     btnTime.classList.add('active');
@@ -41,6 +53,8 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('joinCategory').textContent = card.dataset.category;
       document.getElementById('joinMembers').textContent = `모집인원 ${card.dataset.members}`;
       document.getElementById('joinDeadline').textContent = `마감 ${card.dataset.deadline}`;
+      document.getElementById('joinMeetId').value = card.dataset.meetid;
+      joinMeetId = card.dataset.meetid;
 
       joinPopup.classList.add('show');
     });
@@ -57,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.target === loginPrompt) loginPrompt.classList.remove('show');
   });
 
-  // [채팅방 입장하기] → 로그인 안된 경우 로그인 팝업 띄우기
+  // [참여하기] → 로그인 안된 경우 로그인 팝업 띄우기
   joinBtn.addEventListener('click', () => {
     if (!isLoggedIn) {
       joinPopup.classList.remove('show');
@@ -65,13 +79,37 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    const confirmed = window.confirm("채팅방으로 이동하시겠습니까?");
-    if (confirmed) {
-      window.location.replace('/main/');
-    }
-  });
+    fetch('/meet/join_meet/', {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': getCSRFToken()
+      },
+      body: JSON.stringify({ meet_id: joinMeetId })
+      })
+      .then(response => response.json())
+      .then(data => {
+      if (data.message) {
 
+          alert(data.message);
 
+          const confirmed = window.confirm("채팅방으로 이동하시겠습니까?");
+          if (confirmed) {
+              window.location.replace('/main/');
+          }
+          else {
+              window.location.reload();
+          }
+      }
+      else if (data.error) {
+          alert(`${data.error}`);
+          joinPopup.classList.remove('show');
+        }
+      })
+      .catch(() => {
+          alert("서버 오류가 발생했습니다.");
+      });
+    });
 });
 
 
