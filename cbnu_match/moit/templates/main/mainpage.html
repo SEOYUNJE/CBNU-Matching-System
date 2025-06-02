@@ -243,36 +243,22 @@
       <h3><span class="highlight">enjoy</span> Moit</h3>
       <div class="masonry-grid">
         <!--이미지 경로 변경 with static-->
-        <div class="block tall" style="background-image: url('{% static "meet/images/basketball.jpg" %}')">
+        <div class="block tall" style="background-image: url('{% static "meet/images/exercise" %}{{ rd_num }}.jpg')">
           <div class="card-overlay">
             <h3>농구 같이 하실분</h3>
             <p>4월 11일 금요일<br>모집인원 4/8</p>
           </div>
         </div>
         <!--이미지 경로 변경 with static-->
-        <div class="block" style="background-image: url('{% static "meet/images/study2.jpg" %}')">
-          <div class="card-overlay">
-            <h3>도서관에서 공부해요</h3>
-            <p>4월 11일 금요일<br>모집인원 4/8</p>
-          </div>
-        </div>
-        <!--이미지 경로 변경 with static-->
-        <div class="block" style="background-image: url('{% static "meet/images/game.jpg" %}')">
-          <div class="card-overlay">
-            <h3>도서관에서 공부해요</h3>
-            <p>4월 11일 금요일<br>모집인원 4/8</p>
-          </div>
-        </div>
-        <!--이미지 경로 변경 with static-->
-        <div class="block" style="background-image: url('{% static "meet/images/dinner.jpg" %}')">
-          <div class="card-overlay">
-            <h3>도서관에서 공부해요</h3>
-            <p>4월 11일 금요일<br>모집인원 4/8</p>
-          </div>
-        </div>
-        <!--이미지 경로 변경 with static-->
-        <div class="block" style="background-image: url('{% static "meet/images/tennis.jpg" %}')">
-          <div class="card-overlay">
+        <div class="block" style="background-image: url('{% static "meet/images/study" %}{{ rd_num }}.jpg')">
+          <div class="card-overlay"
+            data-title="{{ meet.title }}"
+            data-created="{{ meet.created_at|date:'n/j H:i' }}"
+            data-introduce="{{ meet.meet_introduce }}"
+            data-category="{{ meet.category }}"
+            data-members="{{ meet.participant.count }}/{{ meet.max_member }}"
+            data-deadline="{{ meet.deadline|date:'n/j H:i' }}"
+            data-meetid="{{meet.id}}">
             <h3>도서관에서 공부해요</h3>
             <p>4월 11일 금요일<br>모집인원 4/8</p>
           </div>

@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 상단 카드 클릭 → 모임 참가 팝업 창 열기
   // 하단 모임 리스트 클릭 -> 모임 참가 팝업 창 열기 
-  const clickableCards = document.querySelectorAll('.card, .list-item');
+  const clickableCards = document.querySelectorAll('.card, .list-item', '.card-overlay');
   clickableCards.forEach((card) => {
     card.addEventListener('click', () => {
       // meet 정보를 카드의 data-* 속성으로 넘긴다

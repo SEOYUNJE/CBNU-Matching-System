@@ -12,29 +12,22 @@ def mainpage(request):
         ("meals", "meal.svg"),
     ]
     
-    # 카테고리 별 사진
-    meets_image = {
-        "study": [f"study{i}.jpg" for i in range(1, 6)],
-        "game": [f"game{i}.jpg" for i in range(1, 6)],
-        "exercise": [f"exercise{i}.jpg" for i in range(1, 6)],
-        "meals": [f"meals{i}.jpg" for i in range(1, 6)],
-    }
-
-
-    selected_meets = {}
-    for cat in meets_image.keys():
-        cat_meets = [m for m in meets if m.category.lower() == cat]
-        if cat_meets:
-            selected_meets[cat] = {
-                "meet": random.choice(cat_meets),
-                "image": random.choice(meets_image[cat]),
-            }
+    meet_study = Meet.objects.filter(category='STUDY')
+    meet_game = Meet.objects.filter(category='GAME')
+    meet_meals = Meet.objects.filter(category='MEALS')
+    meet_exercise = Meet.objects.filter(category='EXERCISE')
+    
+    # 카테고리 별 사진(1~5 임의로 선정)
+    rd_num = random.randint(1, 5)
 
     authentic = request.user.is_authenticated
 
     return render(request, 'main/mainpage.html', {
-        'meets': meets,
+        'meet_study': meet_study,
+        'meet_game': meet_game,
+        'meet_meals': meet_meals,
+        'meet_exercise': meet_exercise,
         'categories': categories,
         'authentic': authentic,
-        'selected_meets': selected_meets,
+        'rd_num': rd_num,
     })
