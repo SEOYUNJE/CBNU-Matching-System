@@ -48,6 +48,15 @@ document.addEventListener('DOMContentLoaded', async () => {
       alert(message);
   }
 
+  // 사용자가 원하는 사진을 선택하면 미리 보기로 보여줌!
+  photo_FileInput.addEventListener('change', () => {
+      const file = photo_FileInput.files[0];
+      if(file && file.type.startsWith('image/')) {
+        const url = URL.createObjectURL(file);
+        profile_Image.src = url;
+      }
+  })
+
   editProfile_Form.addEventListener('submit', async function(e)  {
     e.preventDefault();
     console.log('실행됨');
