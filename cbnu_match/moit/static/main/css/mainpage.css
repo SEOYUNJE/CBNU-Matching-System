@@ -346,6 +346,22 @@ h3{
   line-height: 1.4;
 }
 
+.no-meet-message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+  width: 100%;
+  padding: 20px;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #444;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
 /* 모바일 반응형 */
 @media (max-width: 768px) {
   .main {

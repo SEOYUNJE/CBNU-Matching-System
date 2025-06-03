@@ -101,5 +101,11 @@ class Profile(models.Model):
         blank = True,
     )  
     
+    manner_temp = models.IntegerField(
+        default = 100,
+        blank=True,
+        null=True,
+    )
+    
     def __str__(self):
         return self.user.username  

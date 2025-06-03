@@ -264,8 +264,9 @@
       <div class="group-wrapper">
         <h3><span class="highlight">enjoy</span> Moit</h3>
         <div class="masonry-grid">
-          {% with moit=moit_list.0 %}
-          <div class="block tall" style="background-image: url('{% static 'meet/images/' %}{{ moit.category|lower }}1.jpg')"
+          {% if moit_list %}
+            {% with moit=moit_list.0 %}
+            <div class="block tall" style="background-image: url('{% static 'meet/images/' %}{{ moit.category|lower }}1.jpg')"
                 data-title="{{ moit.title }}"
                 data-created="{{ moit.created_at|date:'n/j H:i' }}"
                 data-introduce="{{ moit.meet_introduce }}"
@@ -273,16 +274,15 @@
                 data-members="{{ moit.participant.count }}/{{ moit.max_member }}"
                 data-deadline="{{ moit.deadline|date:'n/j H:i' }}"
                 data-meetid="{{ moit.id }}">
-          <div class="card-overlay">
-              <h3>{{ moit.title }}</h3>
-              <h3>{{ moit.category|lower }}</h3>
-              <p>{{ moit.deadline|date:"n월 j일 l" }}<br>모집인원 {{moit.participant.count }}/{{ moit.max_member }}</p>
+              <div class="card-overlay">
+                <h3>{{ moit.title }}</h3>
+                <p>{{ moit.deadline|date:"n월 j일 l" }}<br>모집인원 {{moit.participant.count }}/{{ moit.max_member }}</p>
+                </div>
             </div>
-          </div>
-          {% endwith %}
+            {% endwith %}
 
-          {% with moit=moit_list.1 %}
-          <div class="block" style="background-image: url('{% static 'meet/images/' %}{{ moit.category|lower }}2.jpg')"
+            {% with moit=moit_list.1 %}
+            <div class="block" style="background-image: url('{% static 'meet/images/' %}{{ moit.category|lower }}2.jpg')"
                 data-title="{{ moit.title }}"
                 data-created="{{ moit.created_at|date:'n/j H:i' }}"
                 data-introduce="{{ moit.meet_introduce }}"
@@ -290,15 +290,15 @@
                 data-members="{{ moit.participant.count }}/{{ moit.max_member }}"
                 data-deadline="{{ moit.deadline|date:'n/j H:i' }}"
                 data-meetid="{{ moit.id }}">
-          <div class="card-overlay">
-              <h3>{{ moit.title }}</h3>
-              <p>{{ moit.deadline|date:"n월 j일 l" }}<br>모집인원 {{moit.participant.count }}/{{ moit.max_member }}</p>
+                <div class="card-overlay">
+                  <h3>{{ moit.title }}</h3>
+                  <p>{{ moit.deadline|date:"n월 j일 l" }}<br>모집인원 {{moit.participant.count }}/{{ moit.max_member }}</p>
+                </div>
             </div>
-          </div>
-          {% endwith %}
+            {% endwith %}
 
-          {% with moit=moit_list.2 %}
-          <div class="block" style="background-image: url('{% static 'meet/images/' %}{{ moit.category|lower }}3.jpg')"
+            {% with moit=moit_list.2 %}
+            <div class="block" style="background-image: url('{% static 'meet/images/' %}{{ moit.category|lower }}3.jpg')"
                 data-title="{{ moit.title }}"
                 data-created="{{ moit.created_at|date:'n/j H:i' }}"
                 data-introduce="{{ moit.meet_introduce }}"
@@ -306,15 +306,15 @@
                 data-members="{{ moit.participant.count }}/{{ moit.max_member }}"
                 data-deadline="{{ moit.deadline|date:'n/j H:i' }}"
                 data-meetid="{{ moit.id }}">
-          <div class="card-overlay">
-              <h3>{{ moit.title }}</h3>
-              <p>{{ moit.deadline|date:"n월 j일 l" }}<br>모집인원 {{moit.participant.count }}/{{ moit.max_member }}</p>
+                <div class="card-overlay">
+                    <h3>{{ moit.title }}</h3>
+                    <p>{{ moit.deadline|date:"n월 j일 l" }}<br>모집인원 {{moit.participant.count }}/{{ moit.max_member }}</p>
+                </div>
             </div>
-          </div>
-          {% endwith %}
+            {% endwith %}
 
-          {% with moit=moit_list.3 %}
-          <div class="block" style="background-image: url('{% static 'meet/images/' %}{{ moit.category|lower }}4.jpg')"
+            {% with moit=moit_list.3 %}
+            <div class="block" style="background-image: url('{% static 'meet/images/' %}{{ moit.category|lower }}4.jpg')"
                 data-title="{{ moit.title }}"
                 data-created="{{ moit.created_at|date:'n/j H:i' }}"
                 data-introduce="{{ moit.meet_introduce }}"
@@ -322,15 +322,15 @@
                 data-members="{{ moit.participant.count }}/{{ moit.max_member }}"
                 data-deadline="{{ moit.deadline|date:'n/j H:i' }}"
                 data-meetid="{{ moit.id }}">
-          <div class="card-overlay">
-              <h3>{{ moit.title }}</h3>
-              <p>{{ moit.deadline|date:"n월 j일 l" }}<br>모집인원 {{moit.participant.count }}/{{ moit.max_member }}</p>
+                <div class="card-overlay">
+                  <h3>{{ moit.title }}</h3>
+                  <p>{{ moit.deadline|date:"n월 j일 l" }}<br>모집인원 {{moit.participant.count }}/{{ moit.max_member }}</p>
+                </div>
             </div>
-          </div>
-          {% endwith %}
+            {% endwith %}
 
-          {% with moit=moit_list.4 %}
-          <div class="block" style="background-image: url('{% static 'meet/images/' %}{{ moit.category|lower }}5.jpg')"
+            {% with moit=moit_list.4 %}
+            <div class="block" style="background-image: url('{% static 'meet/images/' %}{{ moit.category|lower }}5.jpg')"
                 data-title="{{ moit.title }}"
                 data-created="{{ moit.created_at|date:'n/j H:i' }}"
                 data-introduce="{{ moit.meet_introduce }}"
@@ -338,13 +338,17 @@
                 data-members="{{ moit.participant.count }}/{{ moit.max_member }}"
                 data-deadline="{{ moit.deadline|date:'n/j H:i' }}"
                 data-meetid="{{ moit.id }}">
-          <div class="card-overlay">
-              <h3>{{ moit.title }}</h3>
-              <p>{{ moit.deadline|date:"n월 j일 l" }}<br>모집인원 {{moit.participant.count }}/{{ moit.max_member }}</p>
+              <div class="card-overlay">
+                <h3>{{ moit.title }}</h3>
+                <p>{{ moit.deadline|date:"n월 j일 l" }}<br>모집인원 {{moit.participant.count }}/{{ moit.max_member }}</p>
+              </div>
             </div>
-          </div>
-          {% endwith %}
-          
+            {% endwith %}
+          {% else %}
+            <div class="no-meet-message">
+              <p>현재 등록된 모임이 없습니다. 모임을 생성해주세요.</p>
+            </div>
+          {% endif %} 
         </div> <!-- masonry-grid -->
       </div> <!-- group-wrapper -->
     </section>
