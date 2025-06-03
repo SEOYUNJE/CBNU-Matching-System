@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
   closeLoginBtn.addEventListener('click', () => {
     loginPrompt.classList.remove('show');
   });
-   // [X] 모임 생성 이후 팝업 닫기
+  //[X] 모임 생성 이후 팝업 닫기
   closeMeetAPrompt.addEventListener('click', () => {
     MeetAPrompt.classList.remove('show');
     window.location.reload(); // 새로고침

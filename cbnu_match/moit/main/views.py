@@ -2,9 +2,9 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from meet.models import Meet
 import random
+from random import shuffle
 
 def mainpage(request):
-    meets = list(Meet.objects.all())
     categories = [
         ("study", "book.svg"),
         ("game", "gamepad.svg"),
@@ -12,22 +12,28 @@ def mainpage(request):
         ("meals", "meal.svg"),
     ]
     
-    meet_study = Meet.objects.filter(category='STUDY')
-    meet_game = Meet.objects.filter(category='GAME')
-    meet_meals = Meet.objects.filter(category='MEALS')
-    meet_exercise = Meet.objects.filter(category='EXERCISE')
-    
-    # 카테고리 별 사진(1~5 임의로 선정)
-    rd_num = random.randint(1, 5)
+    categories = Meet.objects.values_list('category', flat=True).distinct()
+    selected_meets = []
+
+    for cat in categories:
+        qs = Meet.objects.filter(category=cat).order_by('?')
+        meet = qs.first()
+        if meet:
+            selected_meets.append(meet)
+
+    # 4개 뽑았으니 1개 더 뽑기 (중복 카테고리 가능)
+    extra_qs = Meet.objects.exclude(id__in=[m.id for m in selected_meets]).order_by('?')
+    extra_meet = extra_qs.first()
+    if extra_meet:
+        selected_meets.append(extra_meet)
+
+    shuffle(selected_meets)
+    moit_list = selected_meets[:5]
 
     authentic = request.user.is_authenticated
 
     return render(request, 'main/mainpage.html', {
-        'meet_study': meet_study,
-        'meet_game': meet_game,
-        'meet_meals': meet_meals,
-        'meet_exercise': meet_exercise,
+        'moit_list': moit_list,
         'categories': categories,
         'authentic': authentic,
-        'rd_num': rd_num,
     })

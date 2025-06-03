@@ -178,6 +178,20 @@
       </div>
     </div>
   </div>
+  <!-- 모임 생성 이후 팝업 -->
+  <div id="MeetAPrompt" class="modal-overlay">
+    <div class="modal-content" style="align-items: center; text-align: center; position: relative;">
+      <span id="closeMeetAPrompt" class="close-btn">&times;</span>
+      <p style="font-size: 1.1rem; font-weight: 500;">
+        🎉 모임이 성공적으로 생성되었습니다!<br>
+      </p>
+      <a href="{% url 'mainpage' %}" class="submit-btn"
+        style="white-space: nowrap; padding: 0.5rem 1rem; max-width: 130px; overflow: hidden; text-overflow: ellipsis; text-align: center;">
+        채팅방 입장하기
+      </a>
+
+    </div>
+  </div>
 
   <main class="main">
     <!-- Top: filter + horizontal card list -->

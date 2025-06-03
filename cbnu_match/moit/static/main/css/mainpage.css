@@ -322,10 +322,16 @@ h3{
 
 /* 블록 오버레이 */
 .card-overlay {
+  position: absolute;
+  bottom: 0; /* 하단에 붙이기 */
+  left: 0;
+  width: 100%;
   background: rgba(81, 81, 81, 0.5);
   color: #fff;
   padding: 0.5rem 1rem;
-  width: 100%;
+  cursor: pointer;
+  z-index: 10;
+  pointer-events: auto;
 }
 
 .card-overlay h3 {

@@ -24,27 +24,33 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnMember = document.getElementById('btnMember');
   const timeList = document.getElementById('timeList');
   const memberList = document.getElementById('memberList');
+  
 
   const isLoggedIn = joinBtn.dataset.auth === 'True';
   let joinMeetId = null;
 
+ if (btnTime && btnMember && timeList && memberList) {
   btnTime.addEventListener('click', () => {
     btnTime.classList.add('active');
     btnMember.classList.remove('active');
-    timeList.style.display = 'flex';  // 보이기 (수평 형태)
-    memberList.style.display = 'none';  // 숨기기
+    timeList.style.display = 'flex';
+    memberList.style.display = 'none';
   });
 
   btnMember.addEventListener('click', () => {
     btnMember.classList.add('active');
     btnTime.classList.remove('active');
-    memberList.style.display = 'flex';   // 보이기 (수평 형태)
-    timeList.style.display = 'none';    // 숨기기
+    memberList.style.display = 'flex';
+    timeList.style.display = 'none';
   });
+  } 
+  else {
+  console.warn('btnTime, btnMember, timeList 또는 memberList 중 하나 이상이 존재하지 않습니다.');
+  }
 
   // 상단 카드 클릭 → 모임 참가 팝업 창 열기
   // 하단 모임 리스트 클릭 -> 모임 참가 팝업 창 열기 
-  const clickableCards = document.querySelectorAll('.card, .list-item', '.card-overlay');
+  const clickableCards = document.querySelectorAll('.card, .list-item');
   clickableCards.forEach((card) => {
     card.addEventListener('click', () => {
       // meet 정보를 카드의 data-* 속성으로 넘긴다
@@ -55,7 +61,24 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('joinMembers').textContent = `모집인원 ${card.dataset.members}`;
       document.getElementById('joinDeadline').textContent = `마감 ${card.dataset.deadline}`;
       document.getElementById('joinMeetId').value = card.dataset.meetid;
-      joinMeetId = card.dataset.meetid;
+      joinMeetId = card.dataset.meetid; 
+
+      joinPopup.classList.add('show');
+    });
+    });
+  
+  const clickableCards2 = document.querySelectorAll('.block');
+  clickableCards2.forEach((card) => {
+    card.addEventListener('click', () => {
+      // meet 정보를 카드의 data-* 속성으로 넘긴다
+      document.getElementById('joinTitle').textContent = card.dataset.title;
+      document.getElementById('joinDate').textContent = `생성일자 ${card.dataset.created}`;
+      document.getElementById('joinDescription').textContent = card.dataset.introduce;
+      document.getElementById('joinCategory').textContent = card.dataset.category;
+      document.getElementById('joinMembers').textContent = `모집인원 ${card.dataset.members}`;
+      document.getElementById('joinDeadline').textContent = `마감 ${card.dataset.deadline}`;
+      document.getElementById('joinMeetId').value = card.dataset.meetid;
+      joinMeetId = card.dataset.meetid; 
 
       joinPopup.classList.add('show');
     });
