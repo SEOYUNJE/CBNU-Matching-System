@@ -79,7 +79,7 @@
       </div>
       <!-- 검색 후 카테고리 드롭다운 -->
       <div id="categoryDropdown" class="category-dropdown hidden">
-        <button class="category-btn">카테고리 <i class="bi bi-chevron-down"></i></button>
+        <button class="category-btn">카테고리<i class="bi bi-chevron-down"></i></button>
         <div class="category-menu">
           <div class="category-option" data-category="all">전체</div>
           <div class="category-option" data-category="meals">MEALS</div>
@@ -88,76 +88,61 @@
           <div class="category-option" data-category="exercise">EXERCISE</div>
         </div>
       </div>
-    </section>
 
-    <!-- 검색 결과 영역 -->
-    <section id="resultSection" class="result-section hidden">
-      <div class="container">
-        <div class="result-header">
-          <h2 class="result-title">검색결과</h2>
-        </div>
-        <div class="list-layout">
-          <div class="list-item">
-            <h4 class="item-title">같이 초밥 시키실분</h4>
-            <div class="item-meta">
-              <span class="tag">MEALS</span>
-              <span class="info"><i class="bi bi-person-fill"></i>3/4</span>
-              <span class="info"><i class="bi bi-calendar-event"></i>마감 5/12 21:00</span>
-            </div>
-          </div>
-          <div class="list-item">
-            <h4 class="item-title">알고리즘 스터디원 구합니다</h4>
-            <div class="item-meta">
-              <!-- <span class="info"><i class="bi-book"></i>STUDY</span> -->
-              <span class="tag">STUDY</span>
-              <span class="info"><i class="bi bi-person-fill"></i>2/4</span>
-              <span class="info"><i class="bi bi-calendar-event"></i>마감 5/15 18:00</span>
-            </div>
-          </div>
-          <div class="list-item">
-            <h4 class="item-title">배드민턴 치실 분</h4>
-            <div class="item-meta">
-              <span class="tag">EXERCISE</span>
-              <span class="info"><i class="bi bi-person-fill"></i>3/6</span>
-              <span class="info"><i class="bi bi-calendar-event"></i>마감 5/13 15:00</span>
-            </div>
-          </div>
-          <div class="list-item">
-            <h4 class="item-title">롤 같이 하실 분</h4>
-            <div class="item-meta">
-              <span class="tag">GAME</span>
-              <span class="info"><i class="bi bi-person-fill"></i>4/5</span>
-              <span class="info"><i class="bi bi-calendar-event"></i>마감 5/14 20:00</span>
-            </div>
-          </div>
-          <div class="list-item">
-            <h4 class="item-title">치킨 시켜먹을 사람</h4>
-            <div class="item-meta">
-              <span class="tag">MEALS</span>
-              <span class="info"><i class="bi bi-person-fill"></i>2/3</span>
-              <span class="info"><i class="bi bi-calendar-event"></i>마감 5/12 19:00</span>
-            </div>
-          </div>
-          <div class="list-item">
-            <h4 class="item-title">프로젝트 팀원 모집</h4>
-            <div class="item-meta">
-              <span class="tag">STUDY</span>
-              <span class="info"><i class="bi bi-person-fill"></i>3/5</span>
-              <span class="info"><i class="bi bi-calendar-event"></i>마감 5/16 17:00</span>
-            </div>
-          </div>
-        </div>
-        <div class="pagination">
-          <button>&laquo;</button>
-          <button class="active">1</button>
-          <button>2</button>
-          <button>3</button>
-          <button>&raquo;</button>
+      <div id="categoryDropdown2" class="category-dropdown hidden">
+        <button class="category-btn2">카테고리2<i class="bi bi-chevron-down"></i></button>
+        <div class="category-menu">
+          <div class="category-option2" data-category="recent">최신순</div>
+          <div class="category-option2" data-category="old">오래된 순</div>
+          <div class="category-option2" data-category="many">참가자 많은순</div>
+          <div class="category-option2" data-category="few">참가자 적은순</div>
         </div>
       </div>
     </section>
+
+        <!--검색 결과 영역-->
+    <section id="resultSection" class="result-section {% if not results %}hidden{% endif %}">
+  <div class="container">
+    <div class="result-header">
+      <h2 class="result-title">검색결과</h2>
+    </div>
+
+    <div class="list-layout">
+      {% for meet in results %}
+      <div class="list-item">
+        <h4 class="item-title">{{ meet.title }}</h4>
+        <div class="item-meta">
+          <span class="tag">{{ meet.category }}</span>
+          <span class="info">
+            <i class="bi bi-person-fill"></i>
+            {{ meet.num_participant }}/{{ meet.max_member }}
+          </span>
+          <span class="info">
+            <i class="bi bi-calendar-event"></i>
+            마감 {{ meet.deadline|date:"n/j H:i" }}
+          </span>
+        </div>
+      </div>
+      {% empty %}
+      <p>검색 결과가 없습니다.</p>
+      {% endfor %}
+    </div>
+
+    <!-- 페이지네이션 -->
+    <div class="pagination">
+      {% if results.has_previous %}
+        <a href="?page={{ results.previous_page_number }}&query={{ query }}&category={{ category }}&main_type={{ main_type }}&sub_type={{ sub_type }}">이전</a>
+      {% endif %}
+
+      <span class="current">Page {{ results.number }} of {{ results.paginator.num_pages }}</span>
+
+      {% if results.has_next %}
+        <a href="?page={{ results.next_page_number }}&query={{ query }}&category={{ category }}&main_type={{ main_type }}&sub_type={{ sub_type }}">다음</a>
+      {% endif %}
+    </div>
   </div>
-</main>
+</section>
+
 
 <script src="{% static 'search/js/search.js' %}" ></script>
 </body>

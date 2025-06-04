@@ -1,5 +1,7 @@
 // 전역 변수로 현재 선택된 카테고리 저장
-let selectedCategory = '전체';
+let selectedCategory = '전체'; // 카테고리 1
+let selectedCategory2 = '최신순'; // 카테고리 2
+let input_txt = "" // 입력값
 
 // 애니메이션 설정
 const ANIMATION = {
@@ -25,20 +27,26 @@ document.querySelectorAll('.category-tag').forEach(tag => {
 });
 
 // 검색 결과 필터링 함수
-function filterResults(category) {
+function filterResults(category, category2, input_txt) {
   const resultItems = document.querySelectorAll('.list-item');
   
   // 모든 아이템 페이드 아웃
+  // 그전 검색했던 건 사라지게 한다. 
   resultItems.forEach(item => {
     item.style.opacity = '0';
     item.style.transform = 'translateY(20px)';
   });
 
   // 필터링 적용 및 페이드 인
+  // 새로운 카테고리 해당 모임 display
   setTimeout(() => {
     resultItems.forEach((item, index) => {
       const itemCategory = item.querySelector('.tag').textContent.toLowerCase();
-      if (category === '전체' || itemCategory === category.toLowerCase()) {
+      const itemtitle = item.querySelector('.item-title')?.textContent.toLowerCase();
+      // 조건 정리
+      const matchCategory = category === '전체' || itemCategory === category.toLowerCase();
+      const matchTitle = itemtitle.includes(input_txt);
+      if (matchCategory && matchTitle) {
         item.style.display = 'block';
         // 순차적으로 페이드 인
         setTimeout(() => {
@@ -55,11 +63,16 @@ function filterResults(category) {
 
 document.addEventListener('DOMContentLoaded', function() {
   const searchSection = document.getElementById('searchSection');
+  // SearchForm: 검색어 클릭 시 애니메이션 적용
   const searchForm = document.getElementById('searchForm');
   const resultSection = document.getElementById('resultSection');
   const categoryTags = document.getElementById('categoryTags');
+  // 카테고리: 전체, MEALS, STUDY, GAME, EXERCISE
   const categoryDropdown = document.getElementById('categoryDropdown');
+  // 카테고리2: 최신순, 오래된순, 참가자 많은순, 참가자 적은순
+  const categoryDropdown2 = document.getElementById('categoryDropdown2');
   const categoryBtn = document.querySelector('.category-btn');
+  const categoryBtn2 = document.querySelector('.category-btn2');
   
   // 검색창 관련 요소들
   const searchTitle = document.querySelector('.search-title');
@@ -81,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  // 검색 후 카테고리 옵션 클릭 이벤트
+  // 검색 후 카테고리1 옵션 클릭 이벤트
   document.querySelectorAll('.category-option').forEach(option => {
     option.addEventListener('click', function() {
       document.querySelector('.category-option.active')?.classList.remove('active');
@@ -89,15 +102,33 @@ document.addEventListener('DOMContentLoaded', function() {
       selectedCategory = this.textContent;
       categoryBtn.innerHTML = `${selectedCategory} <i class="bi bi-chevron-down"></i>`;
       categoryDropdown.classList.remove('active');
-      filterResults(selectedCategory);
+      filterResults(selectedCategory, selectedCategory2, input_txt);
+    });
+  });
+  // 검색 후 카테고리2 옵션 클릭 이벤트
+  document.querySelectorAll('.category-option2').forEach(option => {
+    option.addEventListener('click', function() {
+      document.querySelector('.category-option2.active')?.classList.remove('active');
+      this.classList.add('active');
+      selectedCategory2 = this.textContent;
+      categoryBtn2.innerHTML = `${selectedCategory2} <i class="bi bi-chevron-down"></i>`;
+      categoryDropdown2.classList.remove('active');
+      filterResults(selectedCategory, selectedCategory2, input_txt);
     });
   });
 
-  // 카테고리 드롭다운 토글
+  // 카테고리1 드롭다운 토글
   categoryBtn.addEventListener('click', function(e) {
     e.stopPropagation();
     categoryDropdown.classList.toggle('active');
     const icon = categoryDropdown.classList.contains('active') ? 'up' : 'down';
+    this.querySelector('i').className = `bi bi-chevron-${icon}`;
+  });
+  // 카테고리2 드롭다운 토글
+  categoryBtn2.addEventListener('click', function(e) {
+    e.stopPropagation();
+    categoryDropdown2.classList.toggle('active');
+    const icon = categoryDropdown2.classList.contains('active') ? 'up' : 'down';
     this.querySelector('i').className = `bi bi-chevron-${icon}`;
   });
 
@@ -107,7 +138,15 @@ document.addEventListener('DOMContentLoaded', function() {
       categoryDropdown.classList.remove('active');
       categoryBtn.querySelector('i').className = 'bi bi-chevron-down';
     }
+    if (!categoryDropdown2.contains(e.target)) {
+      categoryDropdown2.classList.remove('active');
+      categoryBtn2.querySelector('i').className = 'bi bi-chevron-down';
+    }
   });
+
+
+
+
 
   // 검색 폼 제출 이벤트 - 개선된 애니메이션
   searchForm.addEventListener('submit', function(e) {
@@ -119,9 +158,12 @@ document.addEventListener('DOMContentLoaded', function() {
       behavior: 'smooth'
     });
 
+    input_txt = this.querySelector('input').value.trim();
+
     // 모든 전환 요소 준비
     searchSection.style.transition = `all ${ANIMATION.duration}ms ${ANIMATION.easing}`;
     categoryDropdown.style.transition = `opacity ${ANIMATION.duration}ms ${ANIMATION.easing}`;
+    categoryDropdown2.style.transition = `opacity ${ANIMATION.duration}ms ${ANIMATION.easing}`
     resultSection.style.transition = `opacity ${ANIMATION.duration}ms ${ANIMATION.easing}`;
 
     // 동시 전환 시작
@@ -144,10 +186,15 @@ document.addEventListener('DOMContentLoaded', function() {
         searchSection.style.transform = 'translateY(0)';
         searchSection.style.opacity = '1';
 
-        // 드롭다운 표시
+        // 카테고리1 드롭다운 표시
         categoryDropdown.classList.remove('hidden');
         categoryDropdown.style.opacity = '1';
         categoryBtn.innerHTML = `${selectedCategory} <i class="bi bi-chevron-down"></i>`;
+
+        // 카테고리2 드롭다운 표시
+        categoryDropdown2.classList.remove('hidden');
+        categoryDropdown2.style.opacity = '1';
+        categoryBtn2.innerHTML = `${selectedCategory2} <i class="bi bi-chevron-down"></i>`;
 
         // 결과 섹션 표시
         resultSection.style.display = 'block';
@@ -168,7 +215,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         // 필터링 적용
-        filterResults(selectedCategory);
+        filterResults(selectedCategory, selectedCategory2, input_txt);
       }, 100);
     });
   });
@@ -179,6 +226,7 @@ document.addEventListener('DOMContentLoaded', function() {
       // 모든 전환 요소 준비
       searchSection.style.transition = `all ${ANIMATION.duration}ms ${ANIMATION.easing}`;
       categoryDropdown.style.transition = `opacity ${ANIMATION.duration}ms ${ANIMATION.easing}`;
+      categoryDropdown2.style.transition = `opacity ${ANIMATION.duration}ms ${ANIMATION.easing}`;
       resultSection.style.transition = `opacity ${ANIMATION.duration}ms ${ANIMATION.easing}`;
 
       // 동시 전환 시작
@@ -188,6 +236,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // 드롭다운 페이드 아웃
         categoryDropdown.style.opacity = '0';
+        categoryDropdown2.style.opacity = '0';
         
         // 검색창 섹션 전환
         searchSection.style.transform = 'translateY(-10px)';
@@ -200,6 +249,7 @@ document.addEventListener('DOMContentLoaded', function() {
           
           // 드롭다운 숨기기
           categoryDropdown.classList.add('hidden');
+          categoryDropdown2.classList.add('hidden');
           
           // 검색창 섹션 원래 크기로
           searchSection.classList.remove('shrink');
