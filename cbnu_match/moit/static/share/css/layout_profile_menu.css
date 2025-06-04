@@ -47,3 +47,19 @@
 .profile-wrapper.open .profile-icon {
   color: #e74c3c;
 }
+
+/* 매너온도 */
+.manner-bar-wrapper {
+  width: 100%;
+  height: 12px;
+  background-color: #eee;
+  border-radius: 6px;
+  margin-top: 5px;
+  overflow: hidden;
+}
+
+.manner-bar {
+  height: 100%;
+  transition: width 0.3s ease;
+  border-radius: 6px;
+}

@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.core.paginator import Paginator
 from django.http import HttpResponse, HttpResponseRedirect
 from meet.models import Meet
+from account.models import Profile
 from django.db.models import Count, F, ExpressionWrapper, IntegerField
 
 def exercise(request):
@@ -26,11 +27,16 @@ def exercise(request):
     paginator = Paginator(meet_queryset, 8)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+    
+    manner_temp = None
+    if request.user.is_authenticated:
+        manner_temp = Profile.objects.get(user=request.user).manner_temp
 
     return render(request, 'subpage/subpage_exercise.html', {
         'page_obj': page_obj,
         'meet_time': meet_time,
         'meet_member': meet_member,
+        'manner_temp': manner_temp,
     })
 
 def study(request):
@@ -55,11 +61,16 @@ def study(request):
     paginator = Paginator(meet_queryset, 8)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+    
+    manner_temp = None
+    if request.user.is_authenticated:
+        manner_temp = Profile.objects.get(user=request.user).manner_temp
 
     return render(request, 'subpage/subpage_study.html', {
         'page_obj': page_obj,
         'meet_time': meet_time,
         'meet_member': meet_member,
+        'manner_temp': manner_temp,
     })
 
 def game(request):
@@ -84,11 +95,16 @@ def game(request):
     paginator = Paginator(meet_queryset, 8)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+    
+    manner_temp = None
+    if request.user.is_authenticated:
+        manner_temp = Profile.objects.get(user=request.user).manner_temp
 
     return render(request, 'subpage/subpage_game.html', {
         'page_obj': page_obj,
         'meet_time': meet_time,
         'meet_member': meet_member,
+        'manner_temp': manner_temp,
     })
 
 def meals(request):
@@ -113,9 +129,14 @@ def meals(request):
     paginator = Paginator(meet_queryset, 8)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+    
+    manner_temp = None
+    if request.user.is_authenticated:
+        manner_temp = Profile.objects.get(user=request.user).manner_temp
 
     return render(request, 'subpage/subpage_meals.html', {
         'page_obj': page_obj,
         'meet_time': meet_time,
         'meet_member': meet_member,
+        'manner_temp': manner_temp,
     })

@@ -8,7 +8,6 @@
   <link rel="stylesheet" href="{% static 'meet/css/popup_create.css' %}">
   <link rel="stylesheet" href="{% static 'subpage/css/subpage.css' %}">
   <link rel="stylesheet" href="{% static 'share/css/layout_profile_menu.css' %}">
-  <script src="{% static 'share/js/layout_profile_menu.js' %}"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
 </head>
@@ -33,7 +32,13 @@
             <div class="profile-menu" id="profileMenu">
               <div class="profile-info">
                 <span id="name"><p>{{ user.username }}님</p></span>
-                <span id="manner"><p>매너온도 40도</p></span>
+                <span id="manner" data-temp="{{ manner_temp }}">
+                  <p>매너온도 {{ manner_temp }}도</p>
+                  <div class="manner-bar-wrapper">
+                    <div class="manner-bar" id="mannerBar"></div>
+                  </div>
+                  <p id="mannerEmoji"></p>
+                </span>
               </div>
               <hr>
               <a href="{% url 'profile_view' %}" class="menu-item">
@@ -318,5 +323,6 @@
   <!-- 자바스크립트 가져오기 -->
   <script src="{% static 'meet/js/popup_create.js' %}"></script>
   <script src="{% static 'meet/js/popup_join.js' %}"></script>
+  <script src="{% static 'share/js/layout_profile_menu.js' %}"></script>
 </body>
 </html>

@@ -2,6 +2,7 @@ from django.db.models import Count
 from django.core.paginator import Paginator
 from django.shortcuts import render
 from .models import Meet
+from account.models import Profile
 from .forms import SearchForm
 
 CATEGORY_CHOICES = Meet.CATEGORY_CHOICES
@@ -39,13 +40,20 @@ def search(request):
     paginator = Paginator(meet_list, 10)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+    
+    manner_temp = None
+    if request.user.is_authenticated:
+        manner_temp = Profile.objects.get(user=request.user).manner_temp
+
+
 
     context = {
         'form': SearchForm,
         'results': page_obj,
         'query': query,
         'category': category,
-        'sort_type' : sort_type
+        'sort_type' : sort_type,
+        'manner_temp': manner_temp,
     }
 
     return render(request, 'search/search.html', context)

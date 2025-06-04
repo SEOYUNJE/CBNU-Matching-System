@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from meet.models import Meet
+from account.models import Profile
 import random
 from random import shuffle
 
@@ -32,8 +33,13 @@ def mainpage(request):
 
     authentic = request.user.is_authenticated
 
+    manner_temp = None
+    if authentic:
+        manner_temp = Profile.objects.get(user=request.user).manner_temp
+
     return render(request, 'main/mainpage.html', {
         'moit_list': moit_list,
         'categories': categories,
         'authentic': authentic,
+        'manner_temp': manner_temp,
     })
