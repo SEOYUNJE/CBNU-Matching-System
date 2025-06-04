@@ -59,6 +59,9 @@ html {
   top: 0;
   width: 100%;
   z-index: 1000;
+  padding-top: 7px;
+ /* 2025-06-04 수정 */
+  padding-bottom: 7px;
 }
 
 /* 공통 컨테이너-여백을 위한 클래스 */
@@ -102,15 +105,21 @@ a{
   justify-content: center;
   background-color: #f2f2f2;
   border-radius: 2rem;
-  padding: 0.2rem 1.2rem;
+  padding: 0.3rem 1.2rem;
+  /* 2025-06-04 수정 */
+
+  margin-top: 0.2rem;
+  /* margin-bottom: 0.2rem; */
   gap: 1.5rem;
 }
 
 .nav a {
-  font-size: 0.75rem;
+  /* 2025-06-04 수정 */
+
+  font-size: 0.95rem;
   text-decoration: none;
   color: #444;
-  font-weight: 500;
+  font-weight: 400;
   padding: 0.3rem 0.7rem;
 }
 
