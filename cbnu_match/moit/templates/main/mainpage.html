@@ -266,10 +266,10 @@
 
     <!-- 세 번째 섹션: 모임생성 및 카테고리 소개 -->
     <section class="group-list">
+      {% if moit_list %}
       <div class="group-wrapper">
         <h3><span class="highlight">enjoy</span> Moit</h3>
         <div class="masonry-grid">
-          {% if moit_list %}
             {% with moit=moit_list.0 %}
             <div class="block tall" style="background-image: url('{% static 'meet/images/' %}{{ moit.category|lower }}1.jpg')"
                 data-title="{{ moit.title }}"
@@ -349,13 +349,18 @@
               </div>
             </div>
             {% endwith %}
-          {% else %}
-            <div class="no-meet-message">
-              <p>현재 등록된 모임이 없습니다. 모임을 생성해주세요.</p>
-            </div>
-          {% endif %} 
         </div> <!-- masonry-grid -->
       </div> <!-- group-wrapper -->
+      {% else %}
+      <div class="empty-state-wrapper">
+        <h3><span class="highlight">enjoy</span> Moit</h3>
+        <div class="empty-state">
+          <div class="no-meet-message">
+            <p>현재 등록된 모임이 없습니다.<br>모임을 생성해주세요.</p>
+          </div>
+        </div>
+      </div>
+      {% endif %}
     </section>
 
   </main>
