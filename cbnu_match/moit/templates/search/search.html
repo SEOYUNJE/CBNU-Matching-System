@@ -25,6 +25,10 @@
         <a href="{% url 'subpage_game'%}">game</a>
         <a href="{% url 'subpage_exercise'%}">exercise</a>
       </nav>
+        <div class="util" style="display: flex; align-items: center; gap: 12px;">
+          <a href="{% url 'search' %}" class="search-icon">
+            <i class="bi bi-search"></i>
+          </a>
           {% if user.is_authenticated %}
           <!-- 로그인된 상태 -->
           <div class="profile-wrapper">
@@ -62,8 +66,8 @@
     <section id="searchSection" class="search-section">
       <h1 class="search-title">SEARCH</h1>
       <form id="searchForm" class="search-box">
-        <input type="text" placeholder="검색어를 입력하세요..." />
-        <button type="submit"><i class="bi bi-search"></i></button>
+        <input type="text" placeholder="검색어를 입력하세요..." autocomplete="off"/>
+        <button type="submit"><i class="bi bi-search search-icon"></i></button>
       </form>
       <!-- 검색 전 카테고리 태그 -->
       <div id="categoryTags" class="category-tags">

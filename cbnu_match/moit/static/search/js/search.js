@@ -220,4 +220,11 @@ document.addEventListener('DOMContentLoaded', function() {
       document.querySelector('input[type="text"]').value = '';
     }
   });
+  
+  searchTitle.addEventListener('click', () => {
+  if (searchTitle.classList.contains('small')) {
+      window.location.reload();
+    }
+  });
+
 });

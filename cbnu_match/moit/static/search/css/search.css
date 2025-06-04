@@ -1,6 +1,19 @@
 /* 2025-05-29 */
 /* refactor: search.css - 부드러운 전환 효과와 레이아웃 개선 */
-@import url('../layout_page.css');
+@import url('/static/share/css/layout_page.css');
+
+/* search icon */
+.search-icon {
+  font-size: 1.4rem;
+  color: #555;
+  transition: color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.search-icon:hover {
+  color: #e74c3c;
+  transform: translateY(-1.5px) scale(1.1);
+  cursor: pointer;
+}
 
 /* 검색 콘텐츠 전체 래퍼 */
 .search-content-wrapper {
@@ -60,7 +73,11 @@
   margin: 0;
   color: #999;
 }
-
+.search-title.small:hover {
+  color: #e74c3c;
+  cursor: pointer;
+  
+}
 /* 검색창 */
 .search-box {
   width: 50%;
@@ -132,7 +149,7 @@
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
-  justify-content: flex-end;
+  justify-content: center;
   opacity: 1;
   position: absolute;
   bottom: 28%;
@@ -168,7 +185,7 @@
 }
 
 .category-tag.active {
-  background-color: #666;
+  background-color: #e74c3c;
   color: white;
 }
 
