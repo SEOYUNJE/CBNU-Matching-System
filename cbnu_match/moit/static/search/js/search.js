@@ -28,8 +28,7 @@ document.querySelectorAll('.category-tag').forEach(tag => {
 
 // 검색 결과 필터링 함수
 function filterResults(category, category2, input_txt) {
-  const resultItems = document.querySelectorAll('.list-item');
-  
+  const resultItems = Array.from(document.querySelectorAll('.list-item'));
   // 모든 아이템 페이드 아웃
   // 그전 검색했던 건 사라지게 한다. 
   resultItems.forEach(item => {
@@ -40,25 +39,92 @@ function filterResults(category, category2, input_txt) {
   // 필터링 적용 및 페이드 인
   // 새로운 카테고리 해당 모임 display
   setTimeout(() => {
-    resultItems.forEach((item, index) => {
+
+    // Category1 선택값에 따른 정렬 
+
+    const filteredItems = resultItems.filter((item) => {
       const itemCategory = item.querySelector('.tag').textContent.toLowerCase();
-      const itemtitle = item.querySelector('.item-title')?.textContent.toLowerCase();
-      // 조건 정리
+      const itemTitle = item.querySelector('.item-title')?.textContent.toLowerCase();
+
       const matchCategory = category === '전체' || itemCategory === category.toLowerCase();
-      const matchTitle = itemtitle.includes(input_txt);
-      if (matchCategory && matchTitle) {
-        item.style.display = 'block';
-        // 순차적으로 페이드 인
-        setTimeout(() => {
-          item.style.transition = 'all 0.4s ease';
-          item.style.opacity = '1';
-          item.style.transform = 'translateY(0)';
-        }, index * 100);
-      } else {
-        item.style.display = 'none';
-      }
+      const matchTitle = itemTitle.includes(input_txt);
+
+      return matchCategory && matchTitle;
     });
-  }, 200);
+
+    // Category2 선택값에 따른 정렬 
+    // Category2: 최신순(create_at)
+    const sortOption = category2; 
+      if (sortOption === '최신순') {
+        filteredItems.sort((a, b) => {
+        const dateA = new Date(a.dataset.created);
+        const dateB = new Date(b.dataset.created);
+        return dateB - dateA;
+      });
+    } 
+    // Category2: 마감일순 (임박한 순)
+    else if (sortOption === '마감순') {
+      filteredItems.sort((a, b) => {
+      // 마감일 텍스트에서 날짜 정보만 추출해서 Date 객체로 변환
+      const getDeadlineDate = (item) => {
+        const dateText = item.querySelector('.bi-calendar-event').parentElement.textContent.trim();
+        const match = dateText.match(/(\d{1,2})\/(\d{1,2}) (\d{1,2}):(\d{2})/);
+        if (!match) return new Date(8640000000000000); // 날짜 없으면 아주 먼 미래로 처리
+
+        const now = new Date();
+        const [, month, day, hour, minute] = match.map(Number);
+        return new Date(now.getFullYear(), month - 1, day, hour, minute);
+      };
+
+      const dateA = getDeadlineDate(a);
+      const dateB = getDeadlineDate(b);
+
+      return dateA - dateB;
+      });
+    }
+    // Category2: 참여자순 (많은 순)
+    else if (sortOption === '참여자순') {
+        filteredItems.sort((a, b) => {
+          const getParticipants = (item) => {
+          const text = item.querySelector('.bi-person-fill').parentElement.textContent.trim(); // "3/10" 같은 문자열
+          const match = text.match(/(\d+)\s*\/\s*(\d+)/);
+          if (!match) return 0;
+            return Number(match[1]); // 현재 참여자 수 반환
+          };
+        return getParticipants(b) - getParticipants(a); // 참여자 많은 순서
+        });
+      } 
+    // Category2: 모집인원순 (많은 순)
+    else if (sortOption === '모집인원순') {
+        filteredItems.sort((a, b) => {
+          const getMaxMembers = (item) => {
+          const text = item.querySelector('.bi-person-fill').parentElement.textContent.trim(); // "3/10" 같은 문자열
+          const match = text.match(/(\d+)\s*\/\s*(\d+)/);
+        if (!match) return 0;
+        return Number(match[2]); // 모집인원 수 반환
+      };
+      return getMaxMembers(b) - getMaxMembers(a); // 모집 인원 많은 순서
+      });
+    }
+
+    const container = document.querySelector('.list-layout');
+    
+    // 먼저 전체 숨김 처리
+    resultItems.forEach(item => {
+      item.style.display = 'none';
+    });
+
+    // 정렬된 아이템만 순차 출력
+    filteredItems.forEach((item, index) => {
+      container.appendChild(item); // 이 부분이 순서를 바꿔줌
+      item.style.display = 'block';
+      setTimeout(() => {
+        item.style.transition = 'all 0.4s ease';
+        item.style.opacity = '1';
+        item.style.transform = 'translateY(0)';
+      }, index * 100);
+    });
+  }, 0);
 }
 
 document.addEventListener('DOMContentLoaded', function() {

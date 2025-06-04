@@ -107,6 +107,7 @@
 
 .search-box:hover{
   border-color: #aaa;
+
 }
 /* .search-box:focus-within {
   border-color: #aaa; 
@@ -461,13 +462,13 @@
 }
 
 .pagination button:hover {
-  background: #f0f0f0;
+  background: #f19483;
+  color: #fff;
 }
 
 .pagination button.active {
-  background: #666;
-  color: white;
-  border-color: #666;
+  background: #e74c3c;
+  color: #fff;
 }
 
 /* 반응형 디자인 개선 */

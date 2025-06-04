@@ -98,15 +98,15 @@
         <button class="category-btn2">카테고리2<i class="bi bi-chevron-down"></i></button>
         <div class="category-menu">
           <div class="category-option2" data-category="recent">최신순</div>
-          <div class="category-option2" data-category="old">오래된 순</div>
-          <div class="category-option2" data-category="many">참가자 많은순</div>
-          <div class="category-option2" data-category="few">참가자 적은순</div>
+          <div class="category-option2" data-category="old">마감순</div>
+          <div class="category-option2" data-category="many">모집인원순</div>
+          <div class="category-option2" data-category="few">참여자순</div>
         </div>
       </div>
     </section>
 
     <!--검색 결과 영역-->
-    <section id="resultSection" class="result-section {% if not results %}hidden{% endif %}">
+    <section id="resultSection" class="result-section hidden">
   <div class="container">
     <div class="result-header">
       <h2 class="result-title">검색결과</h2>
@@ -114,7 +114,7 @@
 
     <div class="list-layout">
       {% for meet in results %}
-      <div class="list-item">
+      <div class="list-item" data-created="{{ meet.created_at|date:'Y-m-d\\TH:i:s' }}">
         <h4 class="item-title">{{ meet.title }}</h4>
         <div class="item-meta">
           <span class="tag">{{ meet.category }}</span>
