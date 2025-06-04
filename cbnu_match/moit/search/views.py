@@ -1,62 +1,51 @@
+from django.db.models import Count
+from django.core.paginator import Paginator
 from django.shortcuts import render
 from .models import Meet
-from .forms import SearchForm 
-from django.core.paginator import Paginator
-from django.db.models import Q, Count
-from meet.models import Meet
+from .forms import SearchForm
 
-CATEGORY_CHOICES = Meet.CATEGORY_CHOICES 
+CATEGORY_CHOICES = Meet.CATEGORY_CHOICES
 
 def search_before(request):
-    return render(request, 'search/search_before.html')
+    return render(request, 'search/search.html')
 
-# 제목 검색
 def search(request):
-
     query = request.GET.get('query', '')
-    category = request.GET.get('category', '')
-    created_at = request.GET.get('created_at', '')
-    participant = request.GET.get('participant', '')
+    category = request.GET.get('category', '')  # 카테고리
+    sort_type = request.GET.get('sort_type', '')    # 정렬방식
 
-    # 대주제
-    main_type = request.GET.get('main_type', '')
-    # 소주제 
-    sub_type = request.GET.get('sub_type', '')
+    meet_list = Meet.objects.annotate(num_participant=Count('participant'))
 
-    meet_list = Meet.objects.annotate(num_participants=Count('participant'))
-    
-    # 검색
-    if main_type == 'all' or not main_type:
-        if query:
-            meet_list = meet_list.filter(title__icontains=query)
+    # 제목 검색 
+    if query:
+        meet_list = meet_list.filter(title__icontains=query)
 
-   # 최신순
-    if (main_type) == 'created_at':
-        if (sub_type) == 'Newest':
-            meet_list = meet_list.order_by('-created_at')
-        if (sub_type) == 'oldest':
-            meet_list = meet_list.order_by('created_at')
-    # 참가인원
-    if (main_type) == 'participant':
-        if (sub_type) == 'desc':
-            meet_list = meet_list.order_by('-num_participant')
-        if (sub_type) == 'asc' :
-            meet_list = meet_list.order_by('num_participant')
-        # 카테고리
-    if main_type == 'category':
-        if sub_type: 
-            meet_list = meet_list.filter(category=sub_type)       
+    # 카테고리 필터링
+    if category:
+        meet_list = meet_list.filter(category=category)
 
+    # 정렬 조건
+    if sort_type == 'Newest':
+        meet_list = meet_list.order_by('-created_at')
+    elif sort_type == 'oldest':
+        meet_list = meet_list.order_by('created_at')
+
+    if sort_type == 'desc':
+        meet_list = meet_list.order_by('-num_participant')
+    elif sort_type == 'asc':
+        meet_list = meet_list.order_by('num_participant')
+
+    # 페이지네이션
     paginator = Paginator(meet_list, 10)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
     context = {
         'form': SearchForm,
-        'results': page_obj,  
+        'results': page_obj,
         'query': query,
-        'main_type': main_type,
-        'sub_type': sub_type,
+        'category': category,
+        'sort_type' : sort_type
     }
 
     return render(request, 'search/search.html', context)
