@@ -337,6 +337,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
   
+  // Search 로고 클릭 시 되돌아가기 
   searchTitle.addEventListener('click', () => {
   if (searchTitle.classList.contains('small')) {
       window.location.reload();
