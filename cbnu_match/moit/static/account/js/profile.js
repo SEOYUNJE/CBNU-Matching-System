@@ -10,6 +10,7 @@ function getCSRFToken() {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
+    const manner_Display = document.getElementById('manner_Display')
     const nickname_Display = document.getElementById('nickname_Display');
     const gender_Display = document.getElementById('gender_Display');
     const mbti_Display = document.getElementById('mbti_Display');

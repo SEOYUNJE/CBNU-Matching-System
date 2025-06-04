@@ -136,7 +136,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+// 모임 참가 클릭 -> 채팅방입장하기
+document.getElementById('enterChat').addEventListener('click', function() {
+    window.location.href = "/main/";
+});
 
+// 모임 참가 클릭 -> 새로고침
+document.getElementById('exploreMore').addEventListener('click', function() {
+    window.location.reload();
+});
 
 
 // document.addEventListener('DOMContentLoaded', () => {

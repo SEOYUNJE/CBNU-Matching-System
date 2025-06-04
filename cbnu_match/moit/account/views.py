@@ -140,10 +140,20 @@ def create_profile_view(request):
     return render(request, 'account/create_profile.html')
 
 def profile_view(request):
-    return render(request, 'account/profile.html')
+    
+    manner_temp = None
+    if request.user.is_authenticated:
+        manner_temp = Profile.objects.get(user=request.user).manner_temp
+    
+    return render(request, 'account/profile.html',{'manner_temp': manner_temp})
 
 def edit_profile_view(request):
-    return render(request, 'account/edit_profile.html')
+    
+    manner_temp = None
+    if request.user.is_authenticated:
+        manner_temp = Profile.objects.get(user=request.user).manner_temp
+        
+    return render(request, 'account/edit_profile.html', {'manner_temp': manner_temp})
 # API 함수 ==============================================================
 
 # 회원가입 API ===========================================================
@@ -262,6 +272,7 @@ def get_profileInfo_api(request):
         target_profile = Profile.objects.get(user=request.user)
         return JsonResponse({
             'code': 'Successed',
+            'manner_temp': target_profile.manner_temp,
             'nickname': target_profile.nickname,
             'gender': target_profile.gender,
             'mbti': target_profile.mbti,
