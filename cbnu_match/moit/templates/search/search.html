@@ -203,30 +203,32 @@
           </div>
         </div>
       </section>
+
     <!--검색 결과 영역-->
     <section id="resultSection" class="result-section  hidden">
         <div class="container">
           <div class="result-header">
             <h2 class="result-title">검색결과</h2>
-    <div class="list-layout">
-          {% for meet in page_obj %}
-            <div class="list-item" data-created="{{ meet.created_at|date:'Y-m-d\\TH:i:s' }}">
-              <h4 class="item-title">{{ meet.title }}</h4>
-              <div class="item-meta">
-                <span class="tag">{{ meet.category }}</span>
-                <span class="info">
-                  <i class="bi bi-person-fill"></i>
-                  {{ meet.num_participant }}/{{ meet.max_member }}
-                </span>
-                <span class="info">
-                  <i class="bi bi-calendar-event"></i>
-                  마감 {{ meet.deadline|date:"n/j H:i" }}
-                </span>
+            <div class="list-layout">
+            {% for meet in page_obj %}
+              <div class="list-item" data-created="{{ meet.created_at|date:'Y-m-d\\TH:i:s' }}">
+                <h4 class="item-title">{{ meet.title }}</h4>
+                <div class="item-meta">
+                  <span class="tag">{{ meet.category }}</span>
+                  <span class="info">
+                    <i class="bi bi-person-fill"></i>
+                    {{ meet.num_participant }}/{{ meet.max_member }}
+                  </span>
+                  <span class="info">
+                    <i class="bi bi-calendar-event"></i>
+                    마감 {{ meet.deadline|date:"n/j H:i" }}
+                  </span>
+                </div>
               </div>
-            </div>
-          {% empty %}
-            <p>검색 결과가 없습니다.</p>
-          {% endfor %}
+              {% empty %}
+                <p>검색 결과가 없습니다.</p>
+            {% endfor %}
+          </div>
         </div>
 
     <!-- 페이지네이션 -->
