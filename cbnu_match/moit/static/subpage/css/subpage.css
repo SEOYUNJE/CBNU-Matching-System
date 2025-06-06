@@ -77,18 +77,23 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  box-shadow: #666 2px;
+  border: 1px solid transparent; /* ✅ 기본 border 추가 */
+  transition: border 0.2s ease;  /* ✅ 부드럽게 변하게 하기 (선택 사항) */
 }
-.card:hover{
+
+.card:hover {
   border: 1px solid #e74c3c;
 }
 .card-title {
-  font-size: 1.4rem;
-  position: relative;      
-  padding-bottom: 1.5rem;   /* 선과 설명 사이 여백 */
-  margin-bottom: 1rem;    
+  font-size: 100%;
+  position: relative;
+  padding-bottom: 1.5rem;
+  margin-bottom: 1rem;
   text-align: center;
-  
+
+  overflow: hidden;         /* 넘치는 내용 숨기기 */
+  white-space: nowrap;      /* 줄바꿈 방지 */
+  text-overflow: ellipsis;  /* 생략 부호 (...) 표시 */
 }
 
 .card-title::after {

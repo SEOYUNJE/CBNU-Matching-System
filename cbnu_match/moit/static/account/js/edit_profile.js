@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const nickname_Input=document.getElementById('nickname_Input');
   const gender_Input=document.getElementById('gender_Select')
   const mbti_Select=document.getElementById('mbti_Select');
+  const grade_Select=document.getElementById('grade_Select');
   const college_Select=document.getElementById('college_Select');
   const selfIntroduce_Textarea=document.getElementById('selfIntroduce_Textarea');
   const submit_Button=document.getElementById('submit_Button');
@@ -33,7 +34,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         nickname_Input.value = data.nickname;
         gender_Input.value = data.gender;
         mbti_Select.value = data.mbti;
-        //grade_Display.value = data.grade;
+        grade_Select.value = data.grade;
         college_Select.value = data.college;
         selfIntroduce_Textarea.value = data.self_introduce;
         profile_Image.src=data.profileImageURL;
@@ -68,6 +69,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       nickname: nickname_Input.value.trim(),
       gender: gender_Input.value,
       mbti: mbti_Select.value,
+      grade: grade_Select.value,
       college: college_Select.value,
       selfIntroduce: selfIntroduce_Textarea.value,
       profileImage: photo_FileInput.files[0],

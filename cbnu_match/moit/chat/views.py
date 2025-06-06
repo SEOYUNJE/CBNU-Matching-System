@@ -10,3 +10,5 @@ def room(request, room_name):
 # 구동 확인용
 def room_by_meet_id(request, meet_id):
     return render(request, 'chat/room.html', {'room_name': f'meet_{meet_id}'})
+
+

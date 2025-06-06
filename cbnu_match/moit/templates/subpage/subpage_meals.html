@@ -101,6 +101,10 @@
             </select>
           </div>
         </div>
+        
+        <p style="font-size: 12px; margin: 2px 0 16px 0; color: #555;">
+          <strong style="color: #d9534f;">※ 주의 사항: 모집 인원에 방장은 이미 포함되어 있습니다.</strong>
+        </p>
 
         <div class="modal-group">
           <label for="group-description">상세 정보 입력</label>
@@ -167,19 +171,16 @@
     <div class="modal-content" style="align-items: center; text-align: center; position: relative;">
       <span id="closeChatBPrompt" class="close-btn">&times;</span>
       <p style="font-size: 1.1rem; font-weight: 500;">
-        🎉 참여 완료!<br>
         모임에 성공적으로 참여하셨어요.<br>
         이제 다른 참여자들과 함께 활동을 시작해보세요!
       </p>
       <div style="display: flex; justify-content: center; gap: 1rem; margin-top: 1.5rem;">
-        <a href="{% url 'mainpage' %}" class="submit-btn"
-            style="white-space: nowrap; padding: 0.6rem 1.2rem;">
+        <button id="enterChat" class="submit-btn" style="white-space: nowrap; padding: 0.6rem 1.2rem;">
             채팅방 입장하기
-        </a>
-        <a href="{% url 'subpage_meals' %}" class="submit-btn"
-            style="white-space: nowrap; padding: 0.6rem 1.2rem;">
-            더 둘러보기
-        </a>
+        </button>
+        <button id="exploreMore" class="submit-btn" style="white-space: nowrap; padding: 0.6rem 1.2rem;">
+          더 둘러보기
+        </button>
       </div>
     </div>
   </div>
@@ -188,7 +189,7 @@
     <div class="modal-content" style="align-items: center; text-align: center; position: relative;">
       <span id="closeMeetAPrompt" class="close-btn">&times;</span>
       <p style="font-size: 1.1rem; font-weight: 500;">
-        🎉 모임이 성공적으로 생성되었습니다!<br>
+        모임이 성공적으로 생성되었습니다!<br>
       </p>
       <a href="{% url 'mainpage' %}" class="submit-btn"
         style="white-space: nowrap; padding: 0.5rem 1rem; max-width: 130px; overflow: hidden; text-overflow: ellipsis; text-align: center;">

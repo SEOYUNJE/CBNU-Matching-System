@@ -250,8 +250,7 @@ def Save_profile_api(request):
         profile.nickname = (request.user.last_name + request.user.first_name) if not request.POST.get('nickname') else request.POST.get('nickname')
         profile.gender = request.POST.get('gender')
         profile.mbti = request.POST.get('mbti')
-        # 추후 변경 예정
-        profile.grade = '비공개' if request.POST.get('grade') is None else request.POST.get('grade')
+        profile.grade = request.POST.get('grade')
         profile.college = request.POST.get('college')
         profile.self_introduce = request.POST.get('selfIntroduce')
         profile.profile_img = profile.profile_img if request.FILES.get('profileImage') is None else request.FILES.get('profileImage')

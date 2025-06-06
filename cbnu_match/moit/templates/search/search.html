@@ -9,6 +9,7 @@
   <meta charset="UTF-8">
   <title>Moit Full Page Scroll</title>
   <link rel="stylesheet" href="{% static 'search/css/search.css' %}">
+  <link rel="stylesheet" href="{% static 'meet/css/popup_create.css' %}">
   <link rel="stylesheet" href="{% static 'share/css/layout_profile_menu.css' %}">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
   
@@ -63,9 +64,76 @@
     </div>
   </header>
 
+  <!-- 모임 참가 팝업  -->
+
+  <div id="joinPopup" class="modal-overlay">
+    <div class="modal-content">
+      <!-- 닫기 버튼 -->
+      <span id="closeJoinPopup" class="close-btn">&times;</span>
+
+      <!-- 제목 및 날짜 -->
+      <div class="popup-header">
+        <h3 id="joinTitle"></h3>
+        <span id="joinDate" class="popup-date"></span>
+      </div>
+
+      <!-- 구분선 -->
+      <hr class="divider" />
+
+      <!-- 설명 -->
+      <p id="joinDescription" class="description"></p>
+
+      <!-- 구분선 -->
+      <hr class="divider" />
+
+      <!-- 태그 영역 -->
+      <div class="tag-row">
+        <span class="tag" id="joinCategory"></span>
+        <span class="tag" id="joinMembers"></span>
+        <span class="tag" id="joinDeadline"></span>
+      </div>
+
+      <!-- 숨겨진 meet id 추가 -->
+      <input type="hidden" id="joinMeetId" />
+      <button id="enterBtn"class="submit-btn" data-auth="{{user.is_authenticated}}">참여하기</button>
+    </div>
+  </div>
+
+  <!-- 로그인 안내 팝업 -->
+  <div id="loginPrompt" class="modal-overlay">
+    <div class="modal-content" style="align-items: center; text-align: center; position: relative;">
+      <span id="closeLoginPrompt" class="close-btn">&times;</span>
+      <p style="font-size: 1.1rem; font-weight: 500;">
+        로그인하지 않은 상태입니다.<br>
+        로그인 후 서비스를 이용해주세요!
+      </p>
+      <a href="{% url 'signin' %}" class="submit-btn" style="max-width: 200px; margin-top: 1.2rem;">
+        로그인하러 가기
+      </a>
+    </div>
+  </div>
+
+  <!-- 채팅방 이동 팝업 -->
+  <div id="ChatBPrompt" class="modal-overlay">
+    <div class="modal-content" style="align-items: center; text-align: center; position: relative;">
+      <span id="closeChatBPrompt" class="close-btn">&times;</span>
+      <p style="font-size: 1.1rem; font-weight: 500;">
+        모임에 성공적으로 참여하셨어요.<br>
+        이제 다른 참여자들과 함께 활동을 시작해보세요!
+      </p>
+      <div style="display: flex; justify-content: center; gap: 1rem; margin-top: 1.5rem;">
+        <button id="enterChat" class="submit-btn" style="white-space: nowrap; padding: 0.6rem 1.2rem;">
+            채팅방 입장하기
+        </button>
+        <button id="exploreMore" class="submit-btn" style="white-space: nowrap; padding: 0.6rem 1.2rem;">
+          검색하기
+        </button>
+      </div>
+    </div>
+  </div>
   <!-- 메인 콘텐츠 ------------------------------------------------>
 
- <main>
+ <main class="main">
   <div class="search-content-wrapper">
     <!-- 검색창 섹션 -->
     <section id="searchSection" class="search-section">
@@ -150,6 +218,8 @@
 
 
 <script src="{% static 'search/js/search.js' %}" ></script>
+<script src="{% static 'search/js/search_popup.js' %}" ></script>
 <script src="{% static 'share/js/layout_profile_menu.js' %}"></script>
+
 </body>
 </html>
