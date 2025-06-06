@@ -1,0 +1,25 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ko\n"
+
+#, python-format
+msgid "This password is too short. It must contain at least %d character."
+msgid_plural "This password is too short. It must contain at least %d characters."
+msgstr[0] "비밀번호가 너무 짧습니다. 최소 %d자 이상이어야 합니다."
+msgstr[1] "비밀번호가 너무 짧습니다. 최소 %d자 이상이어야 합니다."
+
+msgid "This password is too common."
+msgstr "비밀번호가 너무 일상적인 단어입니다."
+
+msgid "This password is entirely numeric."
+msgstr "비밀번호가 전부 숫자로 되어 있습니다."
+
+
+#: django/contrib/auth/validators.py:10
+msgid "Enter a valid username. This value may contain only letters, numbers, and @/./+/-/_ characters."
+msgstr "유효한 아이디를 입력하세요. 문자, 숫자, @/./+/-/_만 사용할 수 있습니다."
+
+msgid "Enter a valid email address."
+msgstr "올바른 이메일 주소를 입력하세요."

@@ -1,0 +1,82 @@
+@import url('/static/share/css/layout_main.css');
+
+
+/* main: 로그인과 동일하게 센터링 */
+main {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background-color: #fff;
+  padding: 2rem 0;
+}
+
+/* 컨테이너: max-width 360px */
+.id_find-container {
+  background-color: white;
+  padding: 3rem 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  width: 100%;
+  max-width: 360px;     /* 로그인 폼과 동일한 너비 */
+  text-align: left;
+  margin: 0 1rem;
+}
+
+/* 제목 */
+.id_find-container .title {
+  color:#3A3A3A;
+  margin: 0 0 2rem;
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.message {
+  font-size: 1rem;
+  font-weight: 400;
+  text-align: center;
+  margin-top: 3rem;
+  margin-bottom: 4rem;
+}
+
+.message .highlight {
+  color: #e74c3c;
+  font-weight: 500;
+}
+
+
+/* login하러가기기 버튼 */
+.btn-id_find {
+  display: block;
+  width: 100%;
+  padding: 0.8rem 0;
+  margin-top: 1rem;
+  background-color: #e74c3c;
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: background-color .2s;
+}
+
+.btn-id_find:hover {
+  background-color: #cf3e2e;
+}
+
+/* 하단 링크 */
+.links {
+  text-align: center;
+  font-size: 0.8rem;
+  color: #777;
+  margin-top: 30px;
+}
+.links a {
+  color: #777;
+  text-decoration: none;
+  margin: 0 0.5rem;
+}
+.links a:hover {
+  text-decoration: underline;
+}

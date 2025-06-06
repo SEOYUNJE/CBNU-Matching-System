@@ -1,0 +1,171 @@
+@import url('/static/share/css/layout_main.css');
+
+body {
+  margin: 0;
+  font-family: "Montserrat", sans-serif;
+  background-color: #fff;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 3rem 0;
+}
+/* 프로필 이미지 박스 */
+.profile-image-field {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.profile-image-field img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 1px solid #ddd;
+  margin-bottom: 1rem;
+}
+
+/* 버튼 그룹 */
+.profile-image-field .btn-group {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom:1 rem;
+}
+
+.profile-image-field button {
+  flex: 1;          
+  padding: 0.5rem 1rem;
+  background: #f2f2f2;
+  border: 1px solid #ddd;
+  border-radius: 0.40rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background .2s, color .2s;
+}
+
+.profile-image-field button:hover {
+  background: #e0e0e0;
+}
+/* 활성 상태 */
+.profile-image-field button.active {
+  background: #e74c3c;
+  color: #fff;
+  border-color: #e74c3c;
+}
+
+/* 컨테이너 */
+.profile-container {
+  width: 100%;
+  max-width: 360px;
+  padding: 2rem;
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  text-align: left;
+}
+
+/* 제목 */
+.profile-container .title {
+  margin: 0 0 2rem;
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  color: #555;
+}
+
+/* 필드 전체 */
+.profile-container .field {
+  margin-bottom: 1.5rem;
+}
+
+/* 레이블 */
+.profile-container .field label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+/* 모든 입력창 & 셀렉트 & textarea 공통 */
+.profile-container input,
+.profile-container select,
+.profile-container textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+  color: #555;
+  background-color: #f7f7f7;
+  border: 1px solid #ddd;
+  border-radius: 0.25rem;
+  box-sizing: border-box;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  font-family: inherit;
+}
+
+/* select 화살표 커스터마이징(브라우저 기본) */
+.profile-container select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23777'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 0.65rem auto;
+}
+
+/* textarea 별도 높이 설정 (약 3줄) */
+.profile-container textarea#intro {
+  resize: vertical; /* 세로 크기만 조절 가능 */
+  line-height: 1.4;
+  min-height: calc(1.4em * 3 + 1.5rem); /* 3줄 높이 + 패딩 */
+}
+
+/* focus 상태 (input, select, textarea 동일) */
+.profile-container input:focus,
+.profile-container select:focus,
+.profile-container textarea:focus {
+  outline: none;
+  border-color: #e74c3c;
+  box-shadow: 0 0 0 2px rgba(231,76,60,0.2);
+}
+
+/* placeholder 스타일 통일 */
+.profile-container input::placeholder,
+.profile-container textarea::placeholder {
+  color: #aaa;
+  opacity: 1;
+}
+
+/* 글자 수 카운트 표시 */
+#intro-count {
+  font-size: 0.8rem;
+  color: #999;
+  text-align: right;
+  margin-top: -0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* 제출 버튼 */
+.btn-submit {
+  display: block;
+  width: 100%;
+  padding: 0.75rem 0;
+  background-color: #e74c3c;
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-submit:hover {
+  background-color: #cf3e2e;
+}
+
+.btn-submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

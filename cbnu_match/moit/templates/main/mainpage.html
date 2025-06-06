@@ -1,0 +1,398 @@
+<!-- 2025-05-11  -->
+<!-- 메인페이지 -->
+<!-- 작성자: 최은재 -->
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Moit Full Page Scroll</title>
+  <link rel="stylesheet" href="{% static 'main/css/mainpage.css' %}">
+  <link rel="stylesheet" href="{% static 'meet/css/popup_create.css' %}">
+  <link rel="stylesheet" href="{% static 'share/css/layout_profile_menu.css' %}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+</head>
+
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="{% url 'mainpage'%}"><div class="logo">moit</div></a>
+      <nav class="nav">
+        <a href="{% url 'subpage_meals'%}">meals</a>
+        <a href="{% url 'subpage_study'%}">study</a>
+        <a href="{% url 'subpage_game'%}">game</a>
+        <a href="{% url 'subpage_exercise'%}">exercise</a>
+      </nav> 
+        <div class="util" style="display: flex; align-items: center; gap: 12px;">
+          <a href="{% url 'search' %}" class="search-icon">
+            <i class="bi bi-search"></i>
+          </a>
+          {% if user.is_authenticated %}
+          <!-- 로그인된 상태 -->
+          <div class="profile-wrapper">
+            <i class="bi bi-person-circle profile-icon" id="profileBtn"></i>
+            <div class="profile-menu" id="profileMenu">
+              <div class="profile-info">
+                <span id="name"><p>{{ user.username }}님</p></span>
+                <span id="manner" data-temp="{{ manner_temp }}">
+                  <p>매너온도 {{ manner_temp }}도</p>
+                  <div class="manner-bar-wrapper">
+                    <div class="manner-bar" id="mannerBar"></div>
+                  </div>
+                  <p id="mannerEmoji"></p>
+                </span>
+              </div>
+              <hr>
+              <a href="{% url 'profile_view' %}" class="menu-item">
+                  <i class="bi bi-person-fill"></i> profile
+              </a>
+              <a href="{% url 'search' %}" class="menu-item">
+                <i class="bi bi-chat-dots"></i> moit chat
+              </a>
+              <a href="{% url 'signout' %}" class="menu-item">
+                <i class="bi bi-box-arrow-right"></i> log out
+              </a>
+            </div>
+          </div>
+          {% else %}
+          <!-- 로그인되지 않은 상태 -->
+          <a href="{% url 'signin' %}" class="login-menu">로그인</a>
+          {% endif %}
+      </div>
+    </div>
+  </header>
+  <!-- 2025-05-17 -->
+  <!-- 모임 생성 팝업 추가-->
+  <!-- 작성자: 최은재 -->
+  <div id="modalOverlay" class="modal-overlay">
+    <div class="modal-content">
+      <span id="closeModal" class="close-btn">&times;</span>
+      <form id="groupForm">
+        {% csrf_token %}
+        <div class="modal-group">
+          <label for="group-title">모임 제목</label>
+          <input id="group-title" name="title" type="text" placeholder="모임 제목을 작성해주세요.">
+        </div>
+
+        <div class="modal-row">
+          <div class="modal-group">
+            <label for="group-type">모임 종류</label>
+            <select id="group-type" name="category">
+              <option value="STUDY">스터디</option>
+              <option value="GAME">게임</option>
+              <option value="EXERCISE">운동</option>
+              <option value="MEALS">식사</option>
+            </select>
+          </div>
+          <div class="modal-group">
+            <label for="group-date">모임 날짜</label>
+            <input id="group-date" name="deadline" type="datetime-local">
+          </div>
+          <div class="modal-group">
+            <label for="group-people">모임 인원</label>
+            <select id="group-people" name="max_member">
+              <option value="2명">2명</option>
+              <option value="3명">3명</option>
+              <option value="4명">4명</option>
+              <option value="5명">5명</option>
+              <option value="6명">6명</option>
+              <option value="7명">7명</option>
+              <option value="8명">8명</option>
+              
+            </select>
+          </div>
+        </div>
+
+        <p style="font-size: 12px; margin: 2px 0 16px 0; color: #555;">
+          <strong style="color: #d9534f;">※ 주의 사항: 모집 인원에 방장은 이미 포함되어 있습니다.</strong>
+        </p>
+
+        <div class="modal-group">
+          <label for="group-description">상세 정보 입력</label>
+          <textarea id="group-description" name="meet_introduce" placeholder="자세한 모임 설명을 작성해주세요."></textarea>
+          <div id="description-error" class="introduce-error"></div>
+        </div>
+
+        <button class="submit-btn" type="submit" id="create_meet_btn" disabled>생성하기</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 모임 참가 팝업  -->
+
+  <div id="joinPopup" class="modal-overlay">
+    <div class="modal-content">
+      <!-- 닫기 버튼 -->
+      <span id="closeJoinPopup" class="close-btn">&times;</span>
+
+      <!-- 제목 및 날짜 -->
+      <div class="popup-header">
+        <h3 id="joinTitle"></h3>
+        <span id="joinDate" class="popup-date"></span>
+      </div>
+
+      <!-- 구분선 -->
+      <hr class="divider" />
+
+      <!-- 설명 -->
+      <p id="joinDescription" class="description"></p>
+
+      <!-- 구분선 -->
+      <hr class="divider" />
+
+      <!-- 태그 영역 -->
+      <div class="tag-row">
+        <span class="tag" id="joinCategory"></span>
+        <span class="tag" id="joinMembers"></span>
+        <span class="tag" id="joinDeadline"></span>
+      </div>
+
+      <!-- 숨겨진 meet id 추가 -->
+      <input type="hidden" id="joinMeetId" />
+      <button id="enterBtn"class="submit-btn" data-auth="{{user.is_authenticated}}">참여하기</button>
+    </div>
+  </div>
+
+
+  <!-- 로그인 안내 팝업 -->
+  <div id="loginPrompt" class="modal-overlay">
+    <div class="modal-content" style="align-items: center; text-align: center; position: relative;">
+      <span id="closeLoginPrompt" class="close-btn">&times;</span>
+      <p style="font-size: 1.1rem; font-weight: 500;">
+        로그인하지 않은 상태입니다.<br>
+        로그인 후 서비스를 이용해주세요!
+      </p>
+      <a href="{% url 'signin' %}" class="submit-btn" style="max-width: 200px; margin-top: 1.2rem;">
+        로그인하러 가기
+      </a>
+    </div>
+  </div>
+
+  <!-- 모임 생성 이후 팝업 -->
+  <div id="MeetAPrompt" class="modal-overlay">
+    <div class="modal-content" style="align-items: center; text-align: center; position: relative;">
+      <span id="closeMeetAPrompt" class="close-btn">&times;</span>
+      <p style="font-size: 1.1rem; font-weight: 500;">
+        🎉 모임이 성공적으로 생성되었습니다!<br>
+      </p>
+      <a href="{% url 'mainpage' %}" class="submit-btn"
+        style="white-space: nowrap; padding: 0.5rem 1rem; max-width: 130px; overflow: hidden; text-overflow: ellipsis; text-align: center;">
+        채팅방 입장하기
+      </a>
+
+    </div>
+  </div>
+  <!-- 채팅방 이동 팝업 -->
+  <div id="ChatBPrompt" class="modal-overlay">
+    <div class="modal-content" style="align-items: center; text-align: center; position: relative;">
+      <span id="closeChatBPrompt" class="close-btn">&times;</span>
+      <p style="font-size: 1.1rem; font-weight: 500;">
+        🎉 참여 완료!<br>
+        모임에 성공적으로 참여하셨어요.<br>
+        이제 다른 참여자들과 함께 활동을 시작해보세요!
+      </p>
+      <div style="display: flex; justify-content: center; gap: 1rem; margin-top: 1.5rem;">
+        <button id="enterChat" class="submit-btn" style="white-space: nowrap; padding: 0.6rem 1.2rem;">
+            채팅방 입장하기
+        </button>
+        <button id="exploreMore" class="submit-btn" style="white-space: nowrap; padding: 0.6rem 1.2rem;">
+          더 둘러보기
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 메인 콘텐츠 -->
+  <main class="scroll-grid">
+    <!-- 첫 번째 섹션: 슬로건건 -->
+    <section class="intro" tabindex="0">
+      <h1>Meet it. Love it. Moit.</h1>
+      <h2>Make your life </h2>
+    </section>
+
+    <!-- 두 번째 섹션: 모임생성 및 카테고리 소개 -->
+    <section class="section welcome">
+      <div class="container">
+        <div class="welcome-left">
+          <h2>Welcome</h2>
+          <p class="welcome-message">로그인 후에 모임을 생성 해보세요!</p>
+          <button 
+            class="create-btn"
+            data-authentic="{{user.is_authenticated}}">
+            모임 생성
+          </button>
+        </div>
+        <div class="welcome-right">
+          <h3 class="category-title">CATEGORY</h3>
+          <div class="categories">
+            <div class="cat-wrapper">
+              <a href="{% url 'subpage_study' %}" class="cat-link">
+                <div class="cat-item" data-category="study">
+                  <span class="cat-title">STUDY</span>
+                  <img src="{% static 'meet/icons/book.svg' %}" alt="" class="cat-icon" />
+                </div>
+              </a>
+            </div>
+            <div class="cat-wrapper">
+              <a href = {% url 'subpage_game' %} class = "cat-link">
+                <div class="cat-item" data-category="game">
+                  <span class="cat-title">GAME</span>
+                  <!--icon 경로 변경 with static-->
+                  <img src="{% static 'meet/icons/gamepad.svg' %}" alt="" class="cat-icon" />
+                </div>
+              </a>
+            </div>
+            <a href = {% url 'subpage_exercise' %} class = "cat-link">
+              <div class="cat-item" data-category="exercise">
+                <span class="cat-title">EXERCISE</span>
+                <!--icon 경로 변경 with static-->
+                <img src="{% static 'meet/icons/tennis.svg' %}" alt="" class="cat-icon" />
+              </div>
+            </a>
+            <a href = {% url 'subpage_meals' %} class = "cat-link">
+              <div class="cat-item" data-category="meals">
+                <span class="cat-title">MEALS</span>
+                <!--icon 경로 변경 with static-->
+                <img src="{% static 'meet/icons/meal.svg' %}" alt="" class="cat-icon" />
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- 세 번째 섹션: 모임생성 및 카테고리 소개 -->
+    <section class="group-list">
+      {% if moit_list %}
+      <div class="group-wrapper">
+        <h3><span class="highlight">enjoy</span> Moit</h3>
+        <div class="masonry-grid">
+            {% with moit=moit_list.0 %}
+            <div class="block tall" style="background-image: url('{% static 'meet/images/' %}{{ moit.category|lower }}1.jpg')"
+                data-title="{{ moit.title }}"
+                data-created="{{ moit.created_at|date:'n/j H:i' }}"
+                data-introduce="{{ moit.meet_introduce }}"
+                data-category="{{ moit.category }}"
+                data-members="{{ moit.participant.count }}/{{ moit.max_member }}"
+                data-deadline="{{ moit.deadline|date:'n/j H:i' }}"
+                data-meetid="{{ moit.id }}">
+              <div class="card-overlay">
+                <h3>{{ moit.title }}</h3>
+                <p>{{ moit.deadline|date:"n월 j일 l" }}<br>모집인원 {{moit.participant.count }}/{{ moit.max_member }}</p>
+                </div>
+            </div>
+            {% endwith %}
+
+            {% with moit=moit_list.1 %}
+            <div class="block" style="background-image: url('{% static 'meet/images/' %}{{ moit.category|lower }}2.jpg')"
+                data-title="{{ moit.title }}"
+                data-created="{{ moit.created_at|date:'n/j H:i' }}"
+                data-introduce="{{ moit.meet_introduce }}"
+                data-category="{{ moit.category }}"
+                data-members="{{ moit.participant.count }}/{{ moit.max_member }}"
+                data-deadline="{{ moit.deadline|date:'n/j H:i' }}"
+                data-meetid="{{ moit.id }}">
+                <div class="card-overlay">
+                  <h3>{{ moit.title }}</h3>
+                  <p>{{ moit.deadline|date:"n월 j일 l" }}<br>모집인원 {{moit.participant.count }}/{{ moit.max_member }}</p>
+                </div>
+            </div>
+            {% endwith %}
+
+            {% with moit=moit_list.2 %}
+            <div class="block" style="background-image: url('{% static 'meet/images/' %}{{ moit.category|lower }}3.jpg')"
+                data-title="{{ moit.title }}"
+                data-created="{{ moit.created_at|date:'n/j H:i' }}"
+                data-introduce="{{ moit.meet_introduce }}"
+                data-category="{{ moit.category }}"
+                data-members="{{ moit.participant.count }}/{{ moit.max_member }}"
+                data-deadline="{{ moit.deadline|date:'n/j H:i' }}"
+                data-meetid="{{ moit.id }}">
+                <div class="card-overlay">
+                    <h3>{{ moit.title }}</h3>
+                    <p>{{ moit.deadline|date:"n월 j일 l" }}<br>모집인원 {{moit.participant.count }}/{{ moit.max_member }}</p>
+                </div>
+            </div>
+            {% endwith %}
+
+            {% with moit=moit_list.3 %}
+            <div class="block" style="background-image: url('{% static 'meet/images/' %}{{ moit.category|lower }}4.jpg')"
+                data-title="{{ moit.title }}"
+                data-created="{{ moit.created_at|date:'n/j H:i' }}"
+                data-introduce="{{ moit.meet_introduce }}"
+                data-category="{{ moit.category }}"
+                data-members="{{ moit.participant.count }}/{{ moit.max_member }}"
+                data-deadline="{{ moit.deadline|date:'n/j H:i' }}"
+                data-meetid="{{ moit.id }}">
+                <div class="card-overlay">
+                  <h3>{{ moit.title }}</h3>
+                  <p>{{ moit.deadline|date:"n월 j일 l" }}<br>모집인원 {{moit.participant.count }}/{{ moit.max_member }}</p>
+                </div>
+            </div>
+            {% endwith %}
+
+            {% with moit=moit_list.4 %}
+            <div class="block" style="background-image: url('{% static 'meet/images/' %}{{ moit.category|lower }}5.jpg')"
+                data-title="{{ moit.title }}"
+                data-created="{{ moit.created_at|date:'n/j H:i' }}"
+                data-introduce="{{ moit.meet_introduce }}"
+                data-category="{{ moit.category }}"
+                data-members="{{ moit.participant.count }}/{{ moit.max_member }}"
+                data-deadline="{{ moit.deadline|date:'n/j H:i' }}"
+                data-meetid="{{ moit.id }}">
+              <div class="card-overlay">
+                <h3>{{ moit.title }}</h3>
+                <p>{{ moit.deadline|date:"n월 j일 l" }}<br>모집인원 {{moit.participant.count }}/{{ moit.max_member }}</p>
+              </div>
+            </div>
+            {% endwith %}
+        </div> <!-- masonry-grid -->
+      </div> <!-- group-wrapper -->
+      {% else %}
+      <div class="empty-state-wrapper">
+        <h3><span class="highlight">enjoy</span> Moit</h3>
+        <div class="empty-state">
+          <div class="no-meet-message">
+            <p>현재 등록된 모임이 없습니다.<br>모임을 생성해주세요.</p>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+    </section>
+
+  </main>
+  <footer class="footer">
+    <div class="container footer-content">
+      <div class="footer-left">
+        <h2>enjoy your life</h2>
+      </div>
+      <div class="footer-right">
+        <p>12, gaesin-dong, seooone-gu<br>
+         chungju, Republic of Korea<br>
+         T 043.261.2114<br>
+         moit@cbnu.com
+        </p>
+      </div>
+    </div>
+  </footer>
+  <!--js 파일 경로 변경-->
+  <script src="{% static 'meet/js/popup_create.js' %}" defer></script>
+  <script src="{% static 'meet/js/popup_join.js' %}"></script>
+  <script src="{% static 'main/js/mainpage.js' %}"></script>
+  <script src="{% static 'share/js/layout_profile_menu.js' %}"></script>
+  
+  <!-- 스크롤 인디케이터 -->
+<div class="scroll-indicator">
+  <div class="dot active"></div>
+  <div class="dot"></div>
+  <div class="dot"></div>
+</div>
+
+
+</body>
+</html>

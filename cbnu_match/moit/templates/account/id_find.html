@@ -1,0 +1,93 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{% static 'account/css/id_find.css' %}" />
+    <script src="{% static 'share/js/layout_profile_menu.js' %}"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+  <header class="header">
+    <a href="{% url 'mainpage'%}"><div class="logo">moit</div></a>
+    <nav class="nav">
+      <a href="{% url 'subpage_meals' %}">meals</a>
+      <a href="{% url 'subpage_study' %}">study</a>
+      <a href="{% url 'subpage_game' %}">game</a>
+      <a href="{% url 'subpage_exercise' %}">exercise</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="id_find-container">
+      <h1 class="title">아이디 찾기</h1>
+
+      <form action=""method="POST"id="input-form" novalidate>
+        <!--csrf_token 추가-->
+        {% csrf_token %}
+ <!-- 성 • 이름 필드 (2열 그리드) -->
+        <div class="field name-fields">
+          <div class="field-group">
+            <label for="last-name">성</label>
+            <input id="last-name"
+                   type="text"
+                   name="last_name"
+                   placeholder="성 입력"
+                   required>
+          </div>
+          <div class="field-group">
+            <label for="first-name">이름</label>
+            <input id="first-name"
+                   type="text"
+                   name="first_name"
+                   placeholder="이름 입력"
+                   required>
+          </div>
+        </div>
+
+        <!-- 이메일 -->
+        <div class="field">
+          <label for="email">이메일</label>
+          <input
+            id="email"
+            type="email"
+            name="email"
+            placeholder="이메일 입력"
+            required />
+        </div>
+
+        <!-- 에러 메시지 위치 (여기!) -->
+        {% if error %}
+          <div class="error-message" style="color: red; font-size: 0.85rem; margin: 6px 0;">
+            {{ error }}
+          </div>
+        {% endif %}
+        
+        <!-- 가입 버튼 -->
+        <button type="submit" class="btn-id_find" disabled>아이디 찾기</button>
+      </form>
+      <div class="links">
+      <!--아이디 찾기, 비밀번호 재설정 삭제 -->
+      <!--회원가입 경로 추가--> 
+        <a href="{% url 'signup_view' %}">회원가입</a>
+      </div>
+    </div>
+  </main>
+
+ 
+
+<script>
+  //1. input에 입력이 있어야 버튼 활성화됨
+  
+
+  $('#input-form input').on('input', function() {
+    const allFilled = $('#input-form input').toArray().every(el => el.value.trim() !== '');
+    $('.btn-id_find').prop('disabled', !allFilled);
+  });
+
+</script>
+
+</body>
+</html>

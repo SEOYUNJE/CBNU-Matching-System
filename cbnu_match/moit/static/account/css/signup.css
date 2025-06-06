@@ -1,0 +1,153 @@
+@import url('/static/share/css/layout_main.css');
+/* signup.css */
+
+/* main: 로그인과 동일하게 센터링 */
+main {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background-color: #fff;
+  padding: 2rem 0;
+}
+
+/* 컨테이너: max-width 360px */
+.signup-container {
+  background-color: white;
+  padding: 3rem 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  width: 100%;
+  max-width: 360px;     /* 로그인 폼과 동일한 너비 */
+  text-align: left;
+  margin: 0 1rem;
+}
+
+/* 제목 */
+.signup-container .title {
+  margin: 0 0 2rem;
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+/*  성 • 이름 그리드 레이아웃 */
+.name-fields {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 1rem;
+  /* 다른 .field와 동일 */
+  /* margin-bottom: 1.5rem;   */
+  margin-bottom: 0rem !important;  
+
+}
+.name-fields .field-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  color: #333;
+}
+.name-fields .field-group input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 0.25rem;
+  background-color: #f7f7f7;
+  font-size: 0.9rem;
+  box-sizing: border-box;
+  transition: border-color .2s, box-shadow .2s;
+}
+.name-fields .field-group input:focus {
+  outline: none;
+  border-color: #e74c3c;
+  box-shadow: 0 0 0 2px rgba(231,76,60,0.2);
+}
+
+/* 각 입력 필드 묶음 */
+.signup-container .field {
+  margin-bottom: 1.5rem;
+}
+
+#m-email{
+  margin-top: 1.5rem !important;
+}
+
+/* 레이블 */
+.signup-container .field label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+/* inline-group: 아이디 + 중복확인 버튼 */
+.inline-group {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.inline-group input {
+  flex: 1;
+}
+
+/* 입력창 기본 */
+.signup-container input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 0.25rem;
+  background-color: #f7f7f7;
+  font-size: 0.9rem;
+  box-sizing: border-box;
+  transition: border-color .2s, box-shadow .2s;
+}
+
+.signup-container input:focus {
+  outline: none;
+  border-color: #e74c3c;
+  box-shadow: 0 0 0 2px rgba(231,76,60,0.2);
+}
+
+/* 에러 메시지: 기본 숨김 */
+.error-message {
+  display: none;
+  /* margin-top: 0.5rem; */
+  margin-top: 0.5rem !important;
+
+  font-size: 0.8rem;
+  color: #e74c3c;
+}
+
+/* 중복확인 버튼 */
+.btn-check {
+  padding: 0 1rem;
+  background-color: #ddd;
+  border: none;
+  border-radius: 0.25rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color .2s;
+}
+
+.btn-check:hover {
+  background-color: #ccc;
+}
+
+/* 회원가입 버튼 */
+.btn-signup {
+  display: block;
+  width: 100%;
+  padding: 0.8rem 0;
+  margin-top: 1rem;
+  background-color: #e74c3c;
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: background-color .2s;
+}
+
+.btn-signup:hover {
+  background-color: #cf3e2e;
+}

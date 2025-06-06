@@ -1,0 +1,191 @@
+/* 상대방 프로필 모달 창창 */
+.profile-modal {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3000;
+}
+
+.profile-modal.hidden {
+  display: none;
+}
+/* 모달 창 */
+.modal-content {
+  background: white;
+  border-radius: 1.5rem;
+  padding: 2rem;
+  width: 400px;
+  max-width: 90%;
+  text-align: center;
+  position: relative;
+}
+
+/* OO님의 프로필 */
+.modal-content h3 {
+  font-size: 1.2rem;
+  color: #e74c3c;
+  margin-top: 0.2rem; 
+  margin-bottom: 2rem;
+}
+
+.modal-content .avatar {
+  width: 100px; 
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 2rem;
+}
+/* 매너온도 영역------------------- */
+/* .manner-bar {
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 1.5rem;
+}
+.manner-bar .bar {
+  height: 8px;
+  background: #eee;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 4px;
+} */
+
+.manner-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;           /* 텍스트와 바 사이 간격 */
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 1rem;
+}
+.manner-bar .bar {
+  flex: 1;                 /* 바 너비가 자동으로 늘어남 */
+  height: 8px;
+  background: #eee;
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 0;               /* 기존 위쪽 여백 제거 */
+  max-width: 150px;        
+  /* max-width: 250px;   */
+  transition: width 0.4s ease-in-out;  /* 애니메이션도 추가 가능 */
+}
+.manner-bar .fill {
+  height: 100%;
+  background: #e74c3c;
+  /* width: 120px; */
+}
+/* ------------------------------- */
+/* 한줄소개 */
+.modal-content .intro {
+  font-size: 0.85rem;
+  color: #444;
+  /* margin-bottom: 0.2rem; */
+  margin: 0 auto 1rem;
+  /* 세번 째 요소가 bottom */
+  white-space: pre-line;
+  max-width: 85%; 
+  text-align: center;
+}
+.modal-content hr {
+  width: 90%; 
+  /* margin: 2rem 0; */
+  margin: 1.2rem auto 1.2rem;
+  border-top: 1px solid #ccc;
+}
+.modal-content .info {
+  margin: 0.8rem 0;
+  font-weight: bold;
+}
+
+.close-btn {
+  position: absolute;
+  top: 12px; right: 16px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #999;
+}
+
+/* ------------------나가기 팝업-------------------- */
+
+.modal {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 5000;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-box {
+  background: white;
+  padding: 2.5rem 2rem;
+  border-radius: 1rem;
+  width: 360px;
+  min-height: 180px;
+
+  display: flex;                /* ✅ 추가 */
+  flex-direction: column;       /* ✅ 위에서 아래로 배치 */
+  justify-content: center;      /* ✅ 세로 중앙 정렬 */
+  align-items: center;          /* ✅ 가로 정렬도 가운데 */
+
+
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.modal-msg {
+  margin-top: 0rem;
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  font-weight: 500;
+  color: #333;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.modal-actions button {
+  /* padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  flex: 1;
+  max-width: 100px;
+  height: 38px; */
+  
+  width: 90px;             /* 가로 고정 */
+  height: 40px;             /* 세로 고정 */
+  padding: 0;
+  padding: 0;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.confirm-leave {
+  background: #e74c3c;
+  color: white;
+}
+
+.cancel-leave {
+  background: #ddd;
+  color: black;
+}
+
+

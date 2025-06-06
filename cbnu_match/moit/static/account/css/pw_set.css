@@ -1,0 +1,135 @@
+@import url('/static/share/css/layout_main.css');
+
+
+/* main: 로그인과 동일하게 센터링 */
+main {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background-color: #fff;
+  padding: 2rem 0;
+}
+
+/* 컨테이너: max-width 360px */
+.pw_set-container {
+  background-color: white;
+  padding: 3rem 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  width: 100%;
+  max-width: 360px;     /* 로그인 폼과 동일한 너비 */
+  text-align: left;
+  margin: 0 1rem;
+}
+
+/* 제목 */
+.pw_set-container .title {
+  margin: 0 0 2rem;
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.pw_set-container .field {
+  margin-bottom: 1.5rem;
+}
+/*  성 • 이름 그리드 레이아웃 */
+.name-fields {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;  /* 다른 .field와 동일 */
+}
+.name-fields .field-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  color: #333;
+}
+.name-fields .field-group input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 0.25rem;
+  background-color: #f7f7f7;
+  font-size: 0.9rem;
+  box-sizing: border-box;
+  transition: border-color .2s, box-shadow .2s;
+}
+.name-fields .field-group input:focus {
+  outline: none;
+  border-color: #e74c3c;
+  box-shadow: 0 0 0 2px rgba(231,76,60,0.2);
+}
+
+
+
+
+
+/* 레이블 */
+.pw_set-container .field label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+/* 입력창 기본 */
+.pw_set-container input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 0.25rem;
+  background-color: #f7f7f7;
+  font-size: 0.9rem;
+  box-sizing: border-box;
+  transition: border-color .2s, box-shadow .2s;
+}
+
+.pw_set-container input:focus {
+  outline: none;
+  border-color: #e74c3c;
+  box-shadow: 0 0 0 2px rgba(231,76,60,0.2);
+}
+
+
+/* 아이디 찾기 submit 버튼 */
+.btn-id_find {
+  display: block;
+  width: 100%;
+  padding: 0.8rem 0;
+  margin-top: 1rem;
+  background-color: #e74c3c;
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: background-color .2s;
+}
+.btn-id_find:disabled {
+  background-color: #e67d7d;  /* 연한 회색톤 또는 원하는 연한 색으로 변경 */
+  color: #fff;               /* 텍스트 색은 그대로 유지 */
+  cursor: not-allowed;     
+   opacity: 0.7;  
+}
+.btn-id_find:hover {
+  background-color: #cf3e2e;
+}
+
+/* 하단 링크 */
+.links {
+  text-align: center;
+  font-size: 0.8rem;
+  color: #777;
+  margin-top: 20px;
+}
+.links a {
+  color: #777;
+  text-decoration: none;
+  margin: 0 0.5rem;
+}
+.links a:hover {
+  text-decoration: underline;
+}

@@ -1,0 +1,195 @@
+/* 2025-05-16 */
+/* 모임 생성 팝업창 */
+/* 작성자: 최은재 */
+
+/* 전체 팝업 오버레이 */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background-color: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(5px);
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+
+  transition: opacity 0.3s ease;
+  opacity: 0;
+  pointer-events: none;
+}
+.modal-overlay.show {
+  display: flex;
+  opacity: 1;
+  pointer-events: all;
+}
+/* 팝업 본체 */
+.modal-content {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 20px;
+  width: 450px;
+  max-width: 90%;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* label + input/select 묶음 */
+.modal-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 1.2rem;
+}
+
+/* 모임 제목 강조 */
+.modal-group label[for="group-title"] {
+  font-weight: 700;
+}
+
+/* 모든 label 스타일 */
+.modal-group label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #333;
+}
+
+/* 입력 요소 기본 정리 */
+.modal-group input,
+.modal-group select,
+.modal-group textarea {
+  width: 100%;
+  height: 40px;
+  padding: 0 0.6rem;
+  font-size: 0.9rem;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  margin: 0;
+}
+
+/* 텍스트영역만 별도 조정 */
+.modal-group textarea {
+  height: 100px;
+  resize: none;
+  padding: 0.6rem;
+}
+
+/* 날짜 input은 기본값 유지 */
+.modal-group input[type="date"] {
+  padding: 0 0.6rem;
+  font-size: 0.9rem;
+}
+
+/* 가로 3분할 정렬 */
+.modal-row {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.2rem;
+}
+
+.modal-row > .modal-group {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+/* 활성화 시 제출 버튼 */
+.submit-btn {
+  width: 100%;              /* 너비 전체로 설정 */
+  background-color: #e74c3c;
+  color: white;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin-top: 1rem;         /* 보기 좋게 여백도 추가 */
+}
+/* 제출 버튼 비활성화 시  */
+.submit-btn:disabled {
+  background-color: rgba(231, 76, 60, 0.5); /* 0.5는 50% 불투명도 */
+  color: #fff;
+  cursor: not-allowed;
+}
+
+/* 자기소개글 Error */
+.introduce-error {
+  color: red;
+  font-size: 0.9rem;
+  margin-top: 4px;
+}
+
+.submit-btn:hover {
+  background-color: #cf3e2e;
+}
+
+/* 닫기 버튼 */
+.close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1.2rem;
+  font-size: 1.5rem;
+  color: #999;
+  cursor: pointer;
+}
+/* 2025-05-17 */
+/* 모임참가 팝업*/
+/* 작성자: 최은재 */
+.date-info {
+  font-size: 0.9rem;
+  color: #777;
+  margin-top: -0.5rem;
+  margin-bottom: 1rem;
+}
+.popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* margin-bottom: 0.5rem; */
+}
+
+.popup-header h3 {
+  font-size: 1.3rem;
+  font-weight: bold;
+
+}
+
+.popup-date {
+  font-size: 0.9rem;
+  color: #888;
+  white-space: nowrap;
+  margin-top: 0.3rem;
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid #ddd;
+  margin: 0.5rem 0 1rem;
+}
+
+.description {
+  font-size: 1rem;
+  color: #444;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  min-height: 100px; /* 설명 영역 높이 확보 */
+}
+
+.tag-row {
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.tag {
+  background-color: #f2f2f2;
+  color: #333;
+  padding: 0.4rem 0.8rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+}

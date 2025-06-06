@@ -1,0 +1,327 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>moit - Subpage</title>
+  <link rel="stylesheet" href="{% static 'meet/css/popup_create.css' %}">
+  <link rel="stylesheet" href="{% static 'subpage/css/subpage.css' %}">
+  <link rel="stylesheet" href="{% static 'share/css/layout_profile_menu.css' %}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="{% url 'mainpage' %}"><div class="logo">moit</div></a>
+      <nav class="nav">
+        <a href="{% url 'subpage_meals' %}">meals</a>
+        <a href="{% url 'subpage_study' %}" >study</a>
+        <a href="{% url 'subpage_game' %}" class="active">game</a>
+        <a href="{% url 'subpage_exercise' %}">exercise</a>
+      </nav> 
+        <div class="util" style="display: flex; align-items: center; gap: 12px;">
+          <a href="{% url 'search' %}" class="search-icon">
+            <i class="bi bi-search"></i>
+          </a>
+          {% if user.is_authenticated %}
+          <!-- 로그인된 상태 -->
+          <div class="profile-wrapper">
+            <i class="bi bi-person-circle profile-icon" id="profileBtn"></i>
+            <div class="profile-menu" id="profileMenu">
+              <div class="profile-info">
+                <span id="name"><p>{{ user.username }}님</p></span>
+                <span id="manner" data-temp="{{ manner_temp }}">
+                  <p>매너온도 {{ manner_temp }}도</p>
+                  <div class="manner-bar-wrapper">
+                    <div class="manner-bar" id="mannerBar"></div>
+                  </div>
+                  <p id="mannerEmoji"></p>
+                </span>
+              </div>
+              <hr>
+              <a href="{% url 'profile_view' %}" class="menu-item">
+                  <i class="bi bi-person-fill"></i> profile
+              </a>
+              <a href="{% url 'search' %}" class="menu-item">
+                <i class="bi bi-chat-dots"></i> moit chat
+              </a>
+              <a href="{% url 'signout' %}" class="menu-item">
+                <i class="bi bi-box-arrow-right"></i> log out
+              </a>
+            </div>
+          </div>
+          {% else %}
+          <!-- 로그인되지 않은 상태 -->
+          <a href="{% url 'signin' %}" class="login-menu">로그인</a>
+          {% endif %}
+      </div>
+    </div>
+  </header>
+
+  <!-- ------------------------------------------------------------------------------------------>
+  <!-- 모임 생성 팝업 추가-->
+
+  <div id="modalOverlay" class="modal-overlay">
+    <div class="modal-content">
+      <span id="closeModal" class="close-btn">&times;</span>
+      <form id="groupForm">
+        {% csrf_token %}
+        <div class="modal-group">
+          <label for="group-title">모임 제목</label>
+          <input id="group-title" name="title" type="text" placeholder="모임 제목을 작성해주세요.">
+        </div>
+
+        <div class="modal-row">
+          <div class="modal-group">
+            <label for="group-type">모임 종류</label>
+            <select id="group-type" name="category">
+              <option value="GAME">게임</option>
+              <option value="STUDY">스터디</option>
+              <option value="EXERCISE">운동</option>
+              <option value="MEALS">식사</option>
+            </select>
+          </div>
+          <div class="modal-group">
+            <label for="group-date">모임 날짜</label>
+            <input id="group-date" name="deadline" type="datetime-local">
+          </div>
+          <div class="modal-group">
+            <label for="group-people">모임 인원</label>
+            <select id="group-people" name="max_member">
+              <option value="2명">2명</option>
+              <option value="3명">3명</option>
+              <option value="4명">4명</option>
+              <option value="5명">5명</option>
+              <option value="6명">6명</option>
+              <option value="7명">7명</option>
+              <option value="8명">8명</option>
+              
+            </select>
+          </div>
+        </div>
+
+        <p style="font-size: 12px; margin: 2px 0 16px 0; color: #555;">
+          <strong style="color: #d9534f;">※ 주의 사항: 모집 인원에 방장은 이미 포함되어 있습니다.</strong>
+        </p>
+
+        <div class="modal-group">
+          <label for="group-description">상세 정보 입력</label>
+          <textarea id="group-description" name="meet_introduce" placeholder="자세한 모임 설명을 작성해주세요."></textarea>
+          <div id="description-error" class="introduce-error"></div>
+        </div>
+
+        <button class="submit-btn" type="submit" id="create_meet_btn" disabled>생성하기</button>
+      </form>
+    </div>
+  </div>
+<!-- 모임 참가 팝업  -->
+
+  <div id="joinPopup" class="modal-overlay">
+    <div class="modal-content">
+      <!-- 닫기 버튼 -->
+      <span id="closeJoinPopup" class="close-btn">&times;</span>
+
+      <!-- 제목 및 날짜 -->
+      <div class="popup-header">
+        <h3 id="joinTitle"></h3>
+        <span id="joinDate" class="popup-date"></span>
+      </div>
+
+      <!-- 구분선 -->
+      <hr class="divider" />
+
+      <!-- 설명 -->
+      <p id="joinDescription" class="description"></p>
+
+      <!-- 구분선 -->
+      <hr class="divider" />
+
+      <!-- 태그 영역 -->
+      <div class="tag-row">
+        <span class="tag" id="joinCategory"></span>
+        <span class="tag" id="joinMembers"></span>
+        <span class="tag" id="joinDeadline"></span>
+      </div>
+
+      <!-- 숨겨진 meet id 추가 -->
+      <input type="hidden" id="joinMeetId" />
+      <button id="enterBtn"class="submit-btn" data-auth="{{user.is_authenticated}}">참여하기</button>
+    </div>
+  </div>
+
+
+  <!-- 로그인 안내 팝업 -->
+  <div id="loginPrompt" class="modal-overlay">
+    <div class="modal-content" style="align-items: center; text-align: center; position: relative;">
+      <span id="closeLoginPrompt" class="close-btn">&times;</span>
+      <p style="font-size: 1.1rem; font-weight: 500;">
+        로그인하지 않은 상태입니다.<br>
+        로그인 후 서비스를 이용해주세요!
+      </p>
+      <a href="{% url 'signin' %}" class="submit-btn" style="max-width: 200px; margin-top: 1.2rem;">
+        로그인하러 가기
+      </a>
+    </div>
+  </div>
+
+  <!-- 채팅방 이동 팝업 -->
+  <div id="ChatBPrompt" class="modal-overlay">
+    <div class="modal-content" style="align-items: center; text-align: center; position: relative;">
+      <span id="closeChatBPrompt" class="close-btn">&times;</span>
+      <p style="font-size: 1.1rem; font-weight: 500;">
+        모임에 성공적으로 참여하셨어요.<br>
+        이제 다른 참여자들과 함께 활동을 시작해보세요!
+      </p>
+      <div style="display: flex; justify-content: center; gap: 1rem; margin-top: 1.5rem;">
+        <button id="enterChat" class="submit-btn" style="white-space: nowrap; padding: 0.6rem 1.2rem;">
+            채팅방 입장하기
+        </button>
+        <button id="exploreMore" class="submit-btn" style="white-space: nowrap; padding: 0.6rem 1.2rem;">
+          더 둘러보기
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- 모임 생성 이후 팝업 -->
+  <div id="MeetAPrompt" class="modal-overlay">
+    <div class="modal-content" style="align-items: center; text-align: center; position: relative;">
+      <span id="closeMeetAPrompt" class="close-btn">&times;</span>
+      <p style="font-size: 1.1rem; font-weight: 500;">
+        모임이 성공적으로 생성되었습니다!<br>
+      </p>
+      <a href="{% url 'mainpage' %}" class="submit-btn"
+        style="white-space: nowrap; padding: 0.5rem 1rem; max-width: 130px; overflow: hidden; text-overflow: ellipsis; text-align: center;">
+        채팅방 입장하기
+      </a>
+
+    </div>
+  </div>
+
+
+  <main class="main">
+    <!-- Top: filter + horizontal card list -->
+    <section class="section-top">
+    <div class="container">
+      <div class="filter-buttons">
+        <button class="active"  id="btnTime">날짜마감</button>
+        <button id="btnMember">인원마감</button>
+      </div>
+
+      <!-- 날짜마감 리스트 -->
+      <div class="card-grid" id="timeList">
+        {% for meet in meet_time %}
+        <div class="card"
+           data-title="{{ meet.title }}"
+           data-created="{{ meet.created_at|date:'n/j H:i' }}"
+           data-introduce="{{ meet.meet_introduce }}"
+           data-category="{{ meet.category }}"
+           data-members="{{ meet.participant.count }}/{{ meet.max_member }}"
+           data-deadline="{{ meet.deadline|date:'n/j H:i' }}"
+           data-meetid="{{meet.id}}">
+          <h3 class="card-title">{{ meet.title }}</h3>
+          <p class="card-desc">{{ meet.meet_introduce }}</p>
+          <div class="card-meta">
+            <span class="info">{{ meet.category }}</span>
+            <span class="info"><i class="bi bi-person-fill"></i>{{ meet.participant.count }}/{{ meet.max_member }}</span>
+            <span class="info"><i class="bi bi-calendar-event"></i>{{ meet.deadline|date:"n/j H:i" }}</span>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+      <!-- 인원마감 리스트 -->
+      <div class="card-grid" id="memberList" style="display:none;">
+        {% for meet in meet_member %}
+        <div class="card"
+           data-title="{{ meet.title }}"
+           data-created="{{ meet.created_at|date:'n/j H:i' }}"
+           data-introduce="{{ meet.meet_introduce }}"
+           data-category="{{ meet.category }}"
+           data-members="{{ meet.participant.count }}/{{ meet.max_member }}"
+           data-deadline="{{ meet.deadline|date:'n/j H:i' }}"
+           data-meetid="{{meet.id}}">
+          <h3 class="card-title">{{ meet.title }}</h3>
+          <p class="card-desc">{{ meet.meet_introduce }}</p>
+          <div class="card-meta">
+            <span class="info">{{ meet.category }}</span>
+            <span class="info"><i class="bi bi-person-fill"></i>{{ meet.participant.count }}/{{ meet.max_member }}</span>
+            <span class="info"><i class="bi bi-calendar-event"></i>{{ meet.deadline|date:"n/j H:i" }}</span>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+    </div>
+  </section>
+
+    <!-- Bottom-------------------------------------------- -->
+    <section class="section-bottom">
+      <div class="container">
+        <div class="category-header">
+          <h2>CATEGORY <span class="highlight">GAME</span></h2>
+          <!-- 모임 생성 팝업을 위해 클래스 추가 -->
+          <button class="sort-btn create-btn"
+                  data-authentic="{{user.is_authenticated}}"> 
+                  모임생성
+          </button>
+        </div>
+
+        <div class="list-layout">
+          {% for meet in page_obj %}
+            <div class="list-item"
+              data-title="{{ meet.title }}"
+              data-created="{{ meet.created_at|date:"n/j H:i" }}"
+              data-introduce="{{ meet.meet_introduce }}"
+              data-category="{{ meet.category }}"
+              data-deadline="{{ meet.deadline|date:"n/j H:i" }}"
+              data-members="{{ meet.participant.count }}/{{ meet.max_member }}"
+              data-meetid="{{meet.id}}">
+            <h4 class="item-title">{{ meet.title }}</h4>
+            <p class="item-p">{{ meet.meet_introduce }}</p>
+            <div class="item-meta">
+              <span class="info"><i class="bi-controller"></i>{{ meet.category }}</span>
+              <span class="info"><i class="bi bi-person-fill"></i>{{ meet.participant.count }}/{{ meet.max_member }}</span>
+              <span class="info"><i class="bi bi-calendar-event"></i>마감 {{ meet.deadline|date:"n/j H:i" }}</span>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+        <div class="pagination">
+          {% if page_obj.has_previous %}
+            <form method="get" style="display:inline;">
+              <input type="hidden" name="page" value="{{ page_obj.previous_page_number }}">
+              <button>&laquo;</button>
+            </form>
+          {% endif %}
+
+          {% for num in page_obj.paginator.page_range %}
+            <form method="get" style="display:inline;">
+              <input type="hidden" name="page" value="{{ num }}">
+              <button class="{% if page_obj.number == num %}active{% endif %}">{{ num }}</button>
+              </form>
+          {% endfor %}
+
+          {% if page_obj.has_next %}
+            <form method="get" style="display:inline;">
+              <input type="hidden" name="page" value="{{ page_obj.next_page_number }}">
+              <button>&raquo;</button>
+            </form>
+          {% endif %}
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      &copy; 2025 moit. All rights reserved.
+    </div>
+  </footer>
+  <!-- 자바스크립트 가져오기 -->
+  <script src="{% static 'meet/js/popup_create.js' %}"></script>
+  <script src="{% static 'meet/js/popup_join.js' %}"></script>
+  <script src="{% static 'share/js/layout_profile_menu.js' %}"></script>
+</body>
+</html>

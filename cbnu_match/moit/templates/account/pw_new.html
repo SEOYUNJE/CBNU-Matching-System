@@ -1,0 +1,111 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>비밀번호 재설정</title>
+    <link rel="stylesheet" href="{% static 'account/css/pw_new.css' %}" />
+    <script src="{% static 'share/js/layout_profile_menu.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+</head>
+<body>
+  <header class="header">
+    <a href="{% url 'mainpage' %}"><div class="logo">moit</div></a>
+    <nav class="nav">
+      <a href="{% url 'subpage_meals' %}">meals</a>
+      <a href="{% url 'subpage_study' %}">study</a>
+      <a href="{% url 'subpage_game' %}">game</a>
+      <a href="{% url 'subpage_exercise' %}">exercise</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="pw_change-container">
+      <h1 class="title">비밀번호 재설정</h1>
+
+      <form action="{%url 'reset_password'%}" method="POST" id="pw_change-form" novalidate>
+        {% csrf_token %}
+        <input type="hidden" name="username" value="{{ username }}">
+        <!-- 비밀번호 -->
+        <div class="field">
+          <label for="password">비밀번호</label>
+          <input
+            id="password"
+            type="password"
+            name="new_password"
+            oninput="validateForm()"
+            placeholder="영문,숫자 8~25자 조합"
+            required />
+          <p class="error-message" id="pw-pattern-error" style="display:none;">비밀번호는 영문자와 숫자를 포함한 8~25자여야 합니다.</p> 
+        </div>
+
+        <!-- 비밀번호 확인 -->
+        <div class="field">
+          <label for="password-confirm">비밀번호 확인</label>
+          <input
+            id="password-confirm"
+            type="password"
+            name="new_password_check"
+            oninput="validateForm()"
+            placeholder="비밀번호 재입력"
+            required />
+          <p class="error-message" id="pw-match-error" style="display:none;">비밀번호가 일치하지 않습니다.</p>
+        </div>
+
+        <button type="submit" class="btn-pw" disabled>비밀번호 변경하기</button>
+      </form>
+    </div>
+  </main>
+
+  <script>
+  $(function(){
+    const $p1           = $('#password');
+    const $p2           = $('#password-confirm');
+    const $patternError = $('#pw-pattern-error');
+    const $matchError   = $('#pw-match-error');
+    const $submit       = $('.btn-pw');  // 여기 수정됨
+
+    // 영문+숫자 조합, 8~25자
+    const reg = /^(?=.*[A-Za-z])(?=.*\d).{8,25}$/;
+
+    function validateForm(){
+      const p1 = $p1.val().trim();
+      const p2 = $p2.val().trim();
+      let valid = true;
+
+      // 1) 비밀번호 패턴 검사
+      if (p1 === '') {
+        $patternError.hide();
+      } else if (!reg.test(p1)) {
+        $patternError.show().text('비밀번호는 영문자와 숫자를 포함한 8~25자여야 합니다.');
+        valid = false;
+      } else {
+        $patternError.hide();
+      }
+
+      // 2) 비밀번호 확인 일치 검사
+      if (p2 === '') {
+        $matchError.hide();
+      } else if (p1 !== p2) {
+        $matchError.show().text('비밀번호가 일치하지 않습니다.');
+        valid = false;
+      } else {
+        $matchError.hide();
+      }
+
+      // 3) 버튼 활성화/비활성화
+      $submit.prop('disabled', !(valid && p1 !== '' && p2 !== ''));
+    }
+
+    // 이벤트 바인딩
+    $p1.add($p2).on('input', validateForm);
+
+    // 초기 상태
+    validateForm();
+  });
+  </script>
+
+</body>
+</html>

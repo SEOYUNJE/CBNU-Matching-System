@@ -1,0 +1,65 @@
+
+/* Search hover */
+.search-icon i {
+  font-size: 1.4rem;
+  color: #555;
+  transition: color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.search-icon:hover i {
+  color: #e74c3c;
+  transform: translateY(-1.5px) scale(1.1);
+  cursor: pointer;
+}
+
+/* login button hover */
+.login-menu {
+  background-color: #e0e0e0;  /* 기본: 연한 회색 */
+  color: #333;
+  padding: 6px 16px;
+  border-radius: 25px;
+  font-weight: 600;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.login-menu:hover {
+  background-color: #e74c3c;
+  color: #fff;
+}
+
+.profile-icon {
+  font-size: 1.8rem;
+  color: #555;
+  transition: color 0.3s ease, transform 0.3s ease;
+  cursor: pointer;
+}
+
+.profile-icon:hover {
+  color: #e74c3c; /* 더 진한 색상으로 */
+  transform: scale(1.15); /* 미묘한 확대 */
+}
+
+.profile-wrapper.open .profile-icon {
+  color: #e74c3c;
+}
+
+/* 매너온도 */
+.manner-bar-wrapper {
+  width: 100%;
+  height: 12px;
+  background-color: #eee;
+  border-radius: 6px;
+  margin-top: 5px;
+  overflow: hidden;
+}
+
+.manner-bar {
+  height: 100%;
+  transition: width 0.3s ease;
+  border-radius: 6px;
+}

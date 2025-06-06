@@ -1,0 +1,267 @@
+<!-- 2025-05-11  -->
+<!-- 메인페이지 -->
+<!-- 작성자: 최은재 -->
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Moit Full Page Scroll</title>
+  <link rel="stylesheet" href="{% static 'search/css/search.css' %}">
+  <link rel="stylesheet" href="{% static 'meet/css/popup_create.css' %}">
+  <link rel="stylesheet" href="{% static 'share/css/layout_profile_menu.css' %}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+  
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="{% url 'mainpage'%}"><div class="logo">moit</div></a>
+      <nav class="nav">
+        <a href="{% url 'subpage_meals'%}">meals</a>
+        <a href="{% url 'subpage_study'%}">study</a>
+        <a href="{% url 'subpage_game'%}">game</a>
+        <a href="{% url 'subpage_exercise'%}">exercise</a>
+      </nav>
+        <div class="util" style="display: flex; align-items: center; gap: 12px;">
+          <a href="{% url 'search' %}" class="search-icon">
+            <i class="bi bi-search"></i>
+          </a>
+          {% if user.is_authenticated %}
+          <!-- 로그인된 상태 -->
+          <div class="profile-wrapper">
+            <i class="bi bi-person-circle profile-icon" id="profileBtn"></i>
+            <div class="profile-menu" id="profileMenu">
+              <div class="profile-info">
+                <span id="name"><p>{{ user.username }}님</p></span>
+                <span id="manner" data-temp="{{ manner_temp }}">
+                  <p>매너온도 {{ manner_temp }}도</p>
+                  <div class="manner-bar-wrapper">
+                    <div class="manner-bar" id="mannerBar"></div>
+                  </div>
+                  <p id="mannerEmoji"></p>
+                </span>
+              </div>
+              <hr>
+              <a href="{% url 'profile_view' %}" class="menu-item">
+                  <i class="bi bi-person-fill"></i> profile
+              </a>
+              <a href="{% url 'search' %}" class="menu-item">
+                <i class="bi bi-chat-dots"></i> moit chat
+              </a>
+              <a href="{% url 'signout' %}" class="menu-item">
+                <i class="bi bi-box-arrow-right"></i> log out
+              </a>
+            </div>
+          </div>
+          {% else %}
+          <!-- 로그인되지 않은 상태 -->
+          <a href="{% url 'signin' %}" class="login-menu">로그인</a>
+          {% endif %}
+      </div>
+    </div>
+  </header>
+
+  <!-- 모임 참가 팝업  -->
+
+  <div id="joinPopup" class="modal-overlay">
+    <div class="modal-content">
+      <!-- 닫기 버튼 -->
+      <span id="closeJoinPopup" class="close-btn">&times;</span>
+
+      <!-- 제목 및 날짜 -->
+      <div class="popup-header">
+        <h3 id="joinTitle"></h3>
+        <span id="joinDate" class="popup-date"></span>
+      </div>
+
+      <!-- 구분선 -->
+      <hr class="divider" />
+
+      <!-- 설명 -->
+      <p id="joinDescription" class="description"></p>
+
+      <!-- 구분선 -->
+      <hr class="divider" />
+
+      <!-- 태그 영역 -->
+      <div class="tag-row">
+        <span class="tag" id="joinCategory"></span>
+        <span class="tag" id="joinMembers"></span>
+        <span class="tag" id="joinDeadline"></span>
+      </div>
+
+      <!-- 숨겨진 meet id 추가 -->
+      <input type="hidden" id="joinMeetId" />
+      <button id="enterBtn"class="submit-btn" data-auth="{{user.is_authenticated}}">참여하기</button>
+    </div>
+  </div>
+
+  <!-- 로그인 안내 팝업 -->
+  <div id="loginPrompt" class="modal-overlay">
+    <div class="modal-content" style="align-items: center; text-align: center; position: relative;">
+      <span id="closeLoginPrompt" class="close-btn">&times;</span>
+      <p style="font-size: 1.1rem; font-weight: 500;">
+        로그인하지 않은 상태입니다.<br>
+        로그인 후 서비스를 이용해주세요!
+      </p>
+      <a href="{% url 'signin' %}" class="submit-btn" style="max-width: 200px; margin-top: 1.2rem;">
+        로그인하러 가기
+      </a>
+    </div>
+  </div>
+
+  <!-- 채팅방 이동 팝업 -->
+  <div id="ChatBPrompt" class="modal-overlay">
+    <div class="modal-content" style="align-items: center; text-align: center; position: relative;">
+      <span id="closeChatBPrompt" class="close-btn">&times;</span>
+      <p style="font-size: 1.1rem; font-weight: 500;">
+        모임에 성공적으로 참여하셨어요.<br>
+        이제 다른 참여자들과 함께 활동을 시작해보세요!
+      </p>
+      <div style="display: flex; justify-content: center; gap: 1rem; margin-top: 1.5rem;">
+        <button id="enterChat" class="submit-btn" style="white-space: nowrap; padding: 0.6rem 1.2rem;">
+            채팅방 입장하기
+        </button>
+        <button id="exploreMore" class="submit-btn" style="white-space: nowrap; padding: 0.6rem 1.2rem;">
+          검색하기
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- 메인 콘텐츠 ------------------------------------------------>
+
+ <main class="main">
+  <div class="search-content-wrapper">
+    <!-- 검색창 섹션 -->
+    <section id="searchSection" class="search-section">
+        <h1 class="search-title">SEARCH</h1>
+        <form id="searchForm"
+              class="search-box"
+              action="{% url 'search' %}"
+              method="get">
+          <!-- 검색어 필드 -->
+          <input type="text" name="q" placeholder="검색어를 입력하세요..." autocomplete="off"
+                 value="{{ q }}">
+
+          <input type="hidden" name="category" id="categoryInput" value="{{ selected_category }}">
+
+          <input type="hidden" name="sort" id="sortInput" value="{{ selected_sort }}">
+
+          <button type="submit"><i class="bi bi-search search-icon"></i></button>
+        </form>
+
+      <!-- 검색 전 카테고리 -->
+      <div id="categoryTags" class="category-tags">
+          <div class="category-tag {% if selected_category == '전체' %}active{% endif %}"
+               data-category="전체">전체</div>
+          <div class="category-tag {% if selected_category == 'MEALS' %}active{% endif %}"
+               data-category="MEALS">MEALS</div>
+          <div class="category-tag {% if selected_category == 'STUDY' %}active{% endif %}"
+               data-category="STUDY">STUDY</div>
+          <div class="category-tag {% if selected_category == 'GAME' %}active{% endif %}"
+               data-category="GAME">GAME</div>
+          <div class="category-tag {% if selected_category == 'EXERCISE' %}active{% endif %}"
+               data-category="EXERCISE">EXERCISE</div>
+        </div>
+
+        <!-- 카테고리 드롭다운 -->
+        <div id="categoryDropdown" class="category-dropdown {% if selected_category %} {% endif %}">
+          <button class="category-btn">
+            {{ selected_category }} <i class="bi bi-chevron-down"></i>
+          </button>
+          <div class="category-menu">
+            <div class="category-option {% if selected_category == '전체' %}active{% endif %}"
+                 data-category="전체">전체</div>
+            <div class="category-option {% if selected_category == 'MEALS' %}active{% endif %}"
+                 data-category="MEALS">MEALS</div>
+            <div class="category-option {% if selected_category == 'STUDY' %}active{% endif %}"
+                 data-category="STUDY">STUDY</div>
+            <div class="category-option {% if selected_category == 'GAME' %}active{% endif %}"
+                 data-category="GAME">GAME</div>
+            <div class="category-option {% if selected_category == 'EXERCISE' %}active{% endif %}"
+                 data-category="EXERCISE">EXERCISE</div>
+          </div>
+        </div>
+
+        <!-- 카테고리 2 드롭다운 -->
+        <div id="categoryDropdown2" class="category-dropdown {% if selected_sort %} {% endif %}">
+          <button class="category-btn2">
+            {{ selected_sort }} <i class="bi bi-chevron-down"></i>
+          </button>
+          <div class="category-menu">
+            <div class="category-option2 {% if selected_sort == '최신순' %}active{% endif %}"
+                 data-category="최신순">최신순</div>
+            <div class="category-option2 {% if selected_sort == '마감순' %}active{% endif %}"
+                 data-category="마감순">마감순</div>
+            <div class="category-option2 {% if selected_sort == '모집인원순' %}active{% endif %}"
+                 data-category="모집인원순">모집인원순</div>
+            <div class="category-option2 {% if selected_sort == '참여자순' %}active{% endif %}"
+                 data-category="참여자순">참여자순</div>
+          </div>
+        </div>
+      </section>
+
+    <!--검색 결과 영역-->
+    <section id="resultSection" class="result-section  hidden">
+        <div class="container">
+          <div class="result-header">
+            <h2 class="result-title">검색결과</h2>
+            <div class="list-layout">
+            {% for meet in page_obj %}
+              <div class="list-item" data-created="{{ meet.created_at|date:'Y-m-d\\TH:i:s' }}">
+                <h4 class="item-title">{{ meet.title }}</h4>
+                <div class="item-meta">
+                  <span class="tag">{{ meet.category }}</span>
+                  <span class="info">
+                    <i class="bi bi-person-fill"></i>
+                    {{ meet.num_participant }}/{{ meet.max_member }}
+                  </span>
+                  <span class="info">
+                    <i class="bi bi-calendar-event"></i>
+                    마감 {{ meet.deadline|date:"n/j H:i" }}
+                  </span>
+                </div>
+              </div>
+              {% empty %}
+                <p>검색 결과가 없습니다.</p>
+            {% endfor %}
+          </div>
+        </div>
+
+    <!-- 페이지네이션 -->
+    <div class="pagination">
+      {% if page_obj.has_previous %}
+        <form data-page="{{ page_obj.previous_page_number }}" style="display:inline;">
+          <button>&laquo;</button>
+        </form>
+      {% endif %}
+
+      {% for num in page_obj.paginator.page_range %}
+        <form data-page="{{ num }}" style="display:inline;">
+          <button class="{% if page_obj.number == num %}active{% endif %}">
+            {{ num }}
+          </button>
+        </form>
+      {% endfor %}
+
+      {% if page_obj.has_next %}
+        <form data-page="{{ page_obj.next_page_number }}" style="display:inline;">
+          <button>&raquo;</button>
+        </form>
+      {% endif %}
+    </div>
+  </div>
+</section>
+</div>
+</main>
+
+
+<script src="{% static 'search/js/search.js' %}" ></script>
+<script src="{% static 'search/js/search_popup.js' %}" ></script>
+<script src="{% static 'share/js/layout_profile_menu.js' %}"></script>
+
+</body>
+</html>

@@ -1,22 +1,25 @@
-"""
-URL configuration for moit project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.1/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
+# moit/urls.py
+import os
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+
+# 이미지 업로드
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
+    # 추가 - 연동
     path('admin/', admin.site.urls),
+    path('main/', include('main.urls')),
+    path('search/', include('search.urls')),
+    path('account/', include('account.urls')),
+    path('meet/', include('meet.urls')),
+    path('chat/', include('chat.urls')),
+    path('subpage/', include('subpage.urls')),
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# 추가
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=os.path.join(settings.BASE_DIR, 'static'))
