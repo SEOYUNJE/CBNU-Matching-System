@@ -137,84 +137,124 @@
   <div class="search-content-wrapper">
     <!-- 검색창 섹션 -->
     <section id="searchSection" class="search-section">
-      <h1 class="search-title">SEARCH</h1>
-      <form id="searchForm" class="search-box">
-        <input type="text" placeholder="검색어를 입력하세요..." autocomplete="off"/>
-        <button type="submit"><i class="bi bi-search search-icon"></i></button>
-      </form>
-      <!-- 검색 전 카테고리 태그 -->
+        <h1 class="search-title">SEARCH</h1>
+        <form id="searchForm"
+              class="search-box"
+              action="{% url 'search' %}"
+              method="get">
+          <!-- 검색어 필드 -->
+          <input type="text" name="q" placeholder="검색어를 입력하세요..." autocomplete="off"
+                 value="{{ q }}">
+
+          <input type="hidden" name="category" id="categoryInput" value="{{ selected_category }}">
+
+          <input type="hidden" name="sort" id="sortInput" value="{{ selected_sort }}">
+
+          <button type="submit"><i class="bi bi-search search-icon"></i></button>
+        </form>
+
+      <!-- 검색 전 카테고리 -->
       <div id="categoryTags" class="category-tags">
-        <div class="category-tag" data-category="all">전체</div>
-        <div class="category-tag" data-category="meals">MEALS</div>
-        <div class="category-tag" data-category="study">STUDY</div>
-        <div class="category-tag" data-category="game">GAME</div>
-        <div class="category-tag" data-category="exercise">EXERCISE</div>
-      </div>
-      <!-- 검색 후 카테고리 드롭다운 -->
-      <div id="categoryDropdown" class="category-dropdown hidden">
-        <button class="category-btn">카테고리<i class="bi bi-chevron-down"></i></button>
-        <div class="category-menu">
-          <div class="category-option" data-category="all">전체</div>
-          <div class="category-option" data-category="meals">MEALS</div>
-          <div class="category-option" data-category="study">STUDY</div>
-          <div class="category-option" data-category="game">GAME</div>
-          <div class="category-option" data-category="exercise">EXERCISE</div>
+          <div class="category-tag {% if selected_category == '전체' %}active{% endif %}"
+               data-category="전체">전체</div>
+          <div class="category-tag {% if selected_category == 'MEALS' %}active{% endif %}"
+               data-category="MEALS">MEALS</div>
+          <div class="category-tag {% if selected_category == 'STUDY' %}active{% endif %}"
+               data-category="STUDY">STUDY</div>
+          <div class="category-tag {% if selected_category == 'GAME' %}active{% endif %}"
+               data-category="GAME">GAME</div>
+          <div class="category-tag {% if selected_category == 'EXERCISE' %}active{% endif %}"
+               data-category="EXERCISE">EXERCISE</div>
         </div>
-      </div>
 
-      <div id="categoryDropdown2" class="category-dropdown hidden">
-        <button class="category-btn2">카테고리2<i class="bi bi-chevron-down"></i></button>
-        <div class="category-menu">
-          <div class="category-option2" data-category="recent">최신순</div>
-          <div class="category-option2" data-category="old">마감순</div>
-          <div class="category-option2" data-category="many">모집인원순</div>
-          <div class="category-option2" data-category="few">참여자순</div>
+        <!-- 카테고리 드롭다운 -->
+        <div id="categoryDropdown" class="category-dropdown {% if selected_category %} {% endif %}">
+          <button class="category-btn">
+            {{ selected_category }} <i class="bi bi-chevron-down"></i>
+          </button>
+          <div class="category-menu">
+            <div class="category-option {% if selected_category == '전체' %}active{% endif %}"
+                 data-category="전체">전체</div>
+            <div class="category-option {% if selected_category == 'MEALS' %}active{% endif %}"
+                 data-category="MEALS">MEALS</div>
+            <div class="category-option {% if selected_category == 'STUDY' %}active{% endif %}"
+                 data-category="STUDY">STUDY</div>
+            <div class="category-option {% if selected_category == 'GAME' %}active{% endif %}"
+                 data-category="GAME">GAME</div>
+            <div class="category-option {% if selected_category == 'EXERCISE' %}active{% endif %}"
+                 data-category="EXERCISE">EXERCISE</div>
+          </div>
         </div>
-      </div>
-    </section>
 
+        <!-- 카테고리 2 드롭다운 -->
+        <div id="categoryDropdown2" class="category-dropdown {% if selected_sort %} {% endif %}">
+          <button class="category-btn2">
+            {{ selected_sort }} <i class="bi bi-chevron-down"></i>
+          </button>
+          <div class="category-menu">
+            <div class="category-option2 {% if selected_sort == '최신순' %}active{% endif %}"
+                 data-category="최신순">최신순</div>
+            <div class="category-option2 {% if selected_sort == '마감순' %}active{% endif %}"
+                 data-category="마감순">마감순</div>
+            <div class="category-option2 {% if selected_sort == '모집인원순' %}active{% endif %}"
+                 data-category="모집인원순">모집인원순</div>
+            <div class="category-option2 {% if selected_sort == '참여자순' %}active{% endif %}"
+                 data-category="참여자순">참여자순</div>
+          </div>
+        </div>
+      </section>
     <!--검색 결과 영역-->
-    <section id="resultSection" class="result-section hidden">
-  <div class="container">
-    <div class="result-header">
-      <h2 class="result-title">검색결과</h2>
-    </div>
-
+    <section id="resultSection" class="result-section  hidden">
+        <div class="container">
+          <div class="result-header">
+            <h2 class="result-title">검색결과</h2>
     <div class="list-layout">
-      {% for meet in results %}
-      <div class="list-item" data-created="{{ meet.created_at|date:'Y-m-d\\TH:i:s' }}">
-        <h4 class="item-title">{{ meet.title }}</h4>
-        <div class="item-meta">
-          <span class="tag">{{ meet.category }}</span>
-          <span class="info">
-            <i class="bi bi-person-fill"></i>
-            {{ meet.participant.count }}/{{ meet.max_member }}
-          </span>
-          <span class="info">
-            <i class="bi bi-calendar-event"></i>
-            마감 {{ meet.deadline|date:"n/j H:i" }}
-          </span>
+          {% for meet in page_obj %}
+            <div class="list-item" data-created="{{ meet.created_at|date:'Y-m-d\\TH:i:s' }}">
+              <h4 class="item-title">{{ meet.title }}</h4>
+              <div class="item-meta">
+                <span class="tag">{{ meet.category }}</span>
+                <span class="info">
+                  <i class="bi bi-person-fill"></i>
+                  {{ meet.num_participant }}/{{ meet.max_member }}
+                </span>
+                <span class="info">
+                  <i class="bi bi-calendar-event"></i>
+                  마감 {{ meet.deadline|date:"n/j H:i" }}
+                </span>
+              </div>
+            </div>
+          {% empty %}
+            <p>검색 결과가 없습니다.</p>
+          {% endfor %}
         </div>
-      </div>
-      {% empty %}
-      <p>검색 결과가 없습니다.</p>
-      {% endfor %}
-    </div>
 
     <!-- 페이지네이션 -->
     <div class="pagination">
-      {% if results.has_previous %}
-        <a href="?page={{ results.previous_page_number }}&query={{ query }}&category={{ category }}&main_type={{ main_type }}&sub_type={{ sub_type }}">이전</a>
+      {% if page_obj.has_previous %}
+        <form data-page="{{ page_obj.previous_page_number }}" style="display:inline;">
+          <button>&laquo;</button>
+        </form>
       {% endif %}
 
-      <span class="current">Page {{ results.number }} of {{ results.paginator.num_pages }}</span>
+      {% for num in page_obj.paginator.page_range %}
+        <form data-page="{{ num }}" style="display:inline;">
+          <button class="{% if page_obj.number == num %}active{% endif %}">
+            {{ num }}
+          </button>
+        </form>
+      {% endfor %}
 
-      {% if results.has_next %}
-        <a href="?page={{ results.next_page_number }}&query={{ query }}&category={{ category }}&main_type={{ main_type }}&sub_type={{ sub_type }}">다음</a>
+      {% if page_obj.has_next %}
+        <form data-page="{{ page_obj.next_page_number }}" style="display:inline;">
+          <button>&raquo;</button>
+        </form>
       {% endif %}
     </div>
   </div>
 </section>
+</div>
+</main>
 
 
 <script src="{% static 'search/js/search.js' %}" ></script>

@@ -1,0 +1,58 @@
+{# search/templates/search/search.html #}
+<!DOCTYPE html>
+<html>
+<head>
+  {# ... head 요소들 ... #}
+</head>
+<body>
+  {# … header, 검색창 섹션 … #}
+
+  <section id="resultSection" class="result-section {% if not page_obj %}hidden{% endif %}">
+    <div class="container">
+      <div class="result-header">
+        <h2 class="result-title">검색결과</h2>
+      </div>
+
+      <div class="list-layout">
+        {% for meet in page_obj %}
+          <div class="list-item" data-created="{{ meet.created_at|date:'Y-m-d\\TH:i:s' }}">
+            <h4 class="item-title">{{ meet.title }}</h4>
+            <div class="item-meta">
+              <span class="tag">{{ meet.category }}</span>
+              <span class="info"><i class="bi bi-person-fill"></i> {{ meet.num_participant }}/{{ meet.max_member }}</span>
+              <span class="info"><i class="bi bi-calendar-event"></i> 마감 {{ meet.deadline|date:"n/j H:i" }}</span>
+            </div>
+          </div>
+        {% empty %}
+          <p>검색 결과가 없습니다.</p>
+        {% endfor %}
+      </div>
+
+      <div class="pagination">
+        {% if page_obj.has_previous %}
+          <form method="get" data-page="{{ page_obj.previous_page_number }}" style="display:inline;">
+            <input type="hidden" name="page" value="{{ page_obj.previous_page_number }}">
+            <button>&laquo;</button>
+          </form>
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %}
+          <form method="get" data-page="{{ num }}" style="display:inline;">
+            <input type="hidden" name="page" value="{{ num }}">
+            <button class="{% if page_obj.number == num %}active{% endif %}">{{ num }}</button>
+          </form>
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+          <form method="get" data-page="{{ page_obj.next_page_number }}" style="display:inline;">
+            <input type="hidden" name="page" value="{{ page_obj.next_page_number }}">
+            <button>&raquo;</button>
+          </form>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+
+  {# … 스크립트 로딩(search.js 등) … #}
+</body>
+</html>
