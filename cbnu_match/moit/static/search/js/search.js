@@ -9,24 +9,6 @@
     easing: 'cubic-bezier(0.4, 0, 0.2, 1)'
   };
 
-  // 카테고리 태그 클릭 이벤트 처리
-  // (이전에는 전역에서 처리했지만, AJAX 호출을 위해 DOMContentLoaded 내부로 옮겼습니다)
-  // document.querySelectorAll('.category-tag').forEach(tag => {
-  //   tag.addEventListener('click', function() {
-  //     // 이전 선택 해제
-  //     document.querySelector('.category-tag.active')?.classList.remove('active');
-  //     // 새로운 선택 표시
-  //     this.classList.add('active');
-  //     // 선택된 카테고리 저장
-  //     selectedCategory = this.textContent;
-      
-  //     // 검색 결과가 표시된 상태라면 필터링 적용
-  //     if (!document.getElementById('resultSection').classList.contains('hidden')) {
-  //       filterResults(category1, category2, input_txt);
-  //     }
-  //   });
-  // });
-
   // 검색 결과 필터링 함수
   function filterResults(category, category2, input_txt) {
   const resultItems = Array.from(document.querySelectorAll('.list-item'));
