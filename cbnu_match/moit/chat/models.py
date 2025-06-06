@@ -25,3 +25,6 @@ class Report(models.Model):
     
     # 신고 당한 댓글 
     comment = models.CharField(max_length=500)
+    
+    # 관리자 승인 여부
+    is_approved = models.BooleanField(default=False)
