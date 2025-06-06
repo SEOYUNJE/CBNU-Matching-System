@@ -1,6 +1,6 @@
 from django.core.paginator import Paginator
 from django.shortcuts import render
-from django.db.models import Q
+from django.db.models import Q, Count
 from .models import Meet
 from account.models import Profile
 
@@ -11,11 +11,12 @@ def search(request):
     selected_category = request.GET.get('category', '전체')
     selected_sort     = request.GET.get('sort', '최신순')
 
-    meets = Meet.objects.all()
+    meets = Meet.objects.annotate(num_participant=Count('participant'))
+
+
     if q:
         meets = meets.filter(
-            Q(title__icontains=q) |
-            Q(meet_introduce__icontains=q)
+            Q(title__icontains=q)
         )
 
     if selected_category and selected_category != '전체':
@@ -53,4 +54,5 @@ def search(request):
         'manner_temp': manner_temp,
         'selected_category': selected_category,
         'selected_sort': selected_sort,
+
     })
