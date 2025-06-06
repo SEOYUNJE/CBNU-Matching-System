@@ -373,19 +373,42 @@
 }
 
 .list-item {
-  background: white;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  padding: 1.2rem;
-  padding-top: 0rem;
+  padding: 1.2rem 1.6rem;
+  margin: 5px 20px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
   cursor: pointer;
-  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+  color: #333;
+  font-weight: 500;
+  user-select: none;
+  transform-style: preserve-3d;
+  z-index: 0;
+}
+
+.list-item::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: linear-gradient(135deg, rgba(231, 76, 60, 0.05), rgba(52, 152, 219, 0.05));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: -1;
+  will-change: opacity, transform;
+}
+
+.list-item:hover::before {
+  opacity: 1;
 }
 
 .list-item:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
-  border-color: #d0d0d0;
+  background-color: #f9f9f9;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
 }
 
 .item-title {
