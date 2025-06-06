@@ -15,7 +15,7 @@ def search(request):
     if q:
         meets = meets.filter(
             Q(title__icontains=q) |
-            Q(description__icontains=q)
+            Q(meet_introduce__icontains=q)
         )
 
     if selected_category and selected_category != '전체':
