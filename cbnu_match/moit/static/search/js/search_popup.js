@@ -23,11 +23,13 @@ document.addEventListener('DOMContentLoaded', () => {
   // 상단 카드 클릭 → 모임 참가 팝업 창 열기
   // 하단 모임 리스트 클릭 -> 모임 참가 팝업 창 열기 
   const clickableCards = document.querySelectorAll('.list-item');
+  console.log(clickableCards.length);
   clickableCards.forEach((card) => {
-    card.addEventListener('click', () => {
+    card.addEventListener('click', (e) => {
       // meet 정보를 카드의 data-* 속성으로 넘긴다
       document.getElementById('joinTitle').textContent = card.dataset.title;
-      document.getElementById('joinDate').textContent = `생성일자 ${card.dataset.created}`;
+      console.log(card.dataset.title);
+      document.getElementById('joinDate').textContent = `생성일자 ${card.dataset.start}`;
       document.getElementById('joinDescription').textContent = card.dataset.introduce;
       document.getElementById('joinCategory').textContent = card.dataset.category;
       document.getElementById('joinMembers').textContent = `모집인원 ${card.dataset.members}`;
@@ -96,7 +98,4 @@ document.getElementById('enterChat').addEventListener('click', function() {
     window.location.href = "/main/";
 });
 
-// 모임 참가 클릭 -> 새로고침
-document.getElementById('exploreMore').addEventListener('click', function() {
-    window.location.reload(); // 새로고침
-});
+

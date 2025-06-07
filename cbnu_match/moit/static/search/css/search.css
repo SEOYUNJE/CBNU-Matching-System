@@ -416,6 +416,10 @@
   font-weight: 600;
   color: #333;
   margin-bottom: 0.8rem;
+
+  overflow: hidden;         /* 넘친 텍스트 숨기기 */
+  white-space: nowrap;      /* 줄바꿈 방지 */
+  text-overflow: ellipsis;  /* 넘친 부분 ... 처리 */
 }
 /* ------------------------- */
 /* .card-meta  { 
