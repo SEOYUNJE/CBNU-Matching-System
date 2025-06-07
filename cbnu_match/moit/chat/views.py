@@ -46,7 +46,6 @@ class GetChat(APIView):
             data = {
                 "code": "Successed",
                 "data": serializer.data,
-                "user": request.user.id,
             }
             return Response(data)
         except Exception as e:
@@ -70,60 +69,3 @@ class SendMessage(APIView):
                 'message': str(e),
             }
             return Response(data)
-
-# def get_meet_api(request):
-#     try:
-#         meets = Meet.objects.filter(participant=request.user).prefetch_related('participant')
-
-#         meet_list = []
-#         for meet in meets:
-#             meet_list.append([{
-#                 "id": meet.id,
-#                 "title": meet.title,
-#                 "user": meet.user.id,
-#                 "participant": [(p.id ,Profile.objects.get(user=p).nickname) for p in meet.participant.all()],
-#             }])
-#         data = {
-#             "code": "Successed",
-#             "meet_list": meet_list,
-#         }
-#         print(data)
-#         return JsonResponse(data)
-#     except Exception as e:
-#         print(e)
-#         data = {
-#             "code": "Failed",
-#             "message": "서버 오류",
-#         }
-#         return JsonResponse(data)
-
-
-# def get_chattingRoomData_api(request):
-#     meet_id = request.GET.get('meet_id')
-#     try:
-#         meet = Meet.objects.get(id=meet_id)
-#         profiles = Profile.objects.filter(user__in=meet.participant.all()).annotate(
-#             is_me=Case(
-#                 When(user=request.user, then=Value(0)),
-#                 default=Value(1),
-#                 output_field=IntegerField(),
-#             ),
-#             lower_nickname=Lower('nickname')
-#         ).order_by('is_me', 'lower_nickname').values()
-        
-#         print('===================================')
-#         print(request.user)
-
-#         data = {
-#             "code": "Successed",
-#             "title": meet.title,
-#             "user": request.user,
-#             'participant': list(profiles)
-#         }
-#         return JsonResponse(data)
-#     except Exception as e:
-#         print(e)
-#         return JsonResponse({
-#             "code": "Error",
-#             "message": str(e),
-#         })

@@ -147,10 +147,21 @@ main.chat-container {
   margin-bottom: 0.25rem;
 }
 .chat-room .msg.received .avatar {
-  width: 36px; height: 36px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   overflow: hidden;
   margin-right: 0.5rem;
+
+  display: flex;               /* flex 컨테이너로 설정 */
+  justify-content: center;     /* 가로 중앙 */
+  align-items: center;         /* 세로 중앙 */
+}
+
+.chat-room .msg.received .avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;           /* 이미지 비율 유지하며 꽉 채우기 */
 }
 .chat-room .msg.received .sender-name {
   margin: 0;
@@ -202,7 +213,8 @@ main.chat-container {
 }
 /* 아바타 */
 .chat-room .avatar {
-  width: 36px; height: 36px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   background: #ccc;
   margin-right: 0.5rem;
