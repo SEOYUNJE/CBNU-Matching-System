@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     # Third-Party Apps
     'daphne',
     'channels',
+    'rest_framework',
     
     # Django Default Apps
     'django.contrib.admin',

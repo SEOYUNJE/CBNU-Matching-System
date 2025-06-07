@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>mypage</title>
+  <meta name="csrf-token" content="{{ csrf_token }}">
   <link rel="stylesheet" href="{% static 'chat/css/chat.css' %}" />
   <link rel="stylesheet" href="{% static 'chat/css/chat_popup.css' %}" />
   <script src="{% static 'share/js/layout_profile_menu.js' %}" defer></script>
@@ -33,13 +34,13 @@
                 <span id="manner"><p>매너온도 40도</p></span>
               </div>
               <hr>
-              <a href="{% url 'profilepage' %}" class="menu-item">
+              <a href="{#}" class="menu-item">
                 <i class="bi bi-person-fill"></i> profile
               </a>
-              <a href="{% url 'search' %}" class="menu-item">
+              <a href="{#}" class="menu-item">
                 <i class="bi bi-chat-dots"></i> moit chat
               </a>
-              <a href="{% url 'logout' %}" class="menu-item">
+              <a href="{#}" class="menu-item">
                <i class="bi bi-box-arrow-right"></i> log out
               </a>
           </div>
@@ -56,38 +57,19 @@
     <!-- 왼쪽: 나의 모임 -->
     <aside class="chat-list">
       <h2>나의 모임</h2>
-      <ul>
-        <li class="active">롤 같이 할 사람 모집해요</li>
-        <li>점심에 퀴즈노스 ㅋㅋ</li>
-        <li>제목을 길게 쓰면 어떻게 될려나?
-          제목을 길게 쓰면 어떻게 될려나?
-          제목을 길게 쓰면 어떻게 될려나?
-          제목을 길게 쓰면 어떻게 될려나?
-        </li>
-        <li>위와 같은 사태를 막기 위해 제목 글자수 제한?</li>
-        <li>표시하는건 2줄 최대로 수정해볼려고 했으나</li>
-        <li>이상하게 잘려서</li>
-        <li>포기</li>
-        <li>스터디 해요</li>
-        <li>운영체제 과제 같이해용</li>
-        <li>스터디 해요</li>
-        <li>운영체제 과제 같이해용</li>
-        <li>스터디 해요</li>
-        <li>운영체제 과제 같이해용</li>
-        <li>스터디 해요</li>
-        <li>운영체제 과제 같이해용</li>
-        <li>스터디 해요</li>
+      <ul id='meetTitle-ul'>
+
       </ul>
     </aside>
 
     <!-- 가운데: 채팅방 -->
     <section class="chat-room">
       <header class="room-header">
-        <h2>롤 같이 할 사람 모집해요</h2>
-        <span class="members-count">3/4 모집인원</span>
+        <h2 id='meetTitle-h2'></h2>
+        <span id='participantCount-span' class="members-count"></span>
       </header>
       
-      <div class="messages">
+      <div class="messages" id='messages'>
         <div class="chat-date-container">
           <div class="chat-date">
             <i class="bi bi-calendar-event"></i>
@@ -213,30 +195,15 @@
 
       <!-- 채팅 입력 -->
       <div class="chat-input">
-        <input type="text" placeholder="메시지 입력..." />
-        <button>전송</button>
+        <input id='message-Input' type="text" placeholder="메시지 입력..." />
+        <button id='send-Button'>전송</button>
       </div>
     </section>
 
     <!-- 오른쪽: 멤버 리스트 -->
     <aside class="member-list">
       <h2>멤버</h2>
-      <ul>
-        <li><div class="avatar">
-          <img src="{% static 'meet/images/profile.png' %}" alt="" /></div> 
-          <p>방장임</p>
-          <i class="bi bi-patch-check-fill text-warning" title="방장"></i>
-        </li>
-        <li><div class="avatar">
-          <img src="{% static 'meet/images/profile1.png' %}" alt="토마토" /></div> 
-          <p>토마토 </p>
-        </li>
-        <li><div class="avatar">
-          <img src="{% static 'meet/images/profile.png' %}" alt="토마토" /></div> 
-          <p>헬창임 </p>
-        </li>
-        
-      </ul>
+      <ul id='participant-ul'></ul>
       <button class="leave">채팅방 나가기</button>
     </aside>
   </main>

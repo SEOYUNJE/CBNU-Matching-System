@@ -108,7 +108,7 @@ a{
   padding: 0.3rem 1.2rem;
   /* 2025-06-04 수정 */
 
-  margin-top: 0.2rem;
+  /* margin-top: 0.2rem; */
   /* margin-bottom: 0.2rem; */
   gap: 1.5rem;
 }
@@ -116,11 +116,11 @@ a{
 .nav a {
   /* 2025-06-04 수정 */
 
-  font-size: 0.95rem;
+  font-size: 0.8rem;
   text-decoration: none;
   color: #444;
   font-weight: 400;
-  padding: 0.3rem 0.7rem;
+  padding: 0.2rem 0.7rem;
 }
 
 .nav a:hover {
