@@ -1,6 +1,6 @@
 /* chat.css */
 /* 1) 공통 헤더/푸터 스타일 */
-@import url('/static/share/layout_chat.css');
+@import url('/static/share/css/layout_chat.css');
 
 
 /* 3) 그리드 자식이 부모 높이에 맞춰 줄어들 수 있게 */
@@ -285,13 +285,22 @@ main.chat-container {
   display: flex;
   align-items: center;
 }
+
 .member-list .avatar {
-  width: 32px; height: 32px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
+  overflow: hidden;
   background: #ccc;
   margin-right: 0.5rem;
-   overflow: hidden;
 }
+
+.member-list .avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .member-list .bi {
   margin-left:5px;
   color: rgb(224, 42, 72);

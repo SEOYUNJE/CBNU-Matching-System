@@ -1,125 +1,264 @@
-document.addEventListener('DOMContentLoaded', () => {
-  // 1) 메시지 컨테이너 자동 스크롤
-  const messagesContainer = document.querySelector('.chat-room .messages');
-  if (messagesContainer) {
-    messagesContainer.scrollTop = messagesContainer.scrollHeight;
-  }
+function getCSRFToken() {
+    return document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+}
+document.addEventListener('DOMContentLoaded', async () => {
+    // html 객체
+    const meetTitle_ul = document.getElementById('meetTitle-ul');
+    const meetTitle_h2 = document.getElementById('meetTitle-h2');
+    const participant_ul = document.getElementById('participant-ul');
+    const participantCount_span = document.getElementById('participantCount-span');
+    
+    const send_Button = document.getElementById('send-Button');
+    const message_Input = document.getElementById('message-Input');
 
-  // 2) 전송 버튼 & 입력 필드 바인딩
-  const sendButton = document.querySelector('.chat-input button');
-  const inputField = document.querySelector('.chat-input input, .chat-input textarea');
+    const messages = document.getElementById('messages');
+    // WebSocket 객체
+    let meet_id = null;
+    let socket = null;
+    let cur_user = null;
+    let lastDate = null;
 
-  // 만약 sendButton이나 inputField가 없으면, 아래 로직 자체를 스킵
-  if (!sendButton || !inputField) return;
+    // Function ==============================================================================================================================
+    function initialize_meet(meet) {
+        // li 객체 생서 및 metitle ul에 부착
+        const li = document.createElement('li');
+        li.textContent = meet.title;
+        meetTitle_ul.appendChild(li);
+        
+        // Add Click Event
+        li.addEventListener('click', () => {
+            // Set Room Title
+            meetTitle_h2.textContent = meet.title;
 
-  sendButton.addEventListener('click', () => {
-    const text = inputField.value.trim();
-    if (!text) return;
+            // cur_participant / max_participant
+            participantCount_span.textContent = `모집인원 ${meet.participants_profile.length}/${parseInt(meet.max_member)}`;
 
-    const now = new Date();
-    const timeString = now.toLocaleTimeString([], {
-      hour: '2-digit', minute: '2-digit'
-    });
-    const html = `
-      <div class="msg sent">
-        <div class="bubble"><p>${text}</p></div>
-        <time>${timeString}</time>
-      </div>`;
+            // Reset Participant-ul
+            participant_ul.innerHTML = "";
 
-    const container = document.querySelector('.chat-room .messages');
-    if (container) {
-      container.insertAdjacentHTML('beforeend', html);
-      container.scrollTop = container.scrollHeight;
+            // create member
+            meet.participants_profile.forEach(item => {
+                initialize_participant(item);
+            })
+
+            // Initialize Chat History
+            meet_id = meet.id;
+            Initialize_Chat(meet.id);
+
+            // Connect WebSocket
+            if(socket && socket.readyState === WebSocket.OPEN) {
+                socket.close();
+            }
+            socket = new WebSocket(`ws://${window.location.host}/ws/chat/${meet.id}/`)
+            socket.onmessage = function (e) {
+                const data = JSON.parse(e.data);
+                console.log(data);
+                create_messageHTML(data, cur_user, lastDate)
+                console.log('받은 메시지:', data.sender);
+            }
+        });
     }
 
-    inputField.value = '';
-  });
-});
+    function initialize_participant(participant) {
+        // Debug
+        console.log('실행됨');
+        console.log(participant.profile_img);
 
-// ////////////////////////////////팝업창 관련 /////////////////////////////////////////
-document.addEventListener('DOMContentLoaded', () => {
-  // 메시지 자동 스크롤, 전송 버튼 등 기존 코드...
+        // Create li
+        const li = document.createElement('li');
 
-  // 1) 프로필 열람 클릭 이벤트 등록
-  document.querySelectorAll('.member-list li, .msg-header').forEach(el => {
-    el.addEventListener('click', () => {
-      const name = el.querySelector('p')?.textContent?.trim() || '닉네임';
-      const img = el.querySelector('img')?.src || '../Images/default.png';
+        // div.avatar
+        const avatarDiv = document.createElement('div');
+        avatarDiv.className = 'avatar';
 
-      const modal = document.getElementById('profileModal');
-      modal.querySelector('.nickname').textContent = name;
-      modal.querySelector('.avatar').src = img;
+        // img
+        const img = document.createElement('img');
+        img.src = participant.profile_img;
+        avatarDiv.appendChild(img);
 
-      modal.querySelector('.manner-value').textContent = '40';
-      modal.querySelector('.fill').style.width = '40%';
-      modal.querySelector('.intro').textContent = '롤/오버워치/배그 등등 웬만한 게임은 다 잘합니다 ㅎㅎ 초보자랑 같이 하는 것도 좋아해요!';
-      modal.querySelector('.gender').textContent = '남자';
-      modal.querySelector('.mbti').textContent = 'ENFJ';
-      modal.querySelector('.college').textContent = '상경대학';
+        const p = document.createElement('p');
+        p.textContent = participant.nickname;
+        
+        li.appendChild(avatarDiv);
+        li.appendChild(p);
 
-      modal.classList.remove('hidden');
-    });
-  });
+        participant_ul.appendChild(li);
+    }
 
-  // 2) 닫기 버튼 이벤트 등록
-  document.querySelector('.profile-modal .close-btn')?.addEventListener('click', () => {
-    document.getElementById('profileModal').classList.add('hidden');
-  });
-});
+    async function Initialize_Chat(meet_id) {
+        try {
+            const response = await fetch(`/chat/get_chat_api/?meet_id=${meet_id}`)
+            const data = await response.json()
+            if(data.code === 'Successed') {
+                if(data.data[1] == null) return;
 
-// 매너온도 설정 - 아직 로직 정하지 않은 상태, 참고용으로 작성
-function setMannerBar(score) {
-  const maxScore = 1000;
-  const maxBarWidth = 150;
+                messages.innerHTML = "";
+                data.data.forEach(item => {
+                    if(item.content === '초기화 완료!') return;
 
-  const mannerValue = Math.round((score / maxScore) * 100);      // 표시 숫자
-  const fillWidth = Math.round((score / maxScore) * maxBarWidth); // 바 길이(px)
+                    lastDate = create_messageHTML(item, cur_user, lastDate);
+                });
+            }
+            else {
+                throw new Error(data.message);
+            }
+        }
+        catch (error) {
+            console.log(error);
+            alert('서버 오류');
+        }
+    }
 
-  const modal = document.getElementById('profileModal');
-  modal.querySelector('.manner-value').textContent = mannerValue;
-  modal.querySelector('.fill').style.width = `${fillWidth}px`;
-}
+    // DB 저장을 위해 Django Server 데이터 전송
+    async function send_message(message) {
+        try {
+            if(!message) return;
+            const response = await fetch('/chat/send_message_api/', {
+                method: "POST",
+                headers: {
+                    'Content-type': 'application/json',
+                    'X-CSRFToken': getCSRFToken(),
+                },
+                body: JSON.stringify({ 
+                    message: message,
+                    meet_id: meet_id,
+                }),
+            });
+            const data = await response.json();
+        }
+        catch (error) {
+            console.log(error);
+        }
+        if(!message || socket.readyState !== WebSocket.OPEN) return;
 
-// 나가기 팝업
-document.addEventListener('DOMContentLoaded', () => {
-  const leaveBtn = document.querySelector('.member-list .leave');
-  const leaveModal = document.getElementById('leaveModal');
-  const confirmLeave = document.querySelector('.confirm-leave');
-  const cancelLeave = document.querySelector('.cancel-leave');
+        socket.send(JSON.stringify({
+            message: message
+        }))
 
-  if (leaveBtn && leaveModal) {
-    leaveBtn.addEventListener('click', () => {
-      leaveModal.classList.remove('hidden');
-    });
-    
-  // if (leaveBtn && leaveModal) {
-  //   leaveBtn.addEventListener('click', () => {
-  //     const role = leaveBtn.dataset.role;  // ✅ 역할 가져오기
+        message_Input.value = '';
+    }
 
-  //     // ✅ 역할에 따라 메시지 다르게 설정
-  //     const message = role === 'leader'
-  //       ? '채팅방을 나가면 모임이 삭제됩니다.\n정말 나가시겠습니까?'
-  //       : '채팅방을 나가면 모임에서 제외됩니다.\n정말 나가시겠습니까?';
+    // Chat HTML 요소 추가
+    function create_messageHTML(item, cur_user, lastDate) {
+        const dateObj = new Date(item.created_at);
 
-  //     leaveMsg.innerText = message; // ✅ 메시지 적용
-  //     leaveModal.classList.remove('hidden');
-  //   });
+        const msgDateStr = dateObj.toLocaleDateString('ko-KR', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            weekday: 'long'
+        });
+
+        // 날짜 헤더 생성
+        if (msgDateStr !== lastDate) {
+            const dateContainer = document.createElement('div');
+            dateContainer.className = 'chat-date-container';
+
+            const dateInner = document.createElement('div');
+            dateInner.className = 'chat-date';
+
+            const icon = document.createElement('i');
+            icon.className = 'bi bi-calendar-event';
+
+            const span = document.createElement('span');
+            span.textContent = msgDateStr;
+
+            dateInner.appendChild(icon);
+            dateInner.appendChild(span);
+            dateContainer.appendChild(dateInner);
+
+            messages.appendChild(dateContainer);
+        }
+
+        const dateStr = `${String(dateObj.getHours()).padStart(2, '0')}:${String(dateObj.getMinutes()).padStart(2, '0')}`;
+
+        if (cur_user === item.sender_profile.id) {
+            const msgSent_div = document.createElement('div');
+            msgSent_div.className = 'msg sent';
+
+            const bubble_div = document.createElement('div');
+            bubble_div.className = 'bubble';
+
+            const message_p = document.createElement('p');
+            message_p.textContent = item.content.trim();
+
+            const time = document.createElement('time');
+            time.textContent = dateStr;
+
+            bubble_div.appendChild(message_p);
+            msgSent_div.appendChild(bubble_div);
+            msgSent_div.appendChild(time);
+
+            messages.appendChild(msgSent_div);
+        } else {
+            const msgReceived_div = document.createElement('div');
+            msgReceived_div.className = 'msg-header';
+
+            const avatar_div = document.createElement('div');
+            avatar_div.className = 'avatar';
+
+            const avatar_img = document.createElement('img');
+            avatar_img.src = item.sender_profile.profile_img;
+
+            const senderName_p = document.createElement('p');
+            senderName_p.textContent = item.sender_profile.nickname;
+
+            avatar_div.appendChild(avatar_img);
+            msgReceived_div.appendChild(avatar_div);
+            msgReceived_div.appendChild(senderName_p);
+
+            const message_div = document.createElement('div');
+            message_div.className = 'msg';
+
+            const bubble_div = document.createElement('div');
+            bubble_div.className = 'bubble';
+
+            const message_p = document.createElement('p');
+            message_p.textContent = item.content.trim();
+
+            const time = document.createElement('time');
+            time.textContent = dateStr;
+
+            bubble_div.appendChild(message_p);
+            message_div.appendChild(bubble_div);
+            message_div.appendChild(time);
+
+            messages.appendChild(msgReceived_div);
+            messages.appendChild(message_div);
+        }
+
+        return msgDateStr;
+    }
 
 
-    cancelLeave.addEventListener('click', () => {
-      leaveModal.classList.add('hidden');
-    });
+    // main
+    try {
+        const response = await fetch('/chat/get_meet_api/');
+        const data = await response.json();
 
-    confirmLeave.addEventListener('click', () => {
+        cur_user = data.user;
 
-      // 실제 나가기 로직 처리
-      // location.href = '/chat/leave'; 또는 fetch POST 등
-      // 버튼 클릭 이벤트 발생 후, 방장이 나갔음을 클릭하면 모임 자체가 없어짐??
+        // 모임 추가
+        data.meet_list.forEach(item => {
+            initialize_meet(item);
+        });
 
-      alert("채팅방을 나갔습니다.");
-      leaveModal.classList.add('hidden');
-    });
+        // 자동으로 최상위 모임 선택
+        if(data.meet_list.length > 0) {
+            const first_Li = meetTitle_ul.querySelector('li');
+            if (first_Li) first_Li.click();
+        }
+    }
+    catch(error) {
+        console.log(error);
+    }
 
-  }
-});
+    // 객체 이벤트
+    send_Button.addEventListener('click', () => {
 
+        console.log(message_Input);
+        console.log(send_Button);
+
+        send_message(message_Input.value.trim());
+    })
+})

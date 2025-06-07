@@ -31,6 +31,8 @@ def create_meet(request):
             meet.participant.add(request.user)
             return JsonResponse({'message': '모임 생성 성공'})
         except Exception as e:
+            print('==========================================')
+            print(e)
             return JsonResponse({'error': str(e)}, status=400)
     return JsonResponse({'error': '잘못된 요청'}, status=400)
 
