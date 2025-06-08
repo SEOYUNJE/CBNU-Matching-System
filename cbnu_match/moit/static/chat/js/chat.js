@@ -465,4 +465,128 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         send_message(message_Input.value.trim());
     })
+
+
+    // 신고하기
+    const ReportPrompt = document.getElementById('ReportPrompt');
+    const CloseReportPrompt = document.getElementById('CloseReportPrompt');
+    const ReportForm = document.getElementById('ReportForm');
+    const submitReportBtn = document.getElementById('submitReportBtn');
+
+    // [X] 닫기
+    CloseReportPrompt.addEventListener('click', () => {
+        ReportPrompt.classList.remove('show');
+    });
+    // 바깥 클릭 시 닫기
+    window.addEventListener('click', (e) => {
+        if (e.target === ReportPrompt) ReportPrompt.classList.remove('show');
+    });
+
+    const container = document.getElementById('chattingContainer-div');
+    let selectedComment = null;
+
+    container.addEventListener('click', (e) => {
+        const bubble = e.target.closest('.bubble');
+        if (bubble) {
+            selectedComment = bubble.innerText.trim();
+            showReportBox(bubble, e.pageX, e.pageY);
+            e.stopPropagation(); // 이벤트 버블링 막기 (문서 클릭 이벤트가 바로 안 먹게)
+            }
+        });
+
+    document.addEventListener('click', (e) => {
+    const reportBox = document.getElementById('mini-report-box');
+    if (reportBox) {
+        e.stopPropagation();
+        ReportPrompt.classList.add('show')
+    if (!e.target.closest('.bubble') && !e.target.closest('#mini-report-box')) {
+      reportBox.remove();
+        }
+    }
+    });
+
+    function showReportBox(bubble) {
+    let reportBox = document.getElementById('mini-report-box');
+
+    if (!reportBox) {
+        reportBox = document.createElement('div');
+        reportBox.id = 'mini-report-box';
+        reportBox.innerText = '댓글 신고';
+        document.body.appendChild(reportBox);
+    }
+
+    const rect = bubble.getBoundingClientRect();
+
+    // 스크롤 위치까지 고려해서 계산
+    const left = window.scrollX + rect.right + 8;  // 댓글 오른쪽 끝 + 8px 간격
+    const top = window.scrollY + rect.top + (rect.height - reportBox.offsetHeight) / 2; // 댓글 세로 중앙
+
+    reportBox.style.position = 'absolute';
+    reportBox.style.left = left + 'px';
+    reportBox.style.top = top + 'px';
+    }
+
+    // 신고 사유 버튼 클릭 -> 제출
+    // 유효성 상태 플래그 검사
+    let isReasonSelected = false;
+
+    // 유효성 검사 통과 시 버튼 활성화
+    function checkReportValid() {
+        // 하나라도 선택된 버튼이 있으면 true
+        const selectedReasons = document.querySelectorAll('.reason-btn.selected');
+        isReasonSelected = selectedReasons.length > 0;
+
+        submitReportBtn.disabled = !isReasonSelected;
+    }
+	
+    const reasonButtons = document.querySelectorAll('.reason-btn');
+
+    reasonButtons.forEach(button => {
+        button.addEventListener('click', () => {
+        button.classList.toggle('selected');
+
+        // 유효성 상태 변경
+        isReasonSelected = true;
+        checkReportValid();
+    });
+    });
+
+
+
+    // [신고하기] 버튼 클릭 시: 신고 중복 확인하기 
+  document.getElementById('ReportForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    submitReportBtn.disabled = true;
+
+	// 선택된 사유 가져오기
+    const selectedBtn = document.querySelector('.reason-btn.selected');
+	const reason = selectedBtn.textContent;
+	    
+    fetch('/chat/report_api/', {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': getCSRFToken()
+      },
+      body: JSON.stringify({
+		reason: reason,
+		comment: selectedComment,
+		})
+      })
+      .then(response => response.json())
+      .then(data => {
+      if (data.message) {
+		  alert(data.message)
+          ReportPrompt.classList.remove('show');
+      }
+      else if (data.error) {
+		  // 신고를 중복해서 할수 없습니다.
+          alert(`${data.error}`);
+        }
+      })
+      .catch(() => {
+          alert("서버 오류가 발생했습니다.");
+      });
+    });
 })

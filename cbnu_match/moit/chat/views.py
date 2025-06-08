@@ -78,9 +78,10 @@ def report_api(request):
             
             # 신고 사유, 신고당한 사람, 댓글 
             reason = data.get('reason')
-            reported_user = data.get('reported_user')
             comment = data.get('comment')
-
+            
+            report_chat = Chat.objects.get(content = comment)
+            reported_user = report_chat.sender
             # 신고 이력 확인하기 
             is_duplicate = Report.objects.filter(
                 reporter=request.user,

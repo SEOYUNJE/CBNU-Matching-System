@@ -7,8 +7,8 @@
   <meta name="csrf-token" content="{{ csrf_token }}">
   <link rel="stylesheet" href="{% static 'chat/css/chat.css' %}" />
   <link rel="stylesheet" href="{% static 'chat/css/chat_popup.css' %}" />
-  <script src="{% static 'share/js/layout_profile_menu.js' %}" defer></script>
-  <script src="{% static 'chat/js/chat.js' %}"></script>
+  <link rel="stylesheet" href="{% static 'meet/css/popup_create.css' %}" />
+  <link rel="stylesheet" href="{% static 'share/css/layout_profile_menu.css' %}">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" />
 </head>
 <body>
@@ -21,33 +21,69 @@
         <a href="{% url 'subpage_meals' %}">meals</a>
         <a href="{% url 'subpage_study' %}">study</a>
         <a href="{% url 'subpage_game' %}">game</a>
-        <a href="{% url 'subpage_exercise' %}">exercise</a>
+        <a href="{% url 'subpage_exercise' %}" class="active">exercise</a>
       </nav> 
-        <div class="util">
-          <a href="{% url 'search' %}"><i class="bi bi-search" id="search"></i></a>
+        <div class="util" style="display: flex; align-items: center; gap: 12px;">
+          <a href="{% url 'search' %}" class="search-icon">
+            <i class="bi bi-search"></i>
+          </a>
+          {% if user.is_authenticated %}
+          <!-- 로그인된 상태 -->
           <div class="profile-wrapper">
-            <i class="bi bi-person-circle" id="profileBtn"></i>
-          
+            <i class="bi bi-person-circle profile-icon" id="profileBtn"></i>
             <div class="profile-menu" id="profileMenu">
               <div class="profile-info">
-                <span id="name"><p>토마토님</p></span>
-                <span id="manner"><p>매너온도 40도</p></span>
+                <span id="name"><p>{{ user.username }}님</p></span>
+                <span id="manner" data-temp="{{ manner_temp }}">
+                  <p>매너온도 {{ manner_temp }}도</p>
+                  <div class="manner-bar-wrapper">
+                    <div class="manner-bar" id="mannerBar"></div>
+                  </div>
+                  <p id="mannerEmoji"></p>
+                </span>
               </div>
               <hr>
-              <a href="{#}" class="menu-item">
-                <i class="bi bi-person-fill"></i> profile
+              <a href="{% url 'profile_view' %}" class="menu-item">
+                  <i class="bi bi-person-fill"></i> profile
               </a>
-              <a href="{#}" class="menu-item">
+              <a href="{% url 'chat_view' %}" class="menu-item">
                 <i class="bi bi-chat-dots"></i> moit chat
               </a>
-              <a href="{#}" class="menu-item">
-               <i class="bi bi-box-arrow-right"></i> log out
+              <a href="{% url 'signout' %}" class="menu-item">
+                <i class="bi bi-box-arrow-right"></i> log out
               </a>
+            </div>
           </div>
-        </div>
+          {% else %}
+          <!-- 로그인되지 않은 상태 -->
+          <a href="{% url 'signin' %}" class="login-menu">로그인</a>
+          {% endif %}
       </div>
     </div>
   </header>
+
+<!-- 신고 사유 팝업창 --> 
+<div id="ReportPrompt" class="modal-overlay">
+    <div class="modal-content">
+      <span id="CloseReportPrompt" class="close-btn">&times;</span>
+      <form id="ReportForm">
+        {% csrf_token %}
+        <h3>신고 사유를 선택해주세요</h3>
+
+		<div class="reason-options">
+			<button type="button" class="reason-btn">해당 댓글에는 욕설 또는 특정인을 비방하는 표현이 포함되어 있습니다</button>
+			<button type="button" class="reason-btn">해당 댓글에는 부적절하거나 음란한 표현이 포함되어 있습니다</button>
+			<button type="button" class="reason-btn">해당 댓글에는 반복적인 도배 또는 광고성 메세지를 포함하고 있습니다</button>
+			<button type="button" class="reason-btn">해당 댓글에는 타인의 개인정보(연락처, 주소 등)이 포함되어 있습니다.</button>
+			<button type="button" class="reason-btn">해당 댓글에는 기타 부적절한 내용이 포함되어 있습니다</button>
+			</div>
+
+        <button id="submitReportBtn" class="submit-btn" disabled>신고하기</button>
+      </form>
+    </div>
+  </div>
+
+
    <!-- 아직 완성은 아님--------------------------------------------------------- -->
   <!-- 헤더 아래 "--- My page ---" 영역 -->
   <section class="title">
@@ -219,7 +255,10 @@
     </aside>
   </main>
 
-
+  <script src="{% static 'share/js/layout_profile_menu.js' %}"></script>
+  <script src="{% static 'chat/js/chat.js' %}"></script>
+</body>
+</html>
 <!---------  상대방 프로필 열람 팝업창 --------->
   <div id="profileModal" class="profile-modal hidden">
     <div class="modal-content">
