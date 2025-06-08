@@ -43,7 +43,7 @@
               <a href="{% url 'profile_view' %}" class="menu-item">
                   <i class="bi bi-person-fill"></i> profile
               </a>
-              <a href="{% url 'search' %}" class="menu-item">
+              <a href="{% url 'chat_view' %}" class="menu-item">
                 <i class="bi bi-chat-dots"></i> moit chat
               </a>
               <a href="{% url 'signout' %}" class="menu-item">
@@ -191,7 +191,7 @@
       <p style="font-size: 1.1rem; font-weight: 500;">
         모임이 성공적으로 생성되었습니다!<br>
       </p>
-      <a href="{% url 'mainpage' %}" class="submit-btn"
+      <a href="{% url 'chat_view' %}" class="submit-btn"
         style="white-space: nowrap; padding: 0.5rem 1rem; max-width: 130px; overflow: hidden; text-overflow: ellipsis; text-align: center;">
         채팅방 입장하기
       </a>

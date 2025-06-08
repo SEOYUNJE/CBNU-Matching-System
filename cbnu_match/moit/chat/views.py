@@ -10,7 +10,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from meet.serializers import MeetSerializer
 from .serializers import ChatSerializer
-from .models import Chat
+from .models import Chat, Report
 
 # view 함수
 def chat_view(request):
@@ -71,59 +71,48 @@ class SendMessage(APIView):
             }
             return Response(data)
 
-# def get_meet_api(request):
-#     try:
-#         meets = Meet.objects.filter(participant=request.user).prefetch_related('participant')
+# 신고 내용 저장(신고 사유, 신고 대상 댓글, 신고 대상 사용자)
+def report_api(request):
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+            
+            # 신고 사유, 신고당한 사람, 댓글 
+            reason = data.get('reason')
+            reported_user = data.get('reported_user')
+            comment = data.get('comment')
 
-#         meet_list = []
-#         for meet in meets:
-#             meet_list.append([{
-#                 "id": meet.id,
-#                 "title": meet.title,
-#                 "user": meet.user.id,
-#                 "participant": [(p.id ,Profile.objects.get(user=p).nickname) for p in meet.participant.all()],
-#             }])
-#         data = {
-#             "code": "Successed",
-#             "meet_list": meet_list,
-#         }
-#         print(data)
-#         return JsonResponse(data)
-#     except Exception as e:
-#         print(e)
-#         data = {
-#             "code": "Failed",
-#             "message": "서버 오류",
-#         }
-#         return JsonResponse(data)
+            # 신고 이력 확인하기 
+            is_duplicate = Report.objects.filter(
+                reporter=request.user,
+                reported_user=reported_user,
+                comment=comment,
+            ).exists()
 
+            if is_duplicate:
+                return JsonResponse({'error': '신고를 중복해서 할 수 없습니다.'}, status=409)
 
-# def get_chattingRoomData_api(request):
-#     meet_id = request.GET.get('meet_id')
-#     try:
-#         meet = Meet.objects.get(id=meet_id)
-#         profiles = Profile.objects.filter(user__in=meet.participant.all()).annotate(
-#             is_me=Case(
-#                 When(user=request.user, then=Value(0)),
-#                 default=Value(1),
-#                 output_field=IntegerField(),
-#             ),
-#             lower_nickname=Lower('nickname')
-#         ).order_by('is_me', 'lower_nickname').values()
+            # 이미 제재된 댓글인지 확인하기 
+            approved_exist = Report.objects.filter(
+                reported_user=reported_user,
+                comment=comment,
+                is_approved=True
+            ).exists()
+
+            if approved_exist:
+                return JsonResponse({'error': '이미 신고 처리가 진행되었습니다.'}, status=409)
+
+            # 새로운 Report Data 생성
+            Report.objects.create(
+                reporter=request.user,
+                reported_user=reported_user,
+                comment=comment,
+                reason=reason,
+            )
+
+            return JsonResponse({'message': '신고가 성공적으로 접수되었습니다'})
         
-#         print('===================================')
-#         print(request.user)
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=400)
 
-#         data = {
-#             "code": "Successed",
-#             "title": meet.title,
-#             "user": request.user,
-#             'participant': list(profiles)
-#         }
-#         return JsonResponse(data)
-#     except Exception as e:
-#         print(e)
-#         return JsonResponse({
-#             "code": "Error",
-#             "message": str(e),
-#         })
+    return JsonResponse({'error': '잘못된 요청'}, status=400)

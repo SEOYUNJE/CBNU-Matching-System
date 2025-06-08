@@ -45,7 +45,7 @@
               <a href="{% url 'profile_view' %}" class="menu-item">
                   <i class="bi bi-person-fill"></i> profile
               </a>
-              <a href="{% url 'search' %}" class="menu-item">
+              <a href="{% url 'chat_view' %}" class="menu-item">
                 <i class="bi bi-chat-dots"></i> moit chat
               </a>
               <a href="{% url 'signout' %}" class="menu-item">
@@ -86,10 +86,19 @@
     <div class="profile-box">
       <!-- 왼쪽: 프로필 이미지 -->
       <div class="left-section">
-        <div class="profile-image">
+        <div class="profile-image-before">
           <img src="" id="profileImage_Display" />
         </div>
-      </div>
+
+        <div class="manner-section">
+            <span id="manner-profile" data-temp="{{ manner_temp }}">
+            <p class="manner-label">매너온도 {{ manner_temp }}도</p>
+            <div class="manner-bar-wrapper-profile">
+              <div class="manner-bar-profile" id="mannerBar-profile"></div>
+            </div>
+            </span>
+          </div>
+        </div>
 
       <!-- 디바이더 선 추가 -->
       <div class="v-divider"></div>
@@ -147,5 +156,6 @@
   </footer>
 
   <script src="{% static 'share/js/layout_profile_menu.js' %}"></script>
+  <script src="{% static 'share/js/profile_menu.js' %}"></script>
 </body>
 </html>

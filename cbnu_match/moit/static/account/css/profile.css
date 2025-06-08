@@ -28,16 +28,40 @@
   margin: 0 auto; */
 }
 
+/* 매너온도 섹션 */
+.manner-section {
+  width: 100%;
+  max-width: 300px; /* 원하는 너비로 조절 */
+  text-align: center;
+}
+
+.manner-label {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* 매너 바 */
+.manner-bar-wrapper-profile {
+  width: 100%;
+  height: 20px; /* 기존보다 크게 */
+  background-color: #eee;
+  border-radius: 10px;
+  margin: 10px 0;
+  overflow: hidden;
+}
+
+.manner-bar-profile {
+  height: 100%;
+  transition: width 0.3s ease;
+  border-radius: 10px;
+}
+
 /* 왼쪽: 이미지 섹션 */
 .left-section {
   display: flex;
-  flex-shrink: 0;
-
-  /* 세로 중앙 */
+  flex-direction: column;  /* ✅ 가로(x) → 세로(o) 정렬 */
   align-items: center;
-  justify-content: center;
-
-  /* 심미적으로 중앙으로 보이게끔 조정 */
   padding-left: 4rem;
   padding-right: 1.5rem;
 }
@@ -49,9 +73,26 @@
   border-radius: 50%;
   background-color: #ccc;
   overflow: hidden;
+  
+}
+
+.profile-image-before {
+  width: 230px;
+  height: 230px;
+  border-radius: 50%;
+  background-color: #ccc;
+  overflow: hidden;
+  margin-top: +10px;
 }
 
 .profile-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.profile-image-before img {
   width: 100%;
   height: 100%;
   object-fit: cover;

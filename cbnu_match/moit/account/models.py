@@ -109,3 +109,12 @@ class Profile(models.Model):
     
     def __str__(self):
         return self.user.username  
+    
+    
+    # 관리자 승인 -> 20점 차감
+    def save(self, *args, **kwargs):
+        # manner_temp가 0 이하이면 계정 정지
+        if self.manner_temp <= 0 and self.user.is_active:
+            self.user.is_active = False
+            self.user.save()
+        super().save(*args, **kwargs)
