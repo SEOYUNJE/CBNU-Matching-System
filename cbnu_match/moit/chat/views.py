@@ -46,7 +46,6 @@ class GetChat(APIView):
             data = {
                 "code": "Successed",
                 "data": serializer.data,
-                "user": request.user.id,
             }
             return Response(data)
         except Exception as e:

@@ -57,19 +57,17 @@
     <!-- 왼쪽: 나의 모임 -->
     <aside class="chat-list">
       <h2>나의 모임</h2>
-      <ul id='meetTitle-ul'>
-
-      </ul>
+      <ul id='meetList-ul'></ul>
     </aside>
 
     <!-- 가운데: 채팅방 -->
     <section class="chat-room">
       <header class="room-header">
-        <h2 id='meetTitle-h2'></h2>
+        <h2 id='chattingTitle-h2'></h2>
         <span id='participantCount-span' class="members-count"></span>
       </header>
       
-      <div class="messages" id='messages'>
+      <div class="messages" id='chattingContainer-div'>
         <div class="chat-date-container">
           <div class="chat-date">
             <i class="bi bi-calendar-event"></i>
@@ -173,10 +171,23 @@
           <time>17:35</time>
         </div>
 
-         <div class="msg received">
+        <div class="msg received">
           <div class="msg-header">
             <div class="avatar"><img src="{% static 'meet/images/profile1.png' %}" alt="토마토" /></div>
             <p class="sender-name">토마토</p>
+          </div>
+          <div class="msg-body">
+            <div class="bubble"><p>안녕하세요!!dddddddddddddddddddddddddddd
+              dddddddddddddddddddddddddddddddddddddddddddddddddddd
+              ddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+              dddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+            </p></div>
+            <time>17:30</time>
+          </div>
+        </div>
+
+        <div class="msg received">
+          <div class="msg-header">
           </div>
           <div class="msg-body">
             <div class="bubble"><p>안녕하세요!!dddddddddddddddddddddddddddd
@@ -196,14 +207,14 @@
       <!-- 채팅 입력 -->
       <div class="chat-input">
         <input id='message-Input' type="text" placeholder="메시지 입력..." />
-        <button id='send-Button'>전송</button>
+        <button id='messageSend-Button'>전송</button>
       </div>
     </section>
 
     <!-- 오른쪽: 멤버 리스트 -->
     <aside class="member-list">
       <h2>멤버</h2>
-      <ul id='participant-ul'></ul>
+      <ul id='participantList-ul'></ul>
       <button class="leave">채팅방 나가기</button>
     </aside>
   </main>
